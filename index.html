@@ -1470,11 +1470,9 @@
             updateAllText();
             
             // Stay on current game instead of redirecting to home
-            if (currentGame && currentGame !== 'welcome') {
-               
+             
                 loadGame('welcome');
-            }
-        }
+           }
 
         function updateAllText() {
             const t = translations[currentLanguage];
