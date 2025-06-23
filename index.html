@@ -1471,10 +1471,7 @@
             
             // Stay on current game instead of redirecting to home
             if (currentGame && currentGame !== 'welcome') {
-                // Just update the current game's text without reloading
-                updateGameText();
-            } else {
-                // Only go to home if we're not in a game
+               
                 loadGame('welcome');
             }
         }
