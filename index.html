@@ -1,95 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Add this INSIDE the <head> section of your HTML -->
-
-<!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#4ecdc4">
-
-<!-- Apple iOS Support -->
-<link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/npm/@mdi/svg@7.2.96/svg/gamepad-variant.svg">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Kids Games">
-
-<!-- Windows Support -->
-<meta name="msapplication-TileColor" content="#4ecdc4">
-<meta name="msapplication-tap-highlight" content="no">
-
-<!-- PWA Install Button & Service Worker -->
-<script>
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
-
-// PWA Install Prompt
-let deferredPrompt;
-let installButton;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('Install prompt available');
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // Show install button in header
-    showInstallButton();
-});
-
-function showInstallButton() {
-    // Only add if not already added
-    if (!installButton) {
-        installButton = document.createElement('button');
-        installButton.textContent = '📱 Install App';
-        installButton.className = 'header-btn';
-        installButton.id = 'installBtn';
-        installButton.style.background = 'rgba(255,255,255,0.3)';
-        installButton.onclick = installApp;
-        
-        // Add to header buttons
-        const headerButtons = document.querySelector('.header-buttons');
-        if (headerButtons) {
-            headerButtons.appendChild(installButton);
-        }
-    }
-}
-
-async function installApp() {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        
-        if (outcome === 'accepted') {
-            console.log('User accepted install');
-            installButton.style.display = 'none';
-        }
-        
-        deferredPrompt = null;
-    }
-}
-
-// Hide install button if already installed
-window.addEventListener('appinstalled', () => {
-    console.log('App installed successfully');
-    if (installButton) {
-        installButton.style.display = 'none';
-    }
-    deferredPrompt = null;
-});
-</script>
-
-    <title>Kids Game Portal</title>
+    <title>Kids Game Portal - لعبة البورتال للأطفال</title>
     <style>
         * {
             margin: 0;
@@ -102,6 +16,142 @@ window.addEventListener('appinstalled', () => {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Language Selection Screen */
+        .language-selector {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            transition: all 0.5s ease;
+        }
+
+        .language-selector.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+        }
+
+        .language-title {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 50px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .language-options {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .language-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 30px 60px;
+            border-radius: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-btn:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            background: white;
+        }
+
+        .language-flag {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .language-name {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .language-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 1em;
+            z-index: 1001;
+        }
+
+        .language-switch:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* RTL Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .game-item {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .header {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .sidebar {
+            left: auto;
+            right: 0;
+            border-left: 2px solid rgba(255,255,255,0.2);
+            border-right: none;
+        }
+
+        [dir="rtl"] .main-content {
+            margin-left: 0;
+            margin-right: 250px;
+        }
+
+        [dir="rtl"] .game-item:hover {
+            transform: translateX(-10px);
+        }
+
+        [dir="rtl"] .game-item.active {
+            transform: translateX(-10px);
+        }
+
+        [dir="rtl"] .language-switch {
+            right: auto;
+            left: 20px;
         }
 
         /* Header Styles */
@@ -297,6 +347,16 @@ window.addEventListener('appinstalled', () => {
             transition: all 0.3s ease;
             z-index: 100;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        [dir="rtl"] .game-notification {
+            right: auto;
+            left: 20px;
+            transform: translateX(-100px);
+        }
+
+        [dir="rtl"] .game-notification.show {
+            transform: translateX(0);
         }
 
         .game-notification.show {
@@ -594,6 +654,10 @@ window.addEventListener('appinstalled', () => {
             .main-content {
                 margin-left: 0;
             }
+
+            [dir="rtl"] .main-content {
+                margin-right: 0;
+            }
             
             .container {
                 flex-direction: column;
@@ -606,64 +670,95 @@ window.addEventListener('appinstalled', () => {
             .header-buttons {
                 gap: 10px;
             }
+
+            .language-options {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .language-btn {
+                min-width: 250px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Language Selection Screen -->
+    <div class="language-selector" id="languageSelector">
+        <div class="language-title">
+            🎮 Choose Your Language - اختر لغتك 🎮
+        </div>
+        <div class="language-options">
+            <button class="language-btn" onclick="setLanguage('en')">
+                <div class="language-flag">🇺🇸</div>
+                <div class="language-name">English</div>
+            </button>
+            <button class="language-btn" onclick="setLanguage('ar')">
+                <div class="language-flag">🇸🇦</div>
+                <div class="language-name">العربية</div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Language Switch Button -->
+    <button class="language-switch" id="languageSwitch" onclick="showLanguageSelector()" style="display: none;">
+        🌐 <span id="switchText">العربية</span>
+    </button>
+
     <!-- Header -->
-    <header class="header">
-        <h1>🎮 Kids Game Portal</h1>
+    <header class="header" style="display: none;">
+        <h1 id="headerTitle">🎮 Kids Game Portal</h1>
         <div class="header-buttons">
-            <button class="header-btn" onclick="showFullscreen()">⛶ Fullscreen</button>
-            <button class="header-btn" onclick="showStats()">📊 Stats</button>
-            <button class="header-btn" onclick="showSettings()">⚙️ Settings</button>
+            <button class="header-btn" onclick="showFullscreen()" id="fullscreenBtn">⛶ Fullscreen</button>
+            <button class="header-btn" onclick="showStats()" id="statsBtn">📊 Stats</button>
+            <button class="header-btn" onclick="showSettings()" id="settingsBtn">⚙️ Settings</button>
         </div>
     </header>
 
     <!-- Main Container -->
-    <div class="container">
+    <div class="container" style="display: none;">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <h3>🎯 Choose a Game</h3>
+            <h3 id="sidebarTitle">🎯 Choose a Game</h3>
             
             <div class="game-item active" onclick="loadGame('welcome')">
                 <span class="game-icon">🏠</span>
-                <span class="game-name">Home</span>
+                <span class="game-name" data-translate="home">Home</span>
             </div>
             
             <div class="game-item" onclick="loadGame('memory')">
                 <span class="game-icon">🧠</span>
-                <span class="game-name">Memory Match</span>
+                <span class="game-name" data-translate="memory">Memory Match</span>
             </div>
             
             <div class="game-item" onclick="loadGame('tictactoe')">
                 <span class="game-icon">⭕</span>
-                <span class="game-name">Tic Tac Toe</span>
+                <span class="game-name" data-translate="tictactoe">Tic Tac Toe</span>
             </div>
             
             <div class="game-item" onclick="loadGame('whackmole')">
                 <span class="game-icon">🔨</span>
-                <span class="game-name">Whack-a-Mole</span>
+                <span class="game-name" data-translate="whackmole">Whack-a-Mole</span>
             </div>
             
             <div class="game-item" onclick="loadGame('mathquiz')">
                 <span class="game-icon">🔢</span>
-                <span class="game-name">Math Quiz</span>
+                <span class="game-name" data-translate="mathquiz">Math Quiz</span>
             </div>
             
             <div class="game-item" onclick="loadGame('simon')">
                 <span class="game-icon">🔴</span>
-                <span class="game-name">Simon Says</span>
+                <span class="game-name" data-translate="simon">Simon Says</span>
             </div>
             
             <div class="game-item" onclick="loadGame('wordsearch')">
                 <span class="game-icon">🔤</span>
-                <span class="game-name">Word Search</span>
+                <span class="game-name" data-translate="wordsearch">Word Search</span>
             </div>
             
             <div class="game-item" onclick="loadGame('puzzle')">
                 <span class="game-icon">🧩</span>
-                <span class="game-name">Sliding Puzzle</span>
+                <span class="game-name" data-translate="puzzle">Sliding Puzzle</span>
             </div>
         </aside>
 
@@ -672,22 +767,320 @@ window.addEventListener('appinstalled', () => {
             <div class="game-container" id="gameContainer">
                 <!-- Welcome Screen -->
                 <div class="welcome-screen">
-                    <h2>Welcome to Kids Game Portal! 🎉</h2>
-                    <p>Choose a game from the sidebar to start playing!</p>
-                    <p>🎮 <strong>8 Amazing Games</strong> waiting for you!</p>
+                    <h2 data-translate="welcomeTitle">Welcome to Kids Game Portal! 🎉</h2>
+                    <p data-translate="welcomeText">Choose a game from the sidebar to start playing!</p>
+                    <p><span data-translate="gamesCount">🎮 <strong>8 Amazing Games</strong> waiting for you!</span></p>
                     <div style="font-size: 4em; margin: 20px 0;">🎯🧠⭕🔨🔢🔴🔤🧩</div>
-                    <p>Click on any game in the left sidebar to begin your adventure!</p>
+                    <p data-translate="startInstructions">Click on any game in the left sidebar to begin your adventure!</p>
                 </div>
             </div>
         </main>
     </div>
 
     <script>
+        // Language System
+        let currentLanguage = 'en';
+        
+        const translations = {
+            en: {
+                // Header & Navigation
+                headerTitle: '🎮 Kids Game Portal',
+                fullscreenBtn: '⛶ Fullscreen',
+                statsBtn: '📊 Stats',
+                settingsBtn: '⚙️ Settings',
+                sidebarTitle: '🎯 Choose a Game',
+                switchText: 'العربية',
+                
+                // Games
+                home: 'Home',
+                memory: 'Memory Match',
+                tictactoe: 'Tic Tac Toe',
+                whackmole: 'Whack-a-Mole',
+                mathquiz: 'Math Quiz',
+                simon: 'Simon Says',
+                wordsearch: 'Word Search',
+                puzzle: 'Sliding Puzzle',
+                
+                // Welcome Screen
+                welcomeTitle: 'Welcome to Kids Game Portal! 🎉',
+                welcomeText: 'Choose a game from the sidebar to start playing!',
+                gamesCount: '🎮 <strong>8 Amazing Games</strong> waiting for you!',
+                startInstructions: 'Click on any game in the left sidebar to begin your adventure!',
+                
+                // Game Stats
+                gamesPlayed: 'Games Played',
+                totalWins: 'Total Wins',
+                moves: 'Moves',
+                time: 'Time',
+                score: 'Score',
+                level: 'Level',
+                matches: 'Matches',
+                found: 'Found',
+                question: 'Question',
+                currentTurn: 'Current Turn',
+                misses: 'Misses',
+                lives: 'Lives',
+                
+                // Game Titles & Descriptions
+                memoryTitle: '🧠 Memory Match Game',
+                memoryDesc: 'Find all matching pairs!',
+                memoryOverlayTitle: '🧠 Memory Match Game',
+                memoryOverlayDesc: 'Find all matching pairs of emoji cards!',
+                
+                tictactoeTitle: '⭕ Tic Tac Toe',
+                tictactoeDesc: 'Get three in a row to win!',
+                tictactoeOverlayTitle: '⭕ Tic Tac Toe',
+                tictactoeOverlayDesc: 'Get three X\'s or O\'s in a row to win!',
+                
+                whackmoleTitle: '🔨 Whack-a-Mole',
+                whackmoleDesc: 'Click the moles when they pop up!',
+                whackmoleOverlayTitle: '🔨 Whack-a-Mole',
+                whackmoleOverlayDesc: 'Click the moles as fast as you can when they pop up!',
+                
+                mathTitle: '🔢 Math Quiz',
+                mathDesc: 'Solve the math problems!',
+                mathOverlayTitle: '🔢 Math Quiz',
+                mathOverlayDesc: 'Solve 10 math problems as quickly as you can!',
+                
+                simonTitle: '🔴 Simon Says',
+                simonDesc: 'Watch the sequence and repeat it!',
+                simonOverlayTitle: '🔴 Simon Says',
+                simonOverlayDesc: 'Watch the pattern and repeat it by clicking the colored buttons!',
+                
+                wordsearchTitle: '🔤 Word Search',
+                wordsearchDesc: 'Click and drag to select words!',
+                wordsearchOverlayTitle: '🔤 Word Search',
+                wordsearchOverlayDesc: 'Find hidden words by clicking and dragging to select them!',
+                
+                puzzleTitle: '🧩 Sliding Puzzle',
+                puzzleDesc: 'Arrange the numbers in order!',
+                puzzleOverlayTitle: '🧩 Sliding Puzzle',
+                puzzleOverlayDesc: 'Click tiles next to the empty space to slide them and arrange numbers 1-8!',
+                
+                // Buttons
+                startGame: '🚀 Start Game',
+                playAgain: '🎉 Play Again',
+                newGame: '🔄 New Game',
+                shuffle: '🔀 Shuffle',
+                nextColor: '➡️ Next Color',
+                newPuzzle: '🔄 New Puzzle',
+                
+                // Notifications
+                greatMatch: 'Great match! 🎉',
+                correct: '🎉 Correct!',
+                wrong: '❌ Wrong!',
+                gameOver: 'Game Over!',
+                youWon: '🎉 You won!',
+                timeUp: '⏰ Time\'s up!',
+                finalScore: 'Final Score',
+                congratulations: '🎉 Congratulations!',
+                tryAgain: 'Try again!',
+                foundWord: '🎉 Found',
+                allWordsFound: '🎉 All words found!',
+                puzzleSolved: '🎉 Puzzle solved!',
+                itsATie: '🤝 It\'s a tie!',
+                playerWins: 'Player {player} wins!',
+                inSeconds: 'in {time} seconds!',
+                inMoves: 'in {moves} moves',
+                pointsEarned: '+{points} points!',
+                quizCompleted: '🎉 Quiz completed!',
+                levelComplete: '🎉 Level completed!',
+                wrongSequence: '❌ Wrong sequence!',
+                
+                // Settings & Stats Messages
+                statsMessage: 'Games: {games} | Wins: {wins} | Rate: {rate}%',
+                settingsMessage: 'Click games in sidebar to switch • Use fullscreen for better experience',
+                
+                // Word Search Words
+                wordSearchWords: ['CAT', 'DOG', 'SUN', 'FUN', 'TOY', 'BOOK', 'TREE', 'FISH', 'BIRD', 'STAR', 'MOON', 'CAKE', 'GAME', 'PLAY', 'JUMP', 'RUN', 'SWIM', 'BALL', 'APPLE', 'BEAR']
+            },
+            
+            ar: {
+                // Header & Navigation
+                headerTitle: '🎮 بوابة ألعاب الأطفال',
+                fullscreenBtn: '⛶ ملء الشاشة',
+                statsBtn: '📊 الإحصائيات',
+                settingsBtn: '⚙️ الإعدادات',
+                sidebarTitle: '🎯 اختر لعبة',
+                switchText: 'English',
+                
+                // Games
+                home: 'الرئيسية',
+                memory: 'لعبة الذاكرة',
+                tictactoe: 'إكس أوه',
+                whackmole: 'اضرب الخلد',
+                mathquiz: 'اختبار الرياضيات',
+                simon: 'سايمون يقول',
+                wordsearch: 'البحث عن الكلمات',
+                puzzle: 'لغز الانزلاق',
+                
+                // Welcome Screen
+                welcomeTitle: 'مرحباً ببوابة ألعاب الأطفال! 🎉',
+                welcomeText: 'اختر لعبة من الشريط الجانبي لتبدأ اللعب!',
+                gamesCount: '🎮 <strong>8 ألعاب رائعة</strong> في انتظارك!',
+                startInstructions: 'انقر على أي لعبة في الشريط الجانبي الأيسر لبدء مغامرتك!',
+                
+                // Game Stats
+                gamesPlayed: 'الألعاب التي تم لعبها',
+                totalWins: 'إجمالي الانتصارات',
+                moves: 'الحركات',
+                time: 'الوقت',
+                score: 'النقاط',
+                level: 'المستوى',
+                matches: 'المطابقات',
+                found: 'تم العثور',
+                question: 'السؤال',
+                currentTurn: 'الدور الحالي',
+                misses: 'الأخطاء',
+                lives: 'الأرواح',
+                
+                // Game Titles & Descriptions
+                memoryTitle: '🧠 لعبة مطابقة الذاكرة',
+                memoryDesc: 'اعثر على جميع الأزواج المتطابقة!',
+                memoryOverlayTitle: '🧠 لعبة مطابقة الذاكرة',
+                memoryOverlayDesc: 'اعثر على جميع الأزواج المتطابقة من بطاقات الرموز التعبيرية!',
+                
+                tictactoeTitle: '⭕ إكس أوه',
+                tictactoeDesc: 'احصل على ثلاثة في صف للفوز!',
+                tictactoeOverlayTitle: '⭕ إكس أوه',
+                tictactoeOverlayDesc: 'احصل على ثلاثة X أو O في صف للفوز!',
+                
+                whackmoleTitle: '🔨 اضرب الخلد',
+                whackmoleDesc: 'انقر على الخلدان عندما يظهرون!',
+                whackmoleOverlayTitle: '🔨 اضرب الخلد',
+                whackmoleOverlayDesc: 'انقر على الخلدان بأسرع ما يمكن عندما يظهرون!',
+                
+                mathTitle: '🔢 اختبار الرياضيات',
+                mathDesc: 'حل مسائل الرياضيات!',
+                mathOverlayTitle: '🔢 اختبار الرياضيات',
+                mathOverlayDesc: 'حل 10 مسائل رياضية بأسرع ما يمكن!',
+                
+                simonTitle: '🔴 سايمون يقول',
+                simonDesc: 'شاهد التسلسل وكرره!',
+                simonOverlayTitle: '🔴 سايمون يقول',
+                simonOverlayDesc: 'شاهد النمط وكرره بالنقر على الأزرار الملونة!',
+                
+                wordsearchTitle: '🔤 البحث عن الكلمات',
+                wordsearchDesc: 'انقر واسحب لتحديد الكلمات!',
+                wordsearchOverlayTitle: '🔤 البحث عن الكلمات',
+                wordsearchOverlayDesc: 'اعثر على الكلمات المخفية بالنقر والسحب لتحديدها!',
+                
+                puzzleTitle: '🧩 لغز الانزلاق',
+                puzzleDesc: 'رتب الأرقام بالترتيب!',
+                puzzleOverlayTitle: '🧩 لغز الانزلاق',
+                puzzleOverlayDesc: 'انقر على البلاطات المجاورة للمساحة الفارغة لتحريكها ورتب الأرقام من 1-8!',
+                
+                // Buttons
+                startGame: '🚀 ابدأ اللعبة',
+                playAgain: '🎉 العب مرة أخرى',
+                newGame: '🔄 لعبة جديدة',
+                shuffle: '🔀 خلط',
+                nextColor: '➡️ اللون التالي',
+                newPuzzle: '🔄 لغز جديد',
+                
+                // Notifications
+                greatMatch: 'مطابقة رائعة! 🎉',
+                correct: '🎉 صحيح!',
+                wrong: '❌ خطأ!',
+                gameOver: 'انتهت اللعبة!',
+                youWon: '🎉 لقد فزت!',
+                timeUp: '⏰ انتهى الوقت!',
+                finalScore: 'النتيجة النهائية',
+                congratulations: '🎉 تهانينا!',
+                tryAgain: 'حاول مرة أخرى!',
+                foundWord: '🎉 تم العثور على',
+                allWordsFound: '🎉 تم العثور على جميع الكلمات!',
+                puzzleSolved: '🎉 تم حل اللغز!',
+                itsATie: '🤝 تعادل!',
+                playerWins: 'اللاعب {player} يفوز!',
+                inSeconds: 'في {time} ثانية!',
+                inMoves: 'في {moves} حركة',
+                pointsEarned: '+{points} نقطة!',
+                quizCompleted: '🎉 تم إكمال الاختبار!',
+                levelComplete: '🎉 تم إكمال المستوى!',
+                wrongSequence: '❌ تسلسل خاطئ!',
+                
+                // Settings & Stats Messages
+                statsMessage: 'الألعاب: {games} | الانتصارات: {wins} | المعدل: {rate}%',
+                settingsMessage: 'انقر على الألعاب في الشريط الجانبي للتبديل • استخدم ملء الشاشة للحصول على تجربة أفضل',
+                
+                // Word Search Words (Arabic)
+                wordSearchWords: ['قطة', 'كلب', 'شمس', 'مرح', 'لعبة', 'كتاب', 'شجرة', 'سمك', 'طير', 'نجم', 'قمر', 'كعكة', 'لعب', 'قفز', 'جري', 'سبح', 'كرة', 'تفاح', 'دب']
+            }
+        };
+
+        // Language Management
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update HTML attributes
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Hide language selector
+            document.getElementById('languageSelector').classList.add('hidden');
+            
+            // Show main interface
+            setTimeout(() => {
+                document.querySelector('.header').style.display = 'flex';
+                document.querySelector('.container').style.display = 'flex';
+                document.getElementById('languageSwitch').style.display = 'block';
+                updateAllText();
+            }, 500);
+        }
+
+        function showLanguageSelector() {
+            document.getElementById('languageSelector').classList.remove('hidden');
+            document.querySelector('.header').style.display = 'none';
+            document.querySelector('.container').style.display = 'none';
+            document.getElementById('languageSwitch').style.display = 'none';
+        }
+
+        function updateAllText() {
+            const t = translations[currentLanguage];
+            
+            // Update all elements with data-translate attribute
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (t[key]) {
+                    element.innerHTML = t[key];
+                }
+            });
+            
+            // Update specific elements by ID
+            const updateById = {
+                'headerTitle': t.headerTitle,
+                'fullscreenBtn': t.fullscreenBtn,
+                'statsBtn': t.statsBtn,
+                'settingsBtn': t.settingsBtn,
+                'sidebarTitle': t.sidebarTitle,
+                'switchText': t.switchText
+            };
+            
+            Object.keys(updateById).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = updateById[id];
+                }
+            });
+        }
+
+        function translate(key, replacements = {}) {
+            let text = translations[currentLanguage][key] || key;
+            
+            // Replace placeholders like {player}, {time}, etc.
+            Object.keys(replacements).forEach(placeholder => {
+                text = text.replace(`{${placeholder}}`, replacements[placeholder]);
+            });
+            
+            return text;
+        }
+
         // FIXED: Game state management with proper timer handling
         let currentGame = null;
         let gameTimers = {};
         let gameActive = false;
-        let currentTimerInterval = null; // Single timer interval
+        let currentTimerInterval = null;
         let gameStats = {
             gamesPlayed: 0,
             totalTime: 0,
@@ -710,14 +1103,13 @@ window.addEventListener('appinstalled', () => {
             }, duration);
         }
 
-        // FIXED: Win notification WITHOUT showing overlay (just restart same game)
         function showWinNotification(message) {
             const notification = document.createElement('div');
             notification.className = 'game-notification win';
             notification.innerHTML = `
                 <div>${message}</div>
                 <div style="margin-top: 15px;">
-                    <button class="game-btn" onclick="restartCurrentGame()">🎉 Play Again</button>
+                    <button class="game-btn" onclick="restartCurrentGame()">${translate('playAgain')}</button>
                 </div>
             `;
             
@@ -725,26 +1117,21 @@ window.addEventListener('appinstalled', () => {
             setTimeout(() => notification.classList.add('show'), 100);
         }
 
-        // FIXED: Restart current game without overlay
         function restartCurrentGame() {
-            // Remove win notification
             const winNotification = document.querySelector('.game-notification.win');
             if (winNotification) {
                 winNotification.remove();
             }
-            
-            // Reset timer and restart same game
             resetTimer();
             startGame(currentGame);
         }
 
-        // FIXED: Game Overlay System - Only for game switching
         function createGameOverlay(title, description, gameType) {
             return `
                 <div class="game-overlay" id="gameOverlay">
                     <div class="overlay-title">${title}</div>
                     <div class="overlay-description">${description}</div>
-                    <button class="start-game-btn" onclick="startGame('${gameType}')">🚀 Start Game</button>
+                    <button class="start-game-btn" onclick="startGame('${gameType}')">${translate('startGame')}</button>
                 </div>
             `;
         }
@@ -758,9 +1145,8 @@ window.addEventListener('appinstalled', () => {
             }
         }
 
-        // FIXED: Timer management - Single timer approach
         function startTimer() {
-            resetTimer(); // Clear any existing timer
+            resetTimer();
             
             if (!currentGame) return;
             
@@ -800,15 +1186,11 @@ window.addEventListener('appinstalled', () => {
             }
         }
 
-        // FIXED: Start game function
         function startGame(gameType) {
             hideGameOverlay();
             currentGame = gameType;
-            
-            // Store start time for calculations
             gameTimers[gameType] = { startTime: Date.now() };
             
-            // Initialize the specific game
             switch(gameType) {
                 case 'memory':
                     initMemoryGame();
@@ -834,19 +1216,15 @@ window.addEventListener('appinstalled', () => {
             }
         }
 
-        // FIXED: Load game function - Always show overlay for game switching
         function loadGame(gameType) {
-            // Stop current game and reset timer
             gameActive = false;
             resetTimer();
             
-            // Update active sidebar item
             document.querySelectorAll('.game-item').forEach(item => {
                 item.classList.remove('active');
             });
             event.target.closest('.game-item').classList.add('active');
 
-            // Load the selected game with overlay (except welcome)
             switch(gameType) {
                 case 'welcome':
                     currentGame = null;
@@ -879,14 +1257,14 @@ window.addEventListener('appinstalled', () => {
         function showWelcomeScreen() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="welcome-screen">
-                    <h2>Welcome to Kids Game Portal! 🎉</h2>
-                    <p>Choose a game from the sidebar to start playing!</p>
-                    <p>🎮 <strong>8 Amazing Games</strong> waiting for you!</p>
+                    <h2>${translate('welcomeTitle')}</h2>
+                    <p>${translate('welcomeText')}</p>
+                    <p>${translate('gamesCount')}</p>
                     <div style="font-size: 4em; margin: 20px 0;">🎯🧠⭕🔨🔢🔴🔤🧩</div>
-                    <p>Click on any game in the left sidebar to begin your adventure!</p>
+                    <p>${translate('startInstructions')}</p>
                     <div class="game-stats">
-                        <div class="stat-item">Games Played: ${gameStats.gamesPlayed}</div>
-                        <div class="stat-item">Total Wins: ${gameStats.wins}</div>
+                        <div class="stat-item">${translate('gamesPlayed')}: ${gameStats.gamesPlayed}</div>
+                        <div class="stat-item">${translate('totalWins')}: ${gameStats.wins}</div>
                     </div>
                 </div>
             `;
@@ -895,76 +1273,76 @@ window.addEventListener('appinstalled', () => {
         function loadMemoryGame() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="memory-game">
-                    <h2>🧠 Memory Match Game</h2>
-                    <p>Find all matching pairs!</p>
+                    <h2>${translate('memoryTitle')}</h2>
+                    <p>${translate('memoryDesc')}</p>
                     <div class="game-stats">
-                        <div class="stat-item">Moves: <span id="memoryMoves">0</span></div>
-                        <div class="stat-item">Matches: <span id="memoryMatches">0</span>/8</div>
-                        <div class="stat-item">Time: <span id="memoryTime">0</span>s</div>
+                        <div class="stat-item">${translate('moves')}: <span id="memoryMoves">0</span></div>
+                        <div class="stat-item">${translate('matches')}: <span id="memoryMatches">0</span>/8</div>
+                        <div class="stat-item">${translate('time')}: <span id="memoryTime">0</span>s</div>
                     </div>
                     <div class="memory-board" id="memoryBoard"></div>
                 </div>
-                ${createGameOverlay('🧠 Memory Match Game', 'Find all matching pairs of emoji cards!', 'memory')}
+                ${createGameOverlay(translate('memoryOverlayTitle'), translate('memoryOverlayDesc'), 'memory')}
             `;
         }
 
         function loadTicTacToe() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="memory-game">
-                    <h2>⭕ Tic Tac Toe</h2>
-                    <p>Get three in a row to win!</p>
+                    <h2>${translate('tictactoeTitle')}</h2>
+                    <p>${translate('tictactoeDesc')}</p>
                     <div class="game-stats">
-                        <div class="stat-item" id="tttTurn">Current Turn: X</div>
-                        <div class="stat-item">Time: <span id="tictactoeTime">0</span>s</div>
+                        <div class="stat-item" id="tttTurn">${translate('currentTurn')}: X</div>
+                        <div class="stat-item">${translate('time')}: <span id="tictactoeTime">0</span>s</div>
                     </div>
                     <div class="ttt-board" id="tttBoard"></div>
                 </div>
-                ${createGameOverlay('⭕ Tic Tac Toe', 'Get three X\'s or O\'s in a row to win!', 'tictactoe')}
+                ${createGameOverlay(translate('tictactoeOverlayTitle'), translate('tictactoeOverlayDesc'), 'tictactoe')}
             `;
         }
 
         function loadWhackMole() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="memory-game">
-                    <h2>🔨 Whack-a-Mole</h2>
-                    <p>Click the moles when they pop up!</p>
+                    <h2>${translate('whackmoleTitle')}</h2>
+                    <p>${translate('whackmoleDesc')}</p>
                     <div class="game-stats">
-                        <div class="stat-item">Score: <span id="moleScore">0</span></div>
-                        <div class="stat-item">Misses: <span id="moleMisses">0</span>/5</div>
-                        <div class="stat-item">Time: <span id="whackmoleTime">0</span>s</div>
+                        <div class="stat-item">${translate('score')}: <span id="moleScore">0</span></div>
+                        <div class="stat-item">${translate('misses')}: <span id="moleMisses">0</span>/5</div>
+                        <div class="stat-item">${translate('time')}: <span id="whackmoleTime">0</span>s</div>
                     </div>
                     <div class="mole-game-area" id="moleGameArea"></div>
                 </div>
-                ${createGameOverlay('🔨 Whack-a-Mole', 'Click the moles as fast as you can when they pop up!', 'whackmole')}
+                ${createGameOverlay(translate('whackmoleOverlayTitle'), translate('whackmoleOverlayDesc'), 'whackmole')}
             `;
         }
 
         function loadMathQuiz() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="memory-game">
-                    <h2>🔢 Math Quiz</h2>
-                    <p>Solve the math problems!</p>
+                    <h2>${translate('mathTitle')}</h2>
+                    <p>${translate('mathDesc')}</p>
                     <div class="game-stats">
-                        <div class="stat-item">Score: <span id="mathScore">0</span></div>
-                        <div class="stat-item">Question: <span id="mathQuestion">1</span>/10</div>
-                        <div class="stat-item">Time: <span id="mathquizTime">0</span>s</div>
+                        <div class="stat-item">${translate('score')}: <span id="mathScore">0</span></div>
+                        <div class="stat-item">${translate('question')}: <span id="mathQuestion">1</span>/10</div>
+                        <div class="stat-item">${translate('time')}: <span id="mathquizTime">0</span>s</div>
                     </div>
                     <div style="font-size: 2em; margin: 30px 0; color: #4ecdc4;" id="mathProblem">2 + 2 = ?</div>
                     <div id="mathOptions" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;"></div>
                 </div>
-                ${createGameOverlay('🔢 Math Quiz', 'Solve 10 math problems as quickly as you can!', 'mathquiz')}
+                ${createGameOverlay(translate('mathOverlayTitle'), translate('mathOverlayDesc'), 'mathquiz')}
             `;
         }
 
         function loadSimonSays() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="memory-game">
-                    <h2>🔴 Simon Says</h2>
-                    <p>Watch the sequence and repeat it!</p>
+                    <h2>${translate('simonTitle')}</h2>
+                    <p>${translate('simonDesc')}</p>
                     <div class="game-stats">
-                        <div class="stat-item">Level: <span id="simonLevel">1</span></div>
-                        <div class="stat-item">Score: <span id="simonScore">0</span></div>
-                        <div class="stat-item">Time: <span id="simonTime">0</span>s</div>
+                        <div class="stat-item">${translate('level')}: <span id="simonLevel">1</span></div>
+                        <div class="stat-item">${translate('score')}: <span id="simonScore">0</span></div>
+                        <div class="stat-item">${translate('time')}: <span id="simonTime">0</span>s</div>
                     </div>
                     <div class="simon-container" id="simonContainer">
                         <div class="simon-btn simon-red" data-color="0"></div>
@@ -973,39 +1351,39 @@ window.addEventListener('appinstalled', () => {
                         <div class="simon-btn simon-yellow" data-color="3"></div>
                     </div>
                 </div>
-                ${createGameOverlay('🔴 Simon Says', 'Watch the pattern and repeat it by clicking the colored buttons!', 'simon')}
+                ${createGameOverlay(translate('simonOverlayTitle'), translate('simonOverlayDesc'), 'simon')}
             `;
         }
 
         function loadWordSearch() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="memory-game">
-                    <h2>🔤 Word Search</h2>
-                    <p>Click and drag to select words!</p>
+                    <h2>${translate('wordsearchTitle')}</h2>
+                    <p>${translate('wordsearchDesc')}</p>
                     <div class="game-stats">
-                        <div class="stat-item">Found: <span id="wordsFound">0</span>/<span id="totalWords">6</span></div>
-                        <div class="stat-item">Time: <span id="wordsearchTime">0</span>s</div>
+                        <div class="stat-item">${translate('found')}: <span id="wordsFound">0</span>/<span id="totalWords">6</span></div>
+                        <div class="stat-item">${translate('time')}: <span id="wordsearchTime">0</span>s</div>
                     </div>
                     <div class="words-list" id="wordsList"></div>
                     <div id="wordGrid" style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; max-width: 400px; margin: 0 auto;"></div>
                 </div>
-                ${createGameOverlay('🔤 Word Search', 'Find hidden words by clicking and dragging to select them!', 'wordsearch')}
+                ${createGameOverlay(translate('wordsearchOverlayTitle'), translate('wordsearchOverlayDesc'), 'wordsearch')}
             `;
         }
 
         function loadSlidingPuzzle() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="memory-game">
-                    <h2>🧩 Sliding Puzzle</h2>
-                    <p>Arrange the numbers in order!</p>
+                    <h2>${translate('puzzleTitle')}</h2>
+                    <p>${translate('puzzleDesc')}</p>
                     <div class="game-stats">
-                        <div class="stat-item">Moves: <span id="puzzleMoves">0</span></div>
-                        <div class="stat-item">Time: <span id="puzzleTime">0</span>s</div>
+                        <div class="stat-item">${translate('moves')}: <span id="puzzleMoves">0</span></div>
+                        <div class="stat-item">${translate('time')}: <span id="puzzleTime">0</span>s</div>
                     </div>
                     <div id="puzzleBoard" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 300px; margin: 20px auto;"></div>
-                    <button class="game-btn" onclick="shufflePuzzle()">🔀 Shuffle</button>
+                    <button class="game-btn" onclick="shufflePuzzle()">${translate('shuffle')}</button>
                 </div>
-                ${createGameOverlay('🧩 Sliding Puzzle', 'Click tiles next to the empty space to slide them and arrange numbers 1-8!', 'puzzle')}
+                ${createGameOverlay(translate('puzzleOverlayTitle'), translate('puzzleOverlayDesc'), 'puzzle')}
             `;
         }
 
@@ -1020,7 +1398,6 @@ window.addEventListener('appinstalled', () => {
             const board = document.getElementById('memoryBoard');
             board.innerHTML = '';
             
-            // Reset displays
             document.getElementById('memoryMoves').textContent = '0';
             document.getElementById('memoryMatches').textContent = '0';
             
@@ -1050,12 +1427,12 @@ window.addEventListener('appinstalled', () => {
                             flipped.forEach(card => card.classList.add('matched'));
                             matches++;
                             document.getElementById('memoryMatches').textContent = matches;
-                            showNotification('Great match! 🎉', 'success', 1500);
+                            showNotification(translate('greatMatch'), 'success', 1500);
                             
                             if (matches === 8) {
                                 const time = stopTimer();
                                 gameActive = false;
-                                showWinNotification(`🎉 You won in ${moves} moves and ${time} seconds!`);
+                                showWinNotification(translate('youWon') + ' ' + translate('inMoves', {moves}) + ' ' + translate('inSeconds', {time}));
                                 gameStats.wins++;
                                 gameStats.gamesPlayed++;
                             }
@@ -1080,8 +1457,7 @@ window.addEventListener('appinstalled', () => {
             const boardElement = document.getElementById('tttBoard');
             boardElement.innerHTML = '';
             
-            // Reset turn display
-            document.getElementById('tttTurn').textContent = 'Current Turn: X';
+            document.getElementById('tttTurn').textContent = translate('currentTurn') + ': X';
             
             for (let i = 0; i < 9; i++) {
                 const cell = document.createElement('div');
@@ -1101,26 +1477,26 @@ window.addEventListener('appinstalled', () => {
                     const time = stopTimer();
                     gameActive = false;
                     gameRunning = false;
-                    showWinNotification(`🎉 Player ${currentPlayer} wins in ${time} seconds!`);
+                    showWinNotification(translate('playerWins', {player: currentPlayer}) + ' ' + translate('inSeconds', {time}));
                     gameStats.wins++;
                     gameStats.gamesPlayed++;
                 } else if (board.every(cell => cell !== '')) {
                     const time = stopTimer();
                     gameActive = false;
                     gameRunning = false;
-                    showWinNotification(`🤝 It's a tie! Game lasted ${time} seconds!`);
+                    showWinNotification(translate('itsATie') + ' ' + translate('inSeconds', {time}));
                     gameStats.gamesPlayed++;
                 } else {
                     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                    document.getElementById('tttTurn').textContent = `Current Turn: ${currentPlayer}`;
+                    document.getElementById('tttTurn').textContent = translate('currentTurn') + ': ' + currentPlayer;
                 }
             }
             
             function checkWinner() {
                 const winPatterns = [
-                    [0,1,2], [3,4,5], [6,7,8], // rows
-                    [0,3,6], [1,4,7], [2,5,8], // columns
-                    [0,4,8], [2,4,6] // diagonals
+                    [0,1,2], [3,4,5], [6,7,8],
+                    [0,3,6], [1,4,7], [2,5,8],
+                    [0,4,8], [2,4,6]
                 ];
                 
                 return winPatterns.some(pattern => 
@@ -1139,11 +1515,9 @@ window.addEventListener('appinstalled', () => {
             let moleInterval;
             let activeMoles = [];
             
-            // Reset displays
             document.getElementById('moleScore').textContent = '0';
             document.getElementById('moleMisses').textContent = '0';
             
-            // Create 9 holes
             for (let i = 0; i < 9; i++) {
                 const hole = document.createElement('div');
                 hole.className = 'mole-hole';
@@ -1183,7 +1557,7 @@ window.addEventListener('appinstalled', () => {
                             clearInterval(moleInterval);
                             const time = stopTimer();
                             gameActive = false;
-                            showWinNotification(`Game Over! Final Score: ${score} points in ${time} seconds!`);
+                            showWinNotification(translate('gameOver') + ' ' + translate('finalScore') + ': ' + score + ' ' + translate('inSeconds', {time}));
                             gameStats.gamesPlayed++;
                         }
                     }
@@ -1201,22 +1575,20 @@ window.addEventListener('appinstalled', () => {
                     
                     score += 10;
                     document.getElementById('moleScore').textContent = score;
-                    showNotification('+10 points! 🔨', 'success', 800);
+                    showNotification(translate('pointsEarned', {points: 10}), 'success', 800);
                     
                     setTimeout(() => mole.classList.remove('hit'), 300);
                 }
             }
             
-            // Start spawning moles
             moleInterval = setInterval(showMole, 800);
             
-            // Game ends after 30 seconds
             setTimeout(() => {
                 if (gameActive) {
                     clearInterval(moleInterval);
                     const time = stopTimer();
                     gameActive = false;
-                    showWinNotification(`🎉 Time's up! Final Score: ${score} points in ${time} seconds!`);
+                    showWinNotification(translate('timeUp') + ' ' + translate('finalScore') + ': ' + score + ' ' + translate('inSeconds', {time}));
                     gameStats.wins++;
                     gameStats.gamesPlayed++;
                 }
@@ -1228,7 +1600,6 @@ window.addEventListener('appinstalled', () => {
             let score = 0;
             let currentQuestion = 1;
             
-            // Reset displays
             document.getElementById('mathScore').textContent = '0';
             document.getElementById('mathQuestion').textContent = '1';
             
@@ -1262,7 +1633,6 @@ window.addEventListener('appinstalled', () => {
                 
                 document.getElementById('mathProblem').textContent = problemText;
                 
-                // Generate options
                 const options = [answer];
                 while (options.length < 4) {
                     const wrongAnswer = answer + Math.floor(Math.random() * 10) - 5;
@@ -1284,7 +1654,7 @@ window.addEventListener('appinstalled', () => {
                         if (!gameActive) return;
                         
                         if (option === answer) {
-                            showNotification('🎉 Correct!', 'success');
+                            showNotification(translate('correct'), 'success');
                             score++;
                             document.getElementById('mathScore').textContent = score;
                             
@@ -1296,13 +1666,13 @@ window.addEventListener('appinstalled', () => {
                                 } else {
                                     const time = stopTimer();
                                     gameActive = false;
-                                    showWinNotification(`🎉 Quiz completed! Score: ${score}/10 in ${time} seconds!`);
+                                    showWinNotification(translate('quizCompleted') + ' ' + translate('score') + ': ' + score + '/10 ' + translate('inSeconds', {time}));
                                     gameStats.gamesPlayed++;
                                     if (score >= 7) gameStats.wins++;
                                 }
                             }, 1500);
                         } else {
-                            showNotification(`❌ Wrong! The answer was ${answer}`, 'error');
+                            showNotification(translate('wrong') + ' ' + answer, 'error');
                         }
                     };
                     optionsDiv.appendChild(btn);
@@ -1317,7 +1687,6 @@ window.addEventListener('appinstalled', () => {
             let level = 1;
             let isPlayerTurn = false;
             
-            // Reset displays
             document.getElementById('simonLevel').textContent = '1';
             document.getElementById('simonScore').textContent = '0';
             
@@ -1330,20 +1699,19 @@ window.addEventListener('appinstalled', () => {
                     const color = parseInt(btn.dataset.color);
                     playerSequence.push(color);
                     
-                    // Flash button
                     btn.classList.add('active');
                     setTimeout(() => btn.classList.remove('active'), 200);
                     
                     if (playerSequence[playerSequence.length - 1] !== sequence[playerSequence.length - 1]) {
                         const time = stopTimer();
-                        showNotification('❌ Wrong sequence! Game Over!', 'error');
+                        showNotification(translate('wrongSequence'), 'error');
                         gameActive = false;
                         setTimeout(() => {
-                            showWinNotification(`Game Over! You reached level ${level} in ${time} seconds!`);
+                            showWinNotification(translate('gameOver') + ' ' + translate('level') + ' ' + level + ' ' + translate('inSeconds', {time}));
                             gameStats.gamesPlayed++;
                         }, 2000);
                     } else if (playerSequence.length === sequence.length) {
-                        showNotification('🎉 Correct! Next level!', 'success');
+                        showNotification(translate('correct') + ' ' + translate('levelComplete'), 'success');
                         level++;
                         updateSimonDisplay();
                         setTimeout(addToSequence, 1000);
@@ -1378,18 +1746,13 @@ window.addEventListener('appinstalled', () => {
                 });
             }
             
-            // Start first sequence
             setTimeout(addToSequence, 1000);
         }
 
         // Word Search Logic
         function initWordSearch() {
-            const wordPool = [
-                'CAT', 'DOG', 'SUN', 'FUN', 'TOY', 'BOOK', 'TREE', 'FISH', 'BIRD', 'STAR',
-                'MOON', 'CAKE', 'GAME', 'PLAY', 'JUMP', 'RUN', 'SWIM', 'BALL', 'APPLE', 'BEAR'
-            ];
+            const wordPool = translations[currentLanguage].wordSearchWords;
             
-            // Randomly select 6 words
             const selectedWords = [];
             while (selectedWords.length < 6) {
                 const word = wordPool[Math.floor(Math.random() * wordPool.length)];
@@ -1404,11 +1767,9 @@ window.addEventListener('appinstalled', () => {
             let isSelecting = false;
             let selectedCells = [];
             
-            // Reset displays
             document.getElementById('wordsFound').textContent = '0';
             document.getElementById('totalWords').textContent = selectedWords.length;
             
-            // Place words randomly in grid
             selectedWords.forEach(word => {
                 let placed = false;
                 let attempts = 0;
@@ -1424,7 +1785,6 @@ window.addEventListener('appinstalled', () => {
                         col = Math.floor(Math.random() * gridSize);
                     }
                     
-                    // Check if space is available
                     let canPlace = true;
                     for (let i = 0; i < word.length; i++) {
                         const checkRow = direction === 'horizontal' ? row : row + i;
@@ -1448,8 +1808,10 @@ window.addEventListener('appinstalled', () => {
                 }
             });
             
-            // Fill empty spaces with random letters
-            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const letters = currentLanguage === 'ar' ? 
+                'ابتثجحخدذرزسشصضطظعغفقكلمنهوي' : 
+                'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                
             for (let row = 0; row < gridSize; row++) {
                 for (let col = 0; col < gridSize; col++) {
                     if (grid[row][col] === '') {
@@ -1458,7 +1820,6 @@ window.addEventListener('appinstalled', () => {
                 }
             }
             
-            // Display words list
             const wordsList = document.getElementById('wordsList');
             wordsList.innerHTML = '';
             selectedWords.forEach(word => {
@@ -1469,7 +1830,6 @@ window.addEventListener('appinstalled', () => {
                 wordsList.appendChild(wordItem);
             });
             
-            // Create grid display
             const gridElement = document.getElementById('wordGrid');
             gridElement.innerHTML = '';
             
@@ -1481,7 +1841,6 @@ window.addEventListener('appinstalled', () => {
                     cell.dataset.row = rowIndex;
                     cell.dataset.col = colIndex;
                     
-                    // Mouse events for selection
                     cell.addEventListener('mousedown', (e) => {
                         if (!gameActive) return;
                         e.preventDefault();
@@ -1501,7 +1860,6 @@ window.addEventListener('appinstalled', () => {
                 });
             });
             
-            // Global mouse up event
             document.addEventListener('mouseup', () => {
                 if (isSelecting && gameActive) {
                     checkSelectedWord();
@@ -1516,11 +1874,9 @@ window.addEventListener('appinstalled', () => {
                     return;
                 }
                 
-                // Get selected letters
                 const selectedLetters = selectedCells.map(cell => cell.textContent).join('');
                 const reversedLetters = selectedLetters.split('').reverse().join('');
                 
-                // Check if it matches any word
                 let foundWord = null;
                 if (selectedWords.includes(selectedLetters)) {
                     foundWord = selectedLetters;
@@ -1529,29 +1885,26 @@ window.addEventListener('appinstalled', () => {
                 }
                 
                 if (foundWord && !foundWords.has(foundWord)) {
-                    // Mark word as found
                     foundWords.add(foundWord);
                     selectedCells.forEach(cell => {
                         cell.classList.remove('selecting');
                         cell.classList.add('found');
                     });
                     
-                    // Update word list
                     const wordItem = document.querySelector(`[data-word="${foundWord}"]`);
                     wordItem.classList.add('found');
                     
-                    showNotification(`🎉 Found "${foundWord}"!`, 'success');
+                    showNotification(translate('foundWord') + ' "' + foundWord + '"!', 'success');
                     document.getElementById('wordsFound').textContent = foundWords.size;
                     
                     if (foundWords.size === selectedWords.length) {
                         const time = stopTimer();
                         gameActive = false;
-                        showWinNotification(`🎉 All words found in ${time} seconds!`);
+                        showWinNotification(translate('allWordsFound') + ' ' + translate('inSeconds', {time}));
                         gameStats.wins++;
                         gameStats.gamesPlayed++;
                     }
                 } else {
-                    // Not a valid word, remove selection
                     selectedCells.forEach(cell => cell.classList.remove('selecting'));
                 }
                 
@@ -1561,10 +1914,9 @@ window.addEventListener('appinstalled', () => {
 
         // Sliding Puzzle Logic
         function initSlidingPuzzle() {
-            let puzzle = [1,2,3,4,5,6,7,8,0]; // 0 represents empty space
+            let puzzle = [1,2,3,4,5,6,7,8,0];
             let moves = 0;
             
-            // Reset displays
             document.getElementById('puzzleMoves').textContent = '0';
             
             function render() {
@@ -1592,11 +1944,10 @@ window.addEventListener('appinstalled', () => {
                 const emptyIndex = puzzle.indexOf(0);
                 const validMoves = [];
                 
-                // Check adjacent positions
-                if (index % 3 !== 0) validMoves.push(index - 1); // left
-                if (index % 3 !== 2) validMoves.push(index + 1); // right
-                if (index >= 3) validMoves.push(index - 3); // up
-                if (index < 6) validMoves.push(index + 3); // down
+                if (index % 3 !== 0) validMoves.push(index - 1);
+                if (index % 3 !== 2) validMoves.push(index + 1);
+                if (index >= 3) validMoves.push(index - 3);
+                if (index < 6) validMoves.push(index + 3);
                 
                 if (validMoves.includes(emptyIndex)) {
                     [puzzle[index], puzzle[emptyIndex]] = [puzzle[emptyIndex], puzzle[index]];
@@ -1604,11 +1955,10 @@ window.addEventListener('appinstalled', () => {
                     document.getElementById('puzzleMoves').textContent = moves;
                     render();
                     
-                    // Check win condition
                     if (puzzle.slice(0, 8).every((num, i) => num === i + 1)) {
                         const time = stopTimer();
                         gameActive = false;
-                        showWinNotification(`🎉 Puzzle solved in ${moves} moves and ${time} seconds!`);
+                        showWinNotification(translate('puzzleSolved') + ' ' + translate('inMoves', {moves}) + ' ' + translate('inSeconds', {time}));
                         gameStats.wins++;
                         gameStats.gamesPlayed++;
                     }
@@ -1616,7 +1966,6 @@ window.addEventListener('appinstalled', () => {
             }
             
             window.shufflePuzzle = function() {
-                // Simple shuffle
                 for (let i = 0; i < 100; i++) {
                     const emptyIndex = puzzle.indexOf(0);
                     const validMoves = [];
@@ -1645,16 +1994,21 @@ window.addEventListener('appinstalled', () => {
         }
 
         function showStats() {
-            showNotification(`📊 Games: ${gameStats.gamesPlayed} | Wins: ${gameStats.wins} | Rate: ${gameStats.gamesPlayed > 0 ? Math.round((gameStats.wins/gameStats.gamesPlayed)*100) : 0}%`, 'success', 5000);
+            const rate = gameStats.gamesPlayed > 0 ? Math.round((gameStats.wins/gameStats.gamesPlayed)*100) : 0;
+            showNotification(translate('statsMessage', {
+                games: gameStats.gamesPlayed,
+                wins: gameStats.wins,
+                rate: rate
+            }), 'success', 5000);
         }
 
         function showSettings() {
-            showNotification('⚙️ Click games in sidebar to switch • Use fullscreen for better experience', 'success', 4000);
+            showNotification(translate('settingsMessage'), 'success', 4000);
         }
 
         // Initialize the portal
         document.addEventListener('DOMContentLoaded', () => {
-            showWelcomeScreen();
+            // Start with language selection
         });
     </script>
 </body>
