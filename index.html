@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Game Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Layout Container */
+        .container {
+            display: flex;
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-right: 2px solid rgba(255,255,255,0.2);
+            position: fixed;
+            left: 0;
+            top: 80px;
+            bottom: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.3em;
+        }
+
+        .game-item {
+            background: rgba(255,255,255,0.9);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .game-item:hover {
+            transform: translateX(10px);
+            background: rgba(255,255,255,1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .game-item.active {
+            background: #4ecdc4;
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .game-icon {
+            font-size: 1.5em;
+        }
+
+        .game-name {
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 30px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .game-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            min-height: 600px;
+            position: relative;
+        }
+
+        /* Game Overlay System */
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            border-radius: 20px;
+        }
+
+        .game-overlay.hidden {
+            display: none;
+        }
+
+        .start-game-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .start-game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        .overlay-title {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .overlay-description {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        /* Custom Notification System */
+        .game-notification {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #4ecdc4;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: bold;
+            transform: translateX(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .game-notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .game-notification.success {
+            background: #58d68d;
+        }
+
+        .game-notification.error {
+            background: #ff6b6b;
+        }
+
+        .game-notification.win {
+            background: #f39c12;
+            font-size: 1.2em;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 300px;
+            text-align: center;
+        }
+
+        .game-notification.win.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .welcome-screen {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .welcome-screen h2 {
+            color: #ff6b6b;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* Memory Game Styles */
+        .memory-game {
+            text-align: center;
+        }
+
+        .memory-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .memory-card {
+            width: 80px;
+            height: 80px;
+            background: #ff6b6b;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: transparent;
+        }
+
+        .memory-card:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .memory-card.matched {
+            background: #58d68d;
+            color: white;
+        }
+
+        /* Tic Tac Toe Styles */
+        .ttt-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        .ttt-cell {
+            width: 80px;
+            height: 80px;
+            background: #f0f0f0;
+            border: 3px solid #4ecdc4;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ttt-cell:hover {
+            background: #e0e0e0;
+            transform: scale(1.05);
+        }
+
+        /* Simon Says Styles */
+        .simon-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        .simon-btn {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 4px solid #333;
+            opacity: 0.7;
+        }
+
+        .simon-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .simon-btn.active {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+        }
+
+        .simon-red { background: #ff4757; }
+        .simon-green { background: #2ed573; }
+        .simon-blue { background: #1e90ff; }
+        .simon-yellow { background: #ffa502; }
+
+        /* Whack-a-Mole Game Styles */
+        .mole-game-area {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .mole-hole {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #8B4513, #654321);
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            border: 4px solid #4ecdc4;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mole-hole:hover {
+            transform: scale(1.05);
+        }
+
+        .mole {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3em;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .mole.visible {
+            bottom: 10px;
+        }
+
+        .mole.hit {
+            animation: moleHit 0.3s ease;
+        }
+
+        @keyframes moleHit {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+            100% { transform: translateX(-50%) scale(0); }
+        }
+
+        /* Game Stats */
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: #4ecdc4;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .game-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin: 10px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .game-btn:hover {
+            background: #ee5a5a;
+            transform: translateY(-2px);
+        }
+
+        /* Word Search Styles */
+        .word-cell {
+            width: 35px;
+            height: 35px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .word-cell:hover {
+            background: #e0e0e0;
+        }
+
+        .word-cell.selecting {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        .word-cell.found {
+            background: #58d68d;
+            color: white;
+        }
+
+        .words-list {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .word-item {
+            background: #f0f0f0;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .word-item.found {
+            background: #58d68d;
+            color: white;
+            text-decoration: line-through;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                height: auto;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .container {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .header-buttons {
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>🎮 Kids Game Portal</h1>
+        <div class="header-buttons">
+            <button class="header-btn" onclick="showFullscreen()">⛶ Fullscreen</button>
+            <button class="header-btn" onclick="showStats()">📊 Stats</button>
+            <button class="header-btn" onclick="showSettings()">⚙️ Settings</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>🎯 Choose a Game</h3>
+            
+            <div class="game-item active" onclick="loadGame('welcome')">
+                <span class="game-icon">🏠</span>
+                <span class="game-name">Home</span>
+            </div>
+            
+            <div class="game-item" onclick="loadGame('memory')">
+                <span class="game-icon">🧠</span>
+                <span class="game-name">Memory Match</span>
+            </div>
+            
+            <div class="game-item" onclick="loadGame('tictactoe')">
+                <span class="game-icon">⭕</span>
+                <span class="game-name">Tic Tac Toe</span>
+            </div>
+            
+            <div class="game-item" onclick="loadGame('whackmole')">
+                <span class="game-icon">🔨</span>
+                <span class="game-name">Whack-a-Mole</span>
+            </div>
+            
+            <div class="game-item" onclick="loadGame('mathquiz')">
+                <span class="game-icon">🔢</span>
+                <span class="game-name">Math Quiz</span>
+            </div>
+            
+            <div class="game-item" onclick="loadGame('simon')">
+                <span class="game-icon">🔴</span>
+                <span class="game-name">Simon Says</span>
+            </div>
+            
+            <div class="game-item" onclick="loadGame('wordsearch')">
+                <span class="game-icon">🔤</span>
+                <span class="game-name">Word Search</span>
+            </div>
+            
+            <div class="game-item" onclick="loadGame('puzzle')">
+                <span class="game-icon">🧩</span>
+                <span class="game-name">Sliding Puzzle</span>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="game-container" id="gameContainer">
+                <!-- Welcome Screen -->
+                <div class="welcome-screen">
+                    <h2>Welcome to Kids Game Portal! 🎉</h2>
+                    <p>Choose a game from the sidebar to start playing!</p>
+                    <p>🎮 <strong>8 Amazing Games</strong> waiting for you!</p>
+                    <div style="font-size: 4em; margin: 20px 0;">🎯🧠⭕🔨🔢🔴🔤🧩</div>
+                    <p>Click on any game in the left sidebar to begin your adventure!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // FIXED: Game state management with proper timer handling
+        let currentGame = null;
+        let gameTimers = {};
+        let gameActive = false;
+        let currentTimerInterval = null; // Single timer interval
+        let gameStats = {
+            gamesPlayed: 0,
+            totalTime: 0,
+            wins: 0
+        };
+
+        // FIXED: Notification system
+        function showNotification(message, type = 'success', duration = 3000) {
+            const notification = document.createElement('div');
+            notification.className = `game-notification ${type}`;
+            notification.textContent = message;
+            
+            document.getElementById('gameContainer').appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, duration);
+        }
+
+        // FIXED: Win notification WITHOUT showing overlay (just restart same game)
+        function showWinNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'game-notification win';
+            notification.innerHTML = `
+                <div>${message}</div>
+                <div style="margin-top: 15px;">
+                    <button class="game-btn" onclick="restartCurrentGame()">🎉 Play Again</button>
+                </div>
+            `;
+            
+            document.getElementById('gameContainer').appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 100);
+        }
+
+        // FIXED: Restart current game without overlay
+        function restartCurrentGame() {
+            // Remove win notification
+            const winNotification = document.querySelector('.game-notification.win');
+            if (winNotification) {
+                winNotification.remove();
+            }
+            
+            // Reset timer and restart same game
+            resetTimer();
+            startGame(currentGame);
+        }
+
+        // FIXED: Game Overlay System - Only for game switching
+        function createGameOverlay(title, description, gameType) {
+            return `
+                <div class="game-overlay" id="gameOverlay">
+                    <div class="overlay-title">${title}</div>
+                    <div class="overlay-description">${description}</div>
+                    <button class="start-game-btn" onclick="startGame('${gameType}')">🚀 Start Game</button>
+                </div>
+            `;
+        }
+
+        function hideGameOverlay() {
+            const overlay = document.getElementById('gameOverlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+                gameActive = true;
+                startTimer();
+            }
+        }
+
+        // FIXED: Timer management - Single timer approach
+        function startTimer() {
+            resetTimer(); // Clear any existing timer
+            
+            if (!currentGame) return;
+            
+            const startTime = Date.now();
+            currentTimerInterval = setInterval(() => {
+                if (gameActive) {
+                    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                    const timeElement = document.getElementById(`${currentGame}Time`);
+                    if (timeElement) {
+                        timeElement.textContent = elapsed;
+                    }
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (currentTimerInterval) {
+                clearInterval(currentTimerInterval);
+                const elapsed = Math.floor((Date.now() - gameTimers[currentGame]?.startTime || Date.now()) / 1000);
+                currentTimerInterval = null;
+                return elapsed;
+            }
+            return 0;
+        }
+
+        function resetTimer() {
+            if (currentTimerInterval) {
+                clearInterval(currentTimerInterval);
+                currentTimerInterval = null;
+            }
+            
+            if (currentGame) {
+                const timeElement = document.getElementById(`${currentGame}Time`);
+                if (timeElement) {
+                    timeElement.textContent = '0';
+                }
+            }
+        }
+
+        // FIXED: Start game function
+        function startGame(gameType) {
+            hideGameOverlay();
+            currentGame = gameType;
+            
+            // Store start time for calculations
+            gameTimers[gameType] = { startTime: Date.now() };
+            
+            // Initialize the specific game
+            switch(gameType) {
+                case 'memory':
+                    initMemoryGame();
+                    break;
+                case 'tictactoe':
+                    initTicTacToe();
+                    break;
+                case 'whackmole':
+                    initWhackMole();
+                    break;
+                case 'mathquiz':
+                    initMathQuiz();
+                    break;
+                case 'simon':
+                    initSimonSays();
+                    break;
+                case 'wordsearch':
+                    initWordSearch();
+                    break;
+                case 'puzzle':
+                    initSlidingPuzzle();
+                    break;
+            }
+        }
+
+        // FIXED: Load game function - Always show overlay for game switching
+        function loadGame(gameType) {
+            // Stop current game and reset timer
+            gameActive = false;
+            resetTimer();
+            
+            // Update active sidebar item
+            document.querySelectorAll('.game-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.game-item').classList.add('active');
+
+            // Load the selected game with overlay (except welcome)
+            switch(gameType) {
+                case 'welcome':
+                    currentGame = null;
+                    showWelcomeScreen();
+                    break;
+                case 'memory':
+                    loadMemoryGame();
+                    break;
+                case 'tictactoe':
+                    loadTicTacToe();
+                    break;
+                case 'whackmole':
+                    loadWhackMole();
+                    break;
+                case 'mathquiz':
+                    loadMathQuiz();
+                    break;
+                case 'simon':
+                    loadSimonSays();
+                    break;
+                case 'wordsearch':
+                    loadWordSearch();
+                    break;
+                case 'puzzle':
+                    loadSlidingPuzzle();
+                    break;
+            }
+        }
+
+        function showWelcomeScreen() {
+            document.getElementById('gameContainer').innerHTML = `
+                <div class="welcome-screen">
+                    <h2>Welcome to Kids Game Portal! 🎉</h2>
+                    <p>Choose a game from the sidebar to start playing!</p>
+                    <p>🎮 <strong>8 Amazing Games</strong> waiting for you!</p>
+                    <div style="font-size: 4em; margin: 20px 0;">🎯🧠⭕🔨🔢🔴🔤🧩</div>
+                    <p>Click on any game in the left sidebar to begin your adventure!</p>
+                    <div class="game-stats">
+                        <div class="stat-item">Games Played: ${gameStats.gamesPlayed}</div>
+                        <div class="stat-item">Total Wins: ${gameStats.wins}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadMemoryGame() {
+            document.getElementById('gameContainer').innerHTML = `
+                <div class="memory-game">
+                    <h2>🧠 Memory Match Game</h2>
+                    <p>Find all matching pairs!</p>
+                    <div class="game-stats">
+                        <div class="stat-item">Moves: <span id="memoryMoves">0</span></div>
+                        <div class="stat-item">Matches: <span id="memoryMatches">0</span>/8</div>
+                        <div class="stat-item">Time: <span id="memoryTime">0</span>s</div>
+                    </div>
+                    <div class="memory-board" id="memoryBoard"></div>
+                </div>
+                ${createGameOverlay('🧠 Memory Match Game', 'Find all matching pairs of emoji cards!', 'memory')}
+            `;
+        }
+
+        function loadTicTacToe() {
+            document.getElementById('gameContainer').innerHTML = `
+                <div class="memory-game">
+                    <h2>⭕ Tic Tac Toe</h2>
+                    <p>Get three in a row to win!</p>
+                    <div class="game-stats">
+                        <div class="stat-item" id="tttTurn">Current Turn: X</div>
+                        <div class="stat-item">Time: <span id="tictactoeTime">0</span>s</div>
+                    </div>
+                    <div class="ttt-board" id="tttBoard"></div>
+                </div>
+                ${createGameOverlay('⭕ Tic Tac Toe', 'Get three X\'s or O\'s in a row to win!', 'tictactoe')}
+            `;
+        }
+
+        function loadWhackMole() {
+            document.getElementById('gameContainer').innerHTML = `
+                <div class="memory-game">
+                    <h2>🔨 Whack-a-Mole</h2>
+                    <p>Click the moles when they pop up!</p>
+                    <div class="game-stats">
+                        <div class="stat-item">Score: <span id="moleScore">0</span></div>
+                        <div class="stat-item">Misses: <span id="moleMisses">0</span>/5</div>
+                        <div class="stat-item">Time: <span id="whackmoleTime">0</span>s</div>
+                    </div>
+                    <div class="mole-game-area" id="moleGameArea"></div>
+                </div>
+                ${createGameOverlay('🔨 Whack-a-Mole', 'Click the moles as fast as you can when they pop up!', 'whackmole')}
+            `;
+        }
+
+        function loadMathQuiz() {
+            document.getElementById('gameContainer').innerHTML = `
+                <div class="memory-game">
+                    <h2>🔢 Math Quiz</h2>
+                    <p>Solve the math problems!</p>
+                    <div class="game-stats">
+                        <div class="stat-item">Score: <span id="mathScore">0</span></div>
+                        <div class="stat-item">Question: <span id="mathQuestion">1</span>/10</div>
+                        <div class="stat-item">Time: <span id="mathquizTime">0</span>s</div>
+                    </div>
+                    <div style="font-size: 2em; margin: 30px 0; color: #4ecdc4;" id="mathProblem">2 + 2 = ?</div>
+                    <div id="mathOptions" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;"></div>
+                </div>
+                ${createGameOverlay('🔢 Math Quiz', 'Solve 10 math problems as quickly as you can!', 'mathquiz')}
+            `;
+        }
+
+        function loadSimonSays() {
+            document.getElementById('gameContainer').innerHTML = `
+                <div class="memory-game">
+                    <h2>🔴 Simon Says</h2>
+                    <p>Watch the sequence and repeat it!</p>
+                    <div class="game-stats">
+                        <div class="stat-item">Level: <span id="simonLevel">1</span></div>
+                        <div class="stat-item">Score: <span id="simonScore">0</span></div>
+                        <div class="stat-item">Time: <span id="simonTime">0</span>s</div>
+                    </div>
+                    <div class="simon-container" id="simonContainer">
+                        <div class="simon-btn simon-red" data-color="0"></div>
+                        <div class="simon-btn simon-green" data-color="1"></div>
+                        <div class="simon-btn simon-blue" data-color="2"></div>
+                        <div class="simon-btn simon-yellow" data-color="3"></div>
+                    </div>
+                </div>
+                ${createGameOverlay('🔴 Simon Says', 'Watch the pattern and repeat it by clicking the colored buttons!', 'simon')}
+            `;
+        }
+
+        function loadWordSearch() {
+            document.getElementById('gameContainer').innerHTML = `
+                <div class="memory-game">
+                    <h2>🔤 Word Search</h2>
+                    <p>Click and drag to select words!</p>
+                    <div class="game-stats">
+                        <div class="stat-item">Found: <span id="wordsFound">0</span>/<span id="totalWords">6</span></div>
+                        <div class="stat-item">Time: <span id="wordsearchTime">0</span>s</div>
+                    </div>
+                    <div class="words-list" id="wordsList"></div>
+                    <div id="wordGrid" style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; max-width: 400px; margin: 0 auto;"></div>
+                </div>
+                ${createGameOverlay('🔤 Word Search', 'Find hidden words by clicking and dragging to select them!', 'wordsearch')}
+            `;
+        }
+
+        function loadSlidingPuzzle() {
+            document.getElementById('gameContainer').innerHTML = `
+                <div class="memory-game">
+                    <h2>🧩 Sliding Puzzle</h2>
+                    <p>Arrange the numbers in order!</p>
+                    <div class="game-stats">
+                        <div class="stat-item">Moves: <span id="puzzleMoves">0</span></div>
+                        <div class="stat-item">Time: <span id="puzzleTime">0</span>s</div>
+                    </div>
+                    <div id="puzzleBoard" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 300px; margin: 20px auto;"></div>
+                    <button class="game-btn" onclick="shufflePuzzle()">🔀 Shuffle</button>
+                </div>
+                ${createGameOverlay('🧩 Sliding Puzzle', 'Click tiles next to the empty space to slide them and arrange numbers 1-8!', 'puzzle')}
+            `;
+        }
+
+        // Memory Game Logic
+        function initMemoryGame() {
+            const cards = ['🐶', '🐱', '🐸', '🦋', '🌈', '⭐', '🍎', '🎈'];
+            const gameCards = [...cards, ...cards].sort(() => Math.random() - 0.5);
+            let flipped = [];
+            let matches = 0;
+            let moves = 0;
+            
+            const board = document.getElementById('memoryBoard');
+            board.innerHTML = '';
+            
+            // Reset displays
+            document.getElementById('memoryMoves').textContent = '0';
+            document.getElementById('memoryMatches').textContent = '0';
+            
+            gameCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'memory-card';
+                cardElement.dataset.card = card;
+                cardElement.dataset.index = index;
+                cardElement.textContent = '?';
+                cardElement.onclick = () => flipCard(cardElement);
+                board.appendChild(cardElement);
+            });
+            
+            function flipCard(element) {
+                if (!gameActive || flipped.length >= 2 || element.classList.contains('flipped')) return;
+                
+                element.classList.add('flipped');
+                element.textContent = element.dataset.card;
+                flipped.push(element);
+                
+                if (flipped.length === 2) {
+                    moves++;
+                    document.getElementById('memoryMoves').textContent = moves;
+                    
+                    setTimeout(() => {
+                        if (flipped[0].dataset.card === flipped[1].dataset.card) {
+                            flipped.forEach(card => card.classList.add('matched'));
+                            matches++;
+                            document.getElementById('memoryMatches').textContent = matches;
+                            showNotification('Great match! 🎉', 'success', 1500);
+                            
+                            if (matches === 8) {
+                                const time = stopTimer();
+                                gameActive = false;
+                                showWinNotification(`🎉 You won in ${moves} moves and ${time} seconds!`);
+                                gameStats.wins++;
+                                gameStats.gamesPlayed++;
+                            }
+                        } else {
+                            flipped.forEach(card => {
+                                card.classList.remove('flipped');
+                                card.textContent = '?';
+                            });
+                        }
+                        flipped = [];
+                    }, 1000);
+                }
+            }
+        }
+
+        // Tic Tac Toe Logic
+        function initTicTacToe() {
+            let board = Array(9).fill('');
+            let currentPlayer = 'X';
+            let gameRunning = true;
+            
+            const boardElement = document.getElementById('tttBoard');
+            boardElement.innerHTML = '';
+            
+            // Reset turn display
+            document.getElementById('tttTurn').textContent = 'Current Turn: X';
+            
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'ttt-cell';
+                cell.dataset.index = i;
+                cell.onclick = () => makeMove(i);
+                boardElement.appendChild(cell);
+            }
+            
+            function makeMove(index) {
+                if (!gameActive || !gameRunning || board[index] !== '') return;
+                
+                board[index] = currentPlayer;
+                document.querySelector(`[data-index="${index}"]`).textContent = currentPlayer;
+                
+                if (checkWinner()) {
+                    const time = stopTimer();
+                    gameActive = false;
+                    gameRunning = false;
+                    showWinNotification(`🎉 Player ${currentPlayer} wins in ${time} seconds!`);
+                    gameStats.wins++;
+                    gameStats.gamesPlayed++;
+                } else if (board.every(cell => cell !== '')) {
+                    const time = stopTimer();
+                    gameActive = false;
+                    gameRunning = false;
+                    showWinNotification(`🤝 It's a tie! Game lasted ${time} seconds!`);
+                    gameStats.gamesPlayed++;
+                } else {
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    document.getElementById('tttTurn').textContent = `Current Turn: ${currentPlayer}`;
+                }
+            }
+            
+            function checkWinner() {
+                const winPatterns = [
+                    [0,1,2], [3,4,5], [6,7,8], // rows
+                    [0,3,6], [1,4,7], [2,5,8], // columns
+                    [0,4,8], [2,4,6] // diagonals
+                ];
+                
+                return winPatterns.some(pattern => 
+                    pattern.every(index => board[index] === currentPlayer)
+                );
+            }
+        }
+
+        // Whack-a-Mole Logic
+        function initWhackMole() {
+            const gameArea = document.getElementById('moleGameArea');
+            gameArea.innerHTML = '';
+            
+            let score = 0;
+            let misses = 0;
+            let moleInterval;
+            let activeMoles = [];
+            
+            // Reset displays
+            document.getElementById('moleScore').textContent = '0';
+            document.getElementById('moleMisses').textContent = '0';
+            
+            // Create 9 holes
+            for (let i = 0; i < 9; i++) {
+                const hole = document.createElement('div');
+                hole.className = 'mole-hole';
+                hole.dataset.index = i;
+                
+                const mole = document.createElement('div');
+                mole.className = 'mole';
+                mole.textContent = '🐹';
+                mole.onclick = () => hitMole(i);
+                
+                hole.appendChild(mole);
+                gameArea.appendChild(hole);
+            }
+            
+            function showMole() {
+                if (!gameActive) return;
+                
+                const availableHoles = Array.from({length: 9}, (_, i) => i)
+                    .filter(i => !activeMoles.includes(i));
+                
+                if (availableHoles.length === 0) return;
+                
+                const randomHole = availableHoles[Math.floor(Math.random() * availableHoles.length)];
+                const mole = gameArea.children[randomHole].querySelector('.mole');
+                
+                mole.classList.add('visible');
+                activeMoles.push(randomHole);
+                
+                setTimeout(() => {
+                    if (mole.classList.contains('visible')) {
+                        mole.classList.remove('visible');
+                        activeMoles = activeMoles.filter(m => m !== randomHole);
+                        misses++;
+                        document.getElementById('moleMisses').textContent = misses;
+                        
+                        if (misses >= 5) {
+                            clearInterval(moleInterval);
+                            const time = stopTimer();
+                            gameActive = false;
+                            showWinNotification(`Game Over! Final Score: ${score} points in ${time} seconds!`);
+                            gameStats.gamesPlayed++;
+                        }
+                    }
+                }, 1500);
+            }
+            
+            function hitMole(holeIndex) {
+                if (!gameActive) return;
+                
+                const mole = gameArea.children[holeIndex].querySelector('.mole');
+                if (mole.classList.contains('visible')) {
+                    mole.classList.add('hit');
+                    mole.classList.remove('visible');
+                    activeMoles = activeMoles.filter(m => m !== holeIndex);
+                    
+                    score += 10;
+                    document.getElementById('moleScore').textContent = score;
+                    showNotification('+10 points! 🔨', 'success', 800);
+                    
+                    setTimeout(() => mole.classList.remove('hit'), 300);
+                }
+            }
+            
+            // Start spawning moles
+            moleInterval = setInterval(showMole, 800);
+            
+            // Game ends after 30 seconds
+            setTimeout(() => {
+                if (gameActive) {
+                    clearInterval(moleInterval);
+                    const time = stopTimer();
+                    gameActive = false;
+                    showWinNotification(`🎉 Time's up! Final Score: ${score} points in ${time} seconds!`);
+                    gameStats.wins++;
+                    gameStats.gamesPlayed++;
+                }
+            }, 30000);
+        }
+
+        // Math Quiz Logic
+        function initMathQuiz() {
+            let score = 0;
+            let currentQuestion = 1;
+            
+            // Reset displays
+            document.getElementById('mathScore').textContent = '0';
+            document.getElementById('mathQuestion').textContent = '1';
+            
+            generateProblem();
+            
+            function generateProblem() {
+                if (!gameActive || currentQuestion > 10) return;
+                
+                const num1 = Math.floor(Math.random() * 10) + 1;
+                const num2 = Math.floor(Math.random() * 10) + 1;
+                const operations = ['+', '-', '×'];
+                const operation = operations[Math.floor(Math.random() * operations.length)];
+                
+                let answer;
+                let problemText;
+                
+                switch(operation) {
+                    case '+':
+                        answer = num1 + num2;
+                        problemText = `${num1} + ${num2} = ?`;
+                        break;
+                    case '-':
+                        answer = Math.max(num1, num2) - Math.min(num1, num2);
+                        problemText = `${Math.max(num1, num2)} - ${Math.min(num1, num2)} = ?`;
+                        break;
+                    case '×':
+                        answer = num1 * num2;
+                        problemText = `${num1} × ${num2} = ?`;
+                        break;
+                }
+                
+                document.getElementById('mathProblem').textContent = problemText;
+                
+                // Generate options
+                const options = [answer];
+                while (options.length < 4) {
+                    const wrongAnswer = answer + Math.floor(Math.random() * 10) - 5;
+                    if (wrongAnswer > 0 && !options.includes(wrongAnswer)) {
+                        options.push(wrongAnswer);
+                    }
+                }
+                
+                options.sort(() => Math.random() - 0.5);
+                
+                const optionsDiv = document.getElementById('mathOptions');
+                optionsDiv.innerHTML = '';
+                
+                options.forEach(option => {
+                    const btn = document.createElement('button');
+                    btn.className = 'game-btn';
+                    btn.textContent = option;
+                    btn.onclick = () => {
+                        if (!gameActive) return;
+                        
+                        if (option === answer) {
+                            showNotification('🎉 Correct!', 'success');
+                            score++;
+                            document.getElementById('mathScore').textContent = score;
+                            
+                            setTimeout(() => {
+                                currentQuestion++;
+                                if (currentQuestion <= 10) {
+                                    document.getElementById('mathQuestion').textContent = currentQuestion;
+                                    generateProblem();
+                                } else {
+                                    const time = stopTimer();
+                                    gameActive = false;
+                                    showWinNotification(`🎉 Quiz completed! Score: ${score}/10 in ${time} seconds!`);
+                                    gameStats.gamesPlayed++;
+                                    if (score >= 7) gameStats.wins++;
+                                }
+                            }, 1500);
+                        } else {
+                            showNotification(`❌ Wrong! The answer was ${answer}`, 'error');
+                        }
+                    };
+                    optionsDiv.appendChild(btn);
+                });
+            }
+        }
+
+        // Simon Says Logic
+        function initSimonSays() {
+            let sequence = [];
+            let playerSequence = [];
+            let level = 1;
+            let isPlayerTurn = false;
+            
+            // Reset displays
+            document.getElementById('simonLevel').textContent = '1';
+            document.getElementById('simonScore').textContent = '0';
+            
+            const buttons = document.querySelectorAll('.simon-btn');
+            
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (!gameActive || !isPlayerTurn) return;
+                    
+                    const color = parseInt(btn.dataset.color);
+                    playerSequence.push(color);
+                    
+                    // Flash button
+                    btn.classList.add('active');
+                    setTimeout(() => btn.classList.remove('active'), 200);
+                    
+                    if (playerSequence[playerSequence.length - 1] !== sequence[playerSequence.length - 1]) {
+                        const time = stopTimer();
+                        showNotification('❌ Wrong sequence! Game Over!', 'error');
+                        gameActive = false;
+                        setTimeout(() => {
+                            showWinNotification(`Game Over! You reached level ${level} in ${time} seconds!`);
+                            gameStats.gamesPlayed++;
+                        }, 2000);
+                    } else if (playerSequence.length === sequence.length) {
+                        showNotification('🎉 Correct! Next level!', 'success');
+                        level++;
+                        updateSimonDisplay();
+                        setTimeout(addToSequence, 1000);
+                    }
+                });
+            });
+            
+            function updateSimonDisplay() {
+                document.getElementById('simonLevel').textContent = level;
+                document.getElementById('simonScore').textContent = (level - 1) * 10;
+            }
+            
+            function addToSequence() {
+                sequence.push(Math.floor(Math.random() * 4));
+                playSequence();
+            }
+            
+            function playSequence() {
+                isPlayerTurn = false;
+                playerSequence = [];
+                
+                sequence.forEach((color, index) => {
+                    setTimeout(() => {
+                        const btn = document.querySelector(`[data-color="${color}"]`);
+                        btn.classList.add('active');
+                        setTimeout(() => btn.classList.remove('active'), 400);
+                        
+                        if (index === sequence.length - 1) {
+                            setTimeout(() => isPlayerTurn = true, 500);
+                        }
+                    }, index * 800);
+                });
+            }
+            
+            // Start first sequence
+            setTimeout(addToSequence, 1000);
+        }
+
+        // Word Search Logic
+        function initWordSearch() {
+            const wordPool = [
+                'CAT', 'DOG', 'SUN', 'FUN', 'TOY', 'BOOK', 'TREE', 'FISH', 'BIRD', 'STAR',
+                'MOON', 'CAKE', 'GAME', 'PLAY', 'JUMP', 'RUN', 'SWIM', 'BALL', 'APPLE', 'BEAR'
+            ];
+            
+            // Randomly select 6 words
+            const selectedWords = [];
+            while (selectedWords.length < 6) {
+                const word = wordPool[Math.floor(Math.random() * wordPool.length)];
+                if (!selectedWords.includes(word)) {
+                    selectedWords.push(word);
+                }
+            }
+            
+            const gridSize = 10;
+            const grid = Array(gridSize).fill().map(() => Array(gridSize).fill(''));
+            const foundWords = new Set();
+            let isSelecting = false;
+            let selectedCells = [];
+            
+            // Reset displays
+            document.getElementById('wordsFound').textContent = '0';
+            document.getElementById('totalWords').textContent = selectedWords.length;
+            
+            // Place words randomly in grid
+            selectedWords.forEach(word => {
+                let placed = false;
+                let attempts = 0;
+                while (!placed && attempts < 50) {
+                    const direction = Math.random() < 0.5 ? 'horizontal' : 'vertical';
+                    let row, col;
+                    
+                    if (direction === 'horizontal') {
+                        row = Math.floor(Math.random() * gridSize);
+                        col = Math.floor(Math.random() * (gridSize - word.length + 1));
+                    } else {
+                        row = Math.floor(Math.random() * (gridSize - word.length + 1));
+                        col = Math.floor(Math.random() * gridSize);
+                    }
+                    
+                    // Check if space is available
+                    let canPlace = true;
+                    for (let i = 0; i < word.length; i++) {
+                        const checkRow = direction === 'horizontal' ? row : row + i;
+                        const checkCol = direction === 'horizontal' ? col + i : col;
+                        
+                        if (grid[checkRow][checkCol] !== '' && grid[checkRow][checkCol] !== word[i]) {
+                            canPlace = false;
+                            break;
+                        }
+                    }
+                    
+                    if (canPlace) {
+                        for (let i = 0; i < word.length; i++) {
+                            const placeRow = direction === 'horizontal' ? row : row + i;
+                            const placeCol = direction === 'horizontal' ? col + i : col;
+                            grid[placeRow][placeCol] = word[i];
+                        }
+                        placed = true;
+                    }
+                    attempts++;
+                }
+            });
+            
+            // Fill empty spaces with random letters
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            for (let row = 0; row < gridSize; row++) {
+                for (let col = 0; col < gridSize; col++) {
+                    if (grid[row][col] === '') {
+                        grid[row][col] = letters[Math.floor(Math.random() * letters.length)];
+                    }
+                }
+            }
+            
+            // Display words list
+            const wordsList = document.getElementById('wordsList');
+            wordsList.innerHTML = '';
+            selectedWords.forEach(word => {
+                const wordItem = document.createElement('div');
+                wordItem.className = 'word-item';
+                wordItem.textContent = word;
+                wordItem.dataset.word = word;
+                wordsList.appendChild(wordItem);
+            });
+            
+            // Create grid display
+            const gridElement = document.getElementById('wordGrid');
+            gridElement.innerHTML = '';
+            
+            grid.forEach((row, rowIndex) => {
+                row.forEach((letter, colIndex) => {
+                    const cell = document.createElement('div');
+                    cell.className = 'word-cell';
+                    cell.textContent = letter;
+                    cell.dataset.row = rowIndex;
+                    cell.dataset.col = colIndex;
+                    
+                    // Mouse events for selection
+                    cell.addEventListener('mousedown', (e) => {
+                        if (!gameActive) return;
+                        e.preventDefault();
+                        isSelecting = true;
+                        selectedCells = [cell];
+                        cell.classList.add('selecting');
+                    });
+                    
+                    cell.addEventListener('mouseenter', () => {
+                        if (gameActive && isSelecting && !selectedCells.includes(cell)) {
+                            selectedCells.push(cell);
+                            cell.classList.add('selecting');
+                        }
+                    });
+                    
+                    gridElement.appendChild(cell);
+                });
+            });
+            
+            // Global mouse up event
+            document.addEventListener('mouseup', () => {
+                if (isSelecting && gameActive) {
+                    checkSelectedWord();
+                    isSelecting = false;
+                }
+            });
+            
+            function checkSelectedWord() {
+                if (selectedCells.length < 2) {
+                    selectedCells.forEach(cell => cell.classList.remove('selecting'));
+                    selectedCells = [];
+                    return;
+                }
+                
+                // Get selected letters
+                const selectedLetters = selectedCells.map(cell => cell.textContent).join('');
+                const reversedLetters = selectedLetters.split('').reverse().join('');
+                
+                // Check if it matches any word
+                let foundWord = null;
+                if (selectedWords.includes(selectedLetters)) {
+                    foundWord = selectedLetters;
+                } else if (selectedWords.includes(reversedLetters)) {
+                    foundWord = reversedLetters;
+                }
+                
+                if (foundWord && !foundWords.has(foundWord)) {
+                    // Mark word as found
+                    foundWords.add(foundWord);
+                    selectedCells.forEach(cell => {
+                        cell.classList.remove('selecting');
+                        cell.classList.add('found');
+                    });
+                    
+                    // Update word list
+                    const wordItem = document.querySelector(`[data-word="${foundWord}"]`);
+                    wordItem.classList.add('found');
+                    
+                    showNotification(`🎉 Found "${foundWord}"!`, 'success');
+                    document.getElementById('wordsFound').textContent = foundWords.size;
+                    
+                    if (foundWords.size === selectedWords.length) {
+                        const time = stopTimer();
+                        gameActive = false;
+                        showWinNotification(`🎉 All words found in ${time} seconds!`);
+                        gameStats.wins++;
+                        gameStats.gamesPlayed++;
+                    }
+                } else {
+                    // Not a valid word, remove selection
+                    selectedCells.forEach(cell => cell.classList.remove('selecting'));
+                }
+                
+                selectedCells = [];
+            }
+        }
+
+        // Sliding Puzzle Logic
+        function initSlidingPuzzle() {
+            let puzzle = [1,2,3,4,5,6,7,8,0]; // 0 represents empty space
+            let moves = 0;
+            
+            // Reset displays
+            document.getElementById('puzzleMoves').textContent = '0';
+            
+            function render() {
+                const board = document.getElementById('puzzleBoard');
+                board.innerHTML = '';
+                
+                puzzle.forEach((num, index) => {
+                    const tile = document.createElement('div');
+                    tile.style.cssText = `
+                        width: 90px; height: 90px; border: 2px solid #4ecdc4;
+                        display: flex; align-items: center; justify-content: center;
+                        font-size: 1.5em; font-weight: bold; cursor: pointer;
+                        background: ${num === 0 ? '#f0f0f0' : '#fff'};
+                        border-radius: 10px;
+                    `;
+                    tile.textContent = num === 0 ? '' : num;
+                    tile.onclick = () => moveTile(index);
+                    board.appendChild(tile);
+                });
+            }
+            
+            function moveTile(index) {
+                if (!gameActive) return;
+                
+                const emptyIndex = puzzle.indexOf(0);
+                const validMoves = [];
+                
+                // Check adjacent positions
+                if (index % 3 !== 0) validMoves.push(index - 1); // left
+                if (index % 3 !== 2) validMoves.push(index + 1); // right
+                if (index >= 3) validMoves.push(index - 3); // up
+                if (index < 6) validMoves.push(index + 3); // down
+                
+                if (validMoves.includes(emptyIndex)) {
+                    [puzzle[index], puzzle[emptyIndex]] = [puzzle[emptyIndex], puzzle[index]];
+                    moves++;
+                    document.getElementById('puzzleMoves').textContent = moves;
+                    render();
+                    
+                    // Check win condition
+                    if (puzzle.slice(0, 8).every((num, i) => num === i + 1)) {
+                        const time = stopTimer();
+                        gameActive = false;
+                        showWinNotification(`🎉 Puzzle solved in ${moves} moves and ${time} seconds!`);
+                        gameStats.wins++;
+                        gameStats.gamesPlayed++;
+                    }
+                }
+            }
+            
+            window.shufflePuzzle = function() {
+                // Simple shuffle
+                for (let i = 0; i < 100; i++) {
+                    const emptyIndex = puzzle.indexOf(0);
+                    const validMoves = [];
+                    
+                    if (emptyIndex % 3 !== 0) validMoves.push(emptyIndex - 1);
+                    if (emptyIndex % 3 !== 2) validMoves.push(emptyIndex + 1);
+                    if (emptyIndex >= 3) validMoves.push(emptyIndex - 3);
+                    if (emptyIndex < 6) validMoves.push(emptyIndex + 3);
+                    
+                    const randomMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+                    [puzzle[emptyIndex], puzzle[randomMove]] = [puzzle[randomMove], puzzle[emptyIndex]];
+                }
+                moves = 0;
+                document.getElementById('puzzleMoves').textContent = moves;
+                render();
+            };
+            
+            render();
+        }
+
+        // Header button functions
+        function showFullscreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            }
+        }
+
+        function showStats() {
+            showNotification(`📊 Games: ${gameStats.gamesPlayed} | Wins: ${gameStats.wins} | Rate: ${gameStats.gamesPlayed > 0 ? Math.round((gameStats.wins/gameStats.gamesPlayed)*100) : 0}%`, 'success', 5000);
+        }
+
+        function showSettings() {
+            showNotification('⚙️ Click games in sidebar to switch • Use fullscreen for better experience', 'success', 4000);
+        }
+
+        // Initialize the portal
+        document.addEventListener('DOMContentLoaded', () => {
+            showWelcomeScreen();
+        });
+    </script>
+</body>
+</html>
