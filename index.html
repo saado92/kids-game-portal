@@ -152,7 +152,7 @@
             transition: all 0.3s ease;
             font-family: inherit;
             position: absolute;
-            top: 20px;
+            top: 90px;
             left: 20px;
             z-index: 50;
         }
@@ -679,6 +679,16 @@
                 right: auto;
                 left: 10px;
             }
+
+            .pause-btn {
+                top: 90px;
+                left: 10px;
+            }
+
+            [dir="rtl"] .pause-btn {
+                left: auto;
+                right: 10px;
+            }
         }
     </style>
 </head>
@@ -1004,6 +1014,37 @@
                 question: 'Question',
                 currentTurn: 'Tour Actuel',
                 
+                // Game Titles & Descriptions
+                memoryTitle: '🧠 Jeu de Correspondance Mémoire',
+                memoryDesc: 'Trouvez toutes les paires correspondantes!',
+                memoryOverlayTitle: '🧠 Jeu de Correspondance Mémoire',
+                memoryOverlayDesc: 'Trouvez toutes les paires correspondantes de cartes emoji!',
+                
+                tictactoeTitle: '⭕ Morpion',
+                tictactoeDesc: 'Obtenez trois d\'affilée pour gagner!',
+                tictactoeOverlayTitle: '⭕ Morpion',
+                tictactoeOverlayDesc: 'Obtenez trois X ou O d\'affilée pour gagner!',
+                
+                mathTitle: '🔢 Quiz de Mathématiques',
+                mathDesc: 'Résolvez les problèmes de mathématiques!',
+                mathOverlayTitle: '🔢 Quiz de Mathématiques',
+                mathOverlayDesc: 'Résolvez 10 problèmes de mathématiques le plus rapidement possible!',
+                
+                simonTitle: '🔴 Jacques a Dit',
+                simonDesc: 'Regardez la séquence et répétez-la!',
+                simonOverlayTitle: '🔴 Jacques a Dit',
+                simonOverlayDesc: 'Regardez le motif et répétez-le en cliquant sur les boutons colorés!',
+                
+                wordsearchTitle: '🔤 Recherche de Mots',
+                wordsearchDesc: 'Cliquez et faites glisser pour sélectionner les mots!',
+                wordsearchOverlayTitle: '🔤 Recherche de Mots',
+                wordsearchOverlayDesc: 'Trouvez les mots cachés en cliquant et en faisant glisser pour les sélectionner!',
+                
+                puzzleTitle: '🧩 Puzzle Coulissant',
+                puzzleDesc: 'Arrangez les nombres dans l\'ordre!',
+                puzzleOverlayTitle: '🧩 Puzzle Coulissant',
+                puzzleOverlayDesc: 'Cliquez sur les tuiles à côté de l\'espace vide pour les faire glisser et arrangez les nombres 1-8!',
+                
                 // Buttons
                 startGame: '🚀 Commencer le Jeu',
                 playAgain: '🎉 Rejouer',
@@ -1015,7 +1056,9 @@
                 greatMatch: 'Excellente correspondance! 🎉',
                 correct: '🎉 Correct!',
                 wrong: '❌ Faux!',
+                gameOver: 'Jeu Terminé!',
                 youWon: '🎉 Vous avez gagné!',
+                congratulations: '🎉 Félicitations!',
                 foundWord: '🎉 Trouvé',
                 allWordsFound: '🎉 Tous les mots trouvés!',
                 puzzleSolved: '🎉 Puzzle résolu!',
@@ -1062,6 +1105,37 @@
                 question: 'Pregunta',
                 currentTurn: 'Turno Actual',
                 
+                // Game Titles & Descriptions
+                memoryTitle: '🧠 Juego de Correspondencia de Memoria',
+                memoryDesc: '¡Encuentra todas las parejas correspondientes!',
+                memoryOverlayTitle: '🧠 Juego de Correspondencia de Memoria',
+                memoryOverlayDesc: '¡Encuentra todas las parejas correspondientes de cartas emoji!',
+                
+                tictactoeTitle: '⭕ Tres en Raya',
+                tictactoeDesc: '¡Consigue tres en fila para ganar!',
+                tictactoeOverlayTitle: '⭕ Tres en Raya',
+                tictactoeOverlayDesc: '¡Consigue tres X u O en fila para ganar!',
+                
+                mathTitle: '🔢 Quiz de Matemáticas',
+                mathDesc: '¡Resuelve los problemas de matemáticas!',
+                mathOverlayTitle: '🔢 Quiz de Matemáticas',
+                mathOverlayDesc: '¡Resuelve 10 problemas de matemáticas lo más rápido que puedas!',
+                
+                simonTitle: '🔴 Simón Dice',
+                simonDesc: '¡Mira la secuencia y repítela!',
+                simonOverlayTitle: '🔴 Simón Dice',
+                simonOverlayDesc: '¡Mira el patrón y repítelo haciendo clic en los botones de colores!',
+                
+                wordsearchTitle: '🔤 Búsqueda de Palabras',
+                wordsearchDesc: '¡Haz clic y arrastra para seleccionar palabras!',
+                wordsearchOverlayTitle: '🔤 Búsqueda de Palabras',
+                wordsearchOverlayDesc: '¡Encuentra palabras ocultas haciendo clic y arrastrando para seleccionarlas!',
+                
+                puzzleTitle: '🧩 Rompecabezas Deslizante',
+                puzzleDesc: '¡Ordena los números en orden!',
+                puzzleOverlayTitle: '🧩 Rompecabezas Deslizante',
+                puzzleOverlayDesc: '¡Haz clic en las fichas junto al espacio vacío para deslizarlas y ordena los números 1-8!',
+                
                 // Buttons
                 startGame: '🚀 Empezar Juego',
                 playAgain: '🎉 Jugar de Nuevo',
@@ -1073,7 +1147,9 @@
                 greatMatch: '¡Excelente coincidencia! 🎉',
                 correct: '¡🎉 Correcto!',
                 wrong: '❌ ¡Incorrecto!',
+                gameOver: '¡Juego Terminado!',
                 youWon: '¡🎉 Has ganado!',
+                congratulations: '¡🎉 Felicidades!',
                 foundWord: '🎉 Encontrada',
                 allWordsFound: '¡🎉 Todas las palabras encontradas!',
                 puzzleSolved: '¡🎉 Rompecabezas resuelto!',
@@ -1120,6 +1196,37 @@
                 question: 'Soru',
                 currentTurn: 'Şimdiki Tur',
                 
+                // Game Titles & Descriptions
+                memoryTitle: '🧠 Hafıza Eşleştirme Oyunu',
+                memoryDesc: 'Tüm eşleşen çiftleri bulun!',
+                memoryOverlayTitle: '🧠 Hafıza Eşleştirme Oyunu',
+                memoryOverlayDesc: 'Emoji kartlarının tüm eşleşen çiftlerini bulun!',
+                
+                tictactoeTitle: '⭕ Tic Tac Toe',
+                tictactoeDesc: 'Kazanmak için üç tane yan yana getirin!',
+                tictactoeOverlayTitle: '⭕ Tic Tac Toe',
+                tictactoeOverlayDesc: 'Kazanmak için üç X veya O\'yu yan yana getirin!',
+                
+                mathTitle: '🔢 Matematik Yarışması',
+                mathDesc: 'Matematik problemlerini çözün!',
+                mathOverlayTitle: '🔢 Matematik Yarışması',
+                mathOverlayDesc: '10 matematik problemini olabildiğince hızlı çözün!',
+                
+                simonTitle: '🔴 Simon Der',
+                simonDesc: 'Sıralamayı izleyin ve tekrarlayın!',
+                simonOverlayTitle: '🔴 Simon Der',
+                simonOverlayDesc: 'Deseni izleyin ve renkli düğmelere tıklayarak tekrarlayın!',
+                
+                wordsearchTitle: '🔤 Kelime Arama',
+                wordsearchDesc: 'Kelimeleri seçmek için tıklayın ve sürükleyin!',
+                wordsearchOverlayTitle: '🔤 Kelime Arama',
+                wordsearchOverlayDesc: 'Gizli kelimeleri tıklayıp sürükleyerek bulun!',
+                
+                puzzleTitle: '🧩 Kaydırma Bulmacası',
+                puzzleDesc: 'Sayıları sıraya dizin!',
+                puzzleOverlayTitle: '🧩 Kaydırma Bulmacası',
+                puzzleOverlayDesc: 'Boş alanın yanındaki karolara tıklayarak kaydırın ve 1-8 sayılarını sıralayın!',
+                
                 // Buttons
                 startGame: '🚀 Oyunu Başlat',
                 playAgain: '🎉 Tekrar Oyna',
@@ -1131,7 +1238,9 @@
                 greatMatch: 'Harika eşleşme! 🎉',
                 correct: '🎉 Doğru!',
                 wrong: '❌ Yanlış!',
+                gameOver: 'Oyun Bitti!',
                 youWon: '🎉 Kazandınız!',
+                congratulations: '🎉 Tebrikler!',
                 foundWord: '🎉 Bulundu',
                 allWordsFound: '🎉 Tüm kelimeler bulundu!',
                 puzzleSolved: '🎉 Bulmaca çözüldü!',
@@ -1178,6 +1287,37 @@
                 question: 'Domanda',
                 currentTurn: 'Turno Attuale',
                 
+                // Game Titles & Descriptions
+                memoryTitle: '🧠 Gioco di Abbinamento Memoria',
+                memoryDesc: 'Trova tutte le coppie corrispondenti!',
+                memoryOverlayTitle: '🧠 Gioco di Abbinamento Memoria',
+                memoryOverlayDesc: 'Trova tutte le coppie corrispondenti di carte emoji!',
+                
+                tictactoeTitle: '⭕ Tris',
+                tictactoeDesc: 'Ottieni tre di fila per vincere!',
+                tictactoeOverlayTitle: '⭕ Tris',
+                tictactoeOverlayDesc: 'Ottieni tre X o O di fila per vincere!',
+                
+                mathTitle: '🔢 Quiz di Matematica',
+                mathDesc: 'Risolvi i problemi di matematica!',
+                mathOverlayTitle: '🔢 Quiz di Matematica',
+                mathOverlayDesc: 'Risolvi 10 problemi di matematica il più velocemente possibile!',
+                
+                simonTitle: '🔴 Simon Dice',
+                simonDesc: 'Guarda la sequenza e ripetila!',
+                simonOverlayTitle: '🔴 Simon Dice',
+                simonOverlayDesc: 'Guarda il modello e ripetilo cliccando sui pulsanti colorati!',
+                
+                wordsearchTitle: '🔤 Ricerca Parole',
+                wordsearchDesc: 'Clicca e trascina per selezionare le parole!',
+                wordsearchOverlayTitle: '🔤 Ricerca Parole',
+                wordsearchOverlayDesc: 'Trova le parole nascoste cliccando e trascinando per selezionarle!',
+                
+                puzzleTitle: '🧩 Puzzle Scorrevole',
+                puzzleDesc: 'Disponi i numeri in ordine!',
+                puzzleOverlayTitle: '🧩 Puzzle Scorrevole',
+                puzzleOverlayDesc: 'Clicca sulle tessere accanto allo spazio vuoto per farle scorrere e disponi i numeri 1-8!',
+                
                 // Buttons
                 startGame: '🚀 Inizia Gioco',
                 playAgain: '🎉 Gioca Ancora',
@@ -1189,7 +1329,9 @@
                 greatMatch: 'Ottimo abbinamento! 🎉',
                 correct: '🎉 Corretto!',
                 wrong: '❌ Sbagliato!',
+                gameOver: 'Gioco Finito!',
                 youWon: '🎉 Hai vinto!',
+                congratulations: '🎉 Congratulazioni!',
                 foundWord: '🎉 Trovata',
                 allWordsFound: '🎉 Tutte le parole trovate!',
                 puzzleSolved: '🎉 Puzzle risolto!',
@@ -1236,6 +1378,37 @@
                 question: 'Pergunta',
                 currentTurn: 'Vez Atual',
                 
+                // Game Titles & Descriptions
+                memoryTitle: '🧠 Jogo de Correspondência da Memória',
+                memoryDesc: 'Encontre todos os pares correspondentes!',
+                memoryOverlayTitle: '🧠 Jogo de Correspondência da Memória',
+                memoryOverlayDesc: 'Encontre todos os pares correspondentes de cartas emoji!',
+                
+                tictactoeTitle: '⭕ Jogo da Velha',
+                tictactoeDesc: 'Consiga três em linha para ganhar!',
+                tictactoeOverlayTitle: '⭕ Jogo da Velha',
+                tictactoeOverlayDesc: 'Consiga três X ou O em linha para ganhar!',
+                
+                mathTitle: '🔢 Quiz de Matemática',
+                mathDesc: 'Resolva os problemas de matemática!',
+                mathOverlayTitle: '🔢 Quiz de Matemática',
+                mathOverlayDesc: 'Resolva 10 problemas de matemática o mais rápido possível!',
+                
+                simonTitle: '🔴 Simon Diz',
+                simonDesc: 'Observe a sequência e repita!',
+                simonOverlayTitle: '🔴 Simon Diz',
+                simonOverlayDesc: 'Observe o padrão e repita clicando nos botões coloridos!',
+                
+                wordsearchTitle: '🔤 Caça-Palavras',
+                wordsearchDesc: 'Clique e arraste para selecionar palavras!',
+                wordsearchOverlayTitle: '🔤 Caça-Palavras',
+                wordsearchOverlayDesc: 'Encontre palavras ocultas clicando e arrastando para selecioná-las!',
+                
+                puzzleTitle: '🧩 Quebra-Cabeça Deslizante',
+                puzzleDesc: 'Organize os números em ordem!',
+                puzzleOverlayTitle: '🧩 Quebra-Cabeça Deslizante',
+                puzzleOverlayDesc: 'Clique nas peças ao lado do espaço vazio para deslizá-las e organize os números 1-8!',
+                
                 // Buttons
                 startGame: '🚀 Iniciar Jogo',
                 playAgain: '🎉 Jogar Novamente',
@@ -1247,7 +1420,9 @@
                 greatMatch: 'Ótima correspondência! 🎉',
                 correct: '🎉 Correto!',
                 wrong: '❌ Errado!',
+                gameOver: 'Jogo Acabou!',
                 youWon: '🎉 Você ganhou!',
+                congratulations: '🎉 Parabéns!',
                 foundWord: '🎉 Encontrada',
                 allWordsFound: '🎉 Todas as palavras encontradas!',
                 puzzleSolved: '🎉 Quebra-cabeça resolvido!',
@@ -1320,16 +1495,8 @@
             // Update all text
             updateAllText();
             
-            // Update current game content if any
-            if (currentGame) {
-                const activeItem = document.querySelector('.game-item.active');
-                if (activeItem) {
-                    const gameType = activeItem.onclick.toString().match(/loadGame\('(\w+)'\)/)[1];
-                    if (gameType !== 'welcome') {
-                        loadGame(gameType);
-                    }
-                }
-            }
+            // Go directly to home tab
+            loadGame('welcome');
         }
 
         function updateAllText() {
@@ -1407,7 +1574,7 @@
             }
             pauseOverlay.classList.add('show');
             
-            // Update pause button
+            // Hide pause button
             const pauseBtn = document.getElementById('pauseBtn');
             if (pauseBtn) {
                 pauseBtn.style.display = 'none';
@@ -1561,8 +1728,10 @@
             gameTimers[gameType] = { startTime: Date.now() };
             gamePaused = false;
             
-            // Add pause button
-            addPauseButton();
+            // Add pause button only for games that need it
+            if (['memory', 'mathquiz', 'wordsearch', 'puzzle'].includes(gameType)) {
+                addPauseButton();
+            }
             
             switch(gameType) {
                 case 'memory':
