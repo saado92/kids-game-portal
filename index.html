@@ -797,17 +797,14 @@
 
     <script>
         // Language System
-        let currentLanguage = 'en'; // Default to English
+        let currentLanguage = 'en';
         
         const translations = {
             en: {
-                // Header & Navigation
                 headerTitle: '🎮 Kids Game Portal',
                 fullscreenBtn: '⛶ Fullscreen',
                 sidebarTitle: '🎯 Choose a Game',
                 pauseBtn: '⏸️ Pause',
-                
-                // Games
                 home: 'Home',
                 memory: 'Memory Match',
                 tictactoe: 'Tic Tac Toe',
@@ -815,14 +812,10 @@
                 simon: 'Simon Says',
                 wordsearch: 'Word Search',
                 puzzle: 'Sliding Puzzle',
-                
-                // Welcome Screen
                 welcomeTitle: 'Welcome to Kids Game Portal! 🎉',
                 welcomeText: 'Choose a game from the sidebar to start playing!',
                 gamesCount: '🎮 <strong>7 Amazing Games</strong> waiting for you!',
                 startInstructions: 'Click on any game in the left sidebar to begin your adventure!',
-                
-                // Game Stats
                 moves: 'Moves',
                 time: 'Time',
                 score: 'Score',
@@ -831,46 +824,35 @@
                 found: 'Found',
                 question: 'Question',
                 currentTurn: 'Current Turn',
-                
-                // Game Titles & Descriptions
                 memoryTitle: '🧠 Memory Match Game',
-                memoryDesc: 'Find all matching pairs!',
+                memoryDesc: 'Find all matching pairs of emoji cards! Test your memory skills.',
                 memoryOverlayTitle: '🧠 Memory Match Game',
-                memoryOverlayDesc: 'Find all matching pairs of emoji cards!',
-                
+                memoryOverlayDesc: 'Find all matching pairs of emoji cards! Click on cards to flip them and find matches.',
                 tictactoeTitle: '⭕ Tic Tac Toe',
-                tictactoeDesc: 'Get three in a row to win!',
+                tictactoeDesc: 'Classic strategy game! Get three X\'s or O\'s in a row to win.',
                 tictactoeOverlayTitle: '⭕ Tic Tac Toe',
-                tictactoeOverlayDesc: 'Get three X\'s or O\'s in a row to win!',
-                
+                tictactoeOverlayDesc: 'Classic strategy game! Get three X\'s or O\'s in a row, column, or diagonal to win!',
                 mathTitle: '🔢 Math Quiz',
-                mathDesc: 'Solve the math problems!',
+                mathDesc: 'Test your math skills! Solve addition, subtraction, and multiplication problems.',
                 mathOverlayTitle: '🔢 Math Quiz',
-                mathOverlayDesc: 'Solve 10 math problems as quickly as you can!',
-                
+                mathOverlayDesc: 'Test your math skills! Solve 10 math problems as quickly as you can!',
                 simonTitle: '🔴 Simon Says',
-                simonDesc: 'Watch the sequence and repeat it!',
+                simonDesc: 'Memory pattern game! Watch the sequence and repeat it perfectly.',
                 simonOverlayTitle: '🔴 Simon Says',
-                simonOverlayDesc: 'Watch the pattern and repeat it by clicking the colored buttons!',
-                
+                simonOverlayDesc: 'Memory pattern game! Watch the pattern and repeat it by clicking the colored buttons!',
                 wordsearchTitle: '🔤 Word Search',
-                wordsearchDesc: 'Click and drag to select words!',
+                wordsearchDesc: 'Find hidden words! Click and drag to select words in the grid.',
                 wordsearchOverlayTitle: '🔤 Word Search',
-                wordsearchOverlayDesc: 'Find hidden words by clicking and dragging to select them!',
-                
+                wordsearchOverlayDesc: 'Find hidden words! Click and drag to select words hidden in the letter grid!',
                 puzzleTitle: '🧩 Sliding Puzzle',
-                puzzleDesc: 'Arrange the numbers in order!',
+                puzzleDesc: 'Number puzzle game! Arrange the tiles in numerical order from 1 to 8.',
                 puzzleOverlayTitle: '🧩 Sliding Puzzle',
-                puzzleOverlayDesc: 'Click tiles next to the empty space to slide them and arrange numbers 1-8!',
-                
-                // Buttons
+                puzzleOverlayDesc: 'Number puzzle game! Click tiles next to the empty space to slide them and arrange numbers 1-8!',
                 startGame: '🚀 Start Game',
                 playAgain: '🎉 Play Again',
                 shuffle: '🔀 Shuffle',
                 pauseGame: '⏸️ Pause Game',
                 resumeGame: '▶️ Resume Game',
-                
-                // Notifications
                 greatMatch: 'Great match! 🎉',
                 correct: '🎉 Correct!',
                 wrong: '❌ Wrong!',
@@ -886,19 +868,14 @@
                 inMoves: 'in {moves} moves',
                 quizCompleted: '🎉 Quiz completed!',
                 wrongSequence: '❌ Wrong sequence!',
-                
-                // Word Search Words
                 wordSearchWords: ['CAT', 'DOG', 'SUN', 'FUN', 'TOY', 'BOOK', 'TREE', 'FISH', 'BIRD', 'STAR', 'MOON', 'CAKE', 'GAME', 'PLAY', 'JUMP', 'RUN', 'SWIM', 'BALL', 'APPLE', 'BEAR']
             },
             
             ar: {
-                // Header & Navigation
                 headerTitle: '🎮 بوابة ألعاب الأطفال',
                 fullscreenBtn: '⛶ ملء الشاشة',
                 sidebarTitle: '🎯 اختر لعبة',
                 pauseBtn: '⏸️ إيقاف',
-                
-                // Games
                 home: 'الرئيسية',
                 memory: 'لعبة الذاكرة',
                 tictactoe: 'إكس أوه',
@@ -906,8 +883,6 @@
                 simon: 'سايمون يقول',
                 wordsearch: 'البحث عن الكلمات',
                 puzzle: 'لغز الانزلاق',
-                
-                // Welcome Screen
                 welcomeTitle: 'مرحباً ببوابة ألعاب الأطفال! 🎉',
                 welcomeText: 'اختر لعبة من الشريط الجانبي لتبدأ اللعب!',
                 gamesCount: '🎮 <strong>7 ألعاب رائعة</strong> في انتظارك!',
@@ -925,34 +900,34 @@
                 
                 // Game Titles & Descriptions
                 memoryTitle: '🧠 لعبة مطابقة الذاكرة',
-                memoryDesc: 'اعثر على جميع الأزواج المتطابقة!',
+                memoryDesc: 'اعثر على جميع الأزواج المتطابقة! اختبر مهارات الذاكرة لديك.',
                 memoryOverlayTitle: '🧠 لعبة مطابقة الذاكرة',
-                memoryOverlayDesc: 'اعثر على جميع الأزواج المتطابقة من بطاقات الرموز التعبيرية!',
+                memoryOverlayDesc: 'اعثر على جميع الأزواج المتطابقة من بطاقات الرموز التعبيرية! انقر على البطاقات لقلبها والعثور على المطابقات.',
                 
                 tictactoeTitle: '⭕ إكس أوه',
-                tictactoeDesc: 'احصل على ثلاثة في صف للفوز!',
+                tictactoeDesc: 'لعبة استراتيجية كلاسيكية! احصل على ثلاثة X أو O في صف للفوز.',
                 tictactoeOverlayTitle: '⭕ إكس أوه',
-                tictactoeOverlayDesc: 'احصل على ثلاثة X أو O في صف للفوز!',
+                tictactoeOverlayDesc: 'لعبة استراتيجية كلاسيكية! احصل على ثلاثة X أو O في صف أو عمود أو قطر للفوز!',
                 
                 mathTitle: '🔢 اختبار الرياضيات',
-                mathDesc: 'حل مسائل الرياضيات!',
+                mathDesc: 'اختبر مهاراتك في الرياضيات! حل مسائل الجمع والطرح والضرب.',
                 mathOverlayTitle: '🔢 اختبار الرياضيات',
-                mathOverlayDesc: 'حل 10 مسائل رياضية بأسرع ما يمكن!',
+                mathOverlayDesc: 'اختبر مهاراتك في الرياضيات! حل 10 مسائل رياضية بأسرع ما يمكن!',
                 
                 simonTitle: '🔴 سايمون يقول',
-                simonDesc: 'شاهد التسلسل وكرره!',
+                simonDesc: 'لعبة نمط الذاكرة! شاهد التسلسل وكرره بشكل مثالي.',
                 simonOverlayTitle: '🔴 سايمون يقول',
-                simonOverlayDesc: 'شاهد النمط وكرره بالنقر على الأزرار الملونة!',
+                simonOverlayDesc: 'لعبة نمط الذاكرة! شاهد النمط وكرره بالنقر على الأزرار الملونة!',
                 
                 wordsearchTitle: '🔤 البحث عن الكلمات',
-                wordsearchDesc: 'انقر واسحب لتحديد الكلمات!',
+                wordsearchDesc: 'اعثر على الكلمات المخفية! انقر واسحب لتحديد الكلمات في الشبكة.',
                 wordsearchOverlayTitle: '🔤 البحث عن الكلمات',
-                wordsearchOverlayDesc: 'اعثر على الكلمات المخفية بالنقر والسحب لتحديدها!',
+                wordsearchOverlayDesc: 'اعثر على الكلمات المخفية! انقر واسحب لتحديد الكلمات المخفية في شبكة الحروف!',
                 
                 puzzleTitle: '🧩 لغز الانزلاق',
-                puzzleDesc: 'رتب الأرقام بالترتيب!',
+                puzzleDesc: 'لعبة لغز الأرقام! رتب البلاطات بالترتيب الرقمي من 1 إلى 8.',
                 puzzleOverlayTitle: '🧩 لغز الانزلاق',
-                puzzleOverlayDesc: 'انقر على البلاطات المجاورة للمساحة الفارغة لتحريكها ورتب الأرقام من 1-8!',
+                puzzleOverlayDesc: 'لعبة لغز الأرقام! انقر على البلاطات المجاورة للمساحة الفارغة لتحريكها ورتب الأرقام من 1-8!',
                 
                 // Buttons
                 startGame: '🚀 ابدأ اللعبة',
@@ -1016,34 +991,34 @@
                 
                 // Game Titles & Descriptions
                 memoryTitle: '🧠 Jeu de Correspondance Mémoire',
-                memoryDesc: 'Trouvez toutes les paires correspondantes!',
+                memoryDesc: 'Trouvez toutes les paires correspondantes! Testez vos compétences de mémoire.',
                 memoryOverlayTitle: '🧠 Jeu de Correspondance Mémoire',
-                memoryOverlayDesc: 'Trouvez toutes les paires correspondantes de cartes emoji!',
+                memoryOverlayDesc: 'Trouvez toutes les paires correspondantes de cartes emoji! Cliquez sur les cartes pour les retourner et trouver les correspondances.',
                 
                 tictactoeTitle: '⭕ Morpion',
-                tictactoeDesc: 'Obtenez trois d\'affilée pour gagner!',
+                tictactoeDesc: 'Jeu de stratégie classique! Obtenez trois X ou O d\'affilée pour gagner.',
                 tictactoeOverlayTitle: '⭕ Morpion',
-                tictactoeOverlayDesc: 'Obtenez trois X ou O d\'affilée pour gagner!',
+                tictactoeOverlayDesc: 'Jeu de stratégie classique! Obtenez trois X ou O d\'affilée, en colonne ou en diagonale pour gagner!',
                 
                 mathTitle: '🔢 Quiz de Mathématiques',
-                mathDesc: 'Résolvez les problèmes de mathématiques!',
+                mathDesc: 'Testez vos compétences en mathématiques! Résolvez les problèmes d\'addition, de soustraction et de multiplication.',
                 mathOverlayTitle: '🔢 Quiz de Mathématiques',
-                mathOverlayDesc: 'Résolvez 10 problèmes de mathématiques le plus rapidement possible!',
+                mathOverlayDesc: 'Testez vos compétences en mathématiques! Résolvez 10 problèmes de mathématiques le plus rapidement possible!',
                 
                 simonTitle: '🔴 Jacques a Dit',
-                simonDesc: 'Regardez la séquence et répétez-la!',
+                simonDesc: 'Jeu de motif de mémoire! Regardez la séquence et répétez-la parfaitement.',
                 simonOverlayTitle: '🔴 Jacques a Dit',
-                simonOverlayDesc: 'Regardez le motif et répétez-le en cliquant sur les boutons colorés!',
+                simonOverlayDesc: 'Jeu de motif de mémoire! Regardez le motif et répétez-le en cliquant sur les boutons colorés!',
                 
                 wordsearchTitle: '🔤 Recherche de Mots',
-                wordsearchDesc: 'Cliquez et faites glisser pour sélectionner les mots!',
+                wordsearchDesc: 'Trouvez les mots cachés! Cliquez et faites glisser pour sélectionner les mots dans la grille.',
                 wordsearchOverlayTitle: '🔤 Recherche de Mots',
-                wordsearchOverlayDesc: 'Trouvez les mots cachés en cliquant et en faisant glisser pour les sélectionner!',
+                wordsearchOverlayDesc: 'Trouvez les mots cachés! Cliquez et faites glisser pour sélectionner les mots cachés dans la grille de lettres!',
                 
                 puzzleTitle: '🧩 Puzzle Coulissant',
-                puzzleDesc: 'Arrangez les nombres dans l\'ordre!',
+                puzzleDesc: 'Jeu de puzzle numérique! Arrangez les tuiles dans l\'ordre numérique de 1 à 8.',
                 puzzleOverlayTitle: '🧩 Puzzle Coulissant',
-                puzzleOverlayDesc: 'Cliquez sur les tuiles à côté de l\'espace vide pour les faire glisser et arrangez les nombres 1-8!',
+                puzzleOverlayDesc: 'Jeu de puzzle numérique! Cliquez sur les tuiles à côté de l\'espace vide pour les faire glisser et arrangez les nombres 1-8!',
                 
                 // Buttons
                 startGame: '🚀 Commencer le Jeu',
@@ -1107,34 +1082,34 @@
                 
                 // Game Titles & Descriptions
                 memoryTitle: '🧠 Juego de Correspondencia de Memoria',
-                memoryDesc: '¡Encuentra todas las parejas correspondientes!',
+                memoryDesc: '¡Encuentra todas las parejas correspondientes! Pon a prueba tus habilidades de memoria.',
                 memoryOverlayTitle: '🧠 Juego de Correspondencia de Memoria',
-                memoryOverlayDesc: '¡Encuentra todas las parejas correspondientes de cartas emoji!',
+                memoryOverlayDesc: '¡Encuentra todas las parejas correspondientes de cartas emoji! Haz clic en las cartas para voltearlas y encontrar coincidencias.',
                 
                 tictactoeTitle: '⭕ Tres en Raya',
-                tictactoeDesc: '¡Consigue tres en fila para ganar!',
+                tictactoeDesc: '¡Juego de estrategia clásico! Consigue tres X u O en fila para ganar.',
                 tictactoeOverlayTitle: '⭕ Tres en Raya',
-                tictactoeOverlayDesc: '¡Consigue tres X u O en fila para ganar!',
+                tictactoeOverlayDesc: '¡Juego de estrategia clásico! ¡Consigue tres X u O en fila, columna o diagonal para ganar!',
                 
                 mathTitle: '🔢 Quiz de Matemáticas',
-                mathDesc: '¡Resuelve los problemas de matemáticas!',
+                mathDesc: '¡Pon a prueba tus habilidades matemáticas! Resuelve problemas de suma, resta y multiplicación.',
                 mathOverlayTitle: '🔢 Quiz de Matemáticas',
-                mathOverlayDesc: '¡Resuelve 10 problemas de matemáticas lo más rápido que puedas!',
+                mathOverlayDesc: '¡Pon a prueba tus habilidades matemáticas! ¡Resuelve 10 problemas de matemáticas lo más rápido que puedas!',
                 
                 simonTitle: '🔴 Simón Dice',
-                simonDesc: '¡Mira la secuencia y repítela!',
+                simonDesc: '¡Juego de patrón de memoria! Mira la secuencia y repítela perfectamente.',
                 simonOverlayTitle: '🔴 Simón Dice',
-                simonOverlayDesc: '¡Mira el patrón y repítelo haciendo clic en los botones de colores!',
+                simonOverlayDesc: '¡Juego de patrón de memoria! ¡Mira el patrón y repítelo haciendo clic en los botones de colores!',
                 
                 wordsearchTitle: '🔤 Búsqueda de Palabras',
-                wordsearchDesc: '¡Haz clic y arrastra para seleccionar palabras!',
+                wordsearchDesc: '¡Encuentra palabras ocultas! Haz clic y arrastra para seleccionar palabras en la cuadrícula.',
                 wordsearchOverlayTitle: '🔤 Búsqueda de Palabras',
-                wordsearchOverlayDesc: '¡Encuentra palabras ocultas haciendo clic y arrastrando para seleccionarlas!',
+                wordsearchOverlayDesc: '¡Encuentra palabras ocultas! ¡Haz clic y arrastra para seleccionar palabras ocultas en la cuadrícula de letras!',
                 
                 puzzleTitle: '🧩 Rompecabezas Deslizante',
-                puzzleDesc: '¡Ordena los números en orden!',
+                puzzleDesc: '¡Juego de rompecabezas numérico! Ordena las fichas en orden numérico del 1 al 8.',
                 puzzleOverlayTitle: '🧩 Rompecabezas Deslizante',
-                puzzleOverlayDesc: '¡Haz clic en las fichas junto al espacio vacío para deslizarlas y ordena los números 1-8!',
+                puzzleOverlayDesc: '¡Juego de rompecabezas numérico! ¡Haz clic en las fichas junto al espacio vacío para deslizarlas y ordena los números 1-8!',
                 
                 // Buttons
                 startGame: '🚀 Empezar Juego',
@@ -1198,34 +1173,34 @@
                 
                 // Game Titles & Descriptions
                 memoryTitle: '🧠 Hafıza Eşleştirme Oyunu',
-                memoryDesc: 'Tüm eşleşen çiftleri bulun!',
+                memoryDesc: 'Tüm eşleşen çiftleri bulun! Hafıza becerilerinizi test edin.',
                 memoryOverlayTitle: '🧠 Hafıza Eşleştirme Oyunu',
-                memoryOverlayDesc: 'Emoji kartlarının tüm eşleşen çiftlerini bulun!',
+                memoryOverlayDesc: 'Emoji kartlarının tüm eşleşen çiftlerini bulun! Kartları çevirmek ve eşleşmeleri bulmak için kartlara tıklayın.',
                 
                 tictactoeTitle: '⭕ Tic Tac Toe',
-                tictactoeDesc: 'Kazanmak için üç tane yan yana getirin!',
+                tictactoeDesc: 'Klasik strateji oyunu! Kazanmak için üç X veya O\'yu yan yana getirin.',
                 tictactoeOverlayTitle: '⭕ Tic Tac Toe',
-                tictactoeOverlayDesc: 'Kazanmak için üç X veya O\'yu yan yana getirin!',
+                tictactoeOverlayDesc: 'Klasik strateji oyunu! Kazanmak için üç X veya O\'yu satır, sütun veya çaprazda yan yana getirin!',
                 
                 mathTitle: '🔢 Matematik Yarışması',
-                mathDesc: 'Matematik problemlerini çözün!',
+                mathDesc: 'Matematik becerilerinizi test edin! Toplama, çıkarma ve çarpma problemlerini çözün.',
                 mathOverlayTitle: '🔢 Matematik Yarışması',
-                mathOverlayDesc: '10 matematik problemini olabildiğince hızlı çözün!',
+                mathOverlayDesc: 'Matematik becerilerinizi test edin! 10 matematik problemini olabildiğince hızlı çözün!',
                 
                 simonTitle: '🔴 Simon Der',
-                simonDesc: 'Sıralamayı izleyin ve tekrarlayın!',
+                simonDesc: 'Hafıza deseni oyunu! Sıralamayı izleyin ve mükemmel şekilde tekrarlayın.',
                 simonOverlayTitle: '🔴 Simon Der',
-                simonOverlayDesc: 'Deseni izleyin ve renkli düğmelere tıklayarak tekrarlayın!',
+                simonOverlayDesc: 'Hafıza deseni oyunu! Deseni izleyin ve renkli düğmelere tıklayarak tekrarlayın!',
                 
                 wordsearchTitle: '🔤 Kelime Arama',
-                wordsearchDesc: 'Kelimeleri seçmek için tıklayın ve sürükleyin!',
+                wordsearchDesc: 'Gizli kelimeleri bulun! Izgaradaki kelimeleri seçmek için tıklayın ve sürükleyin.',
                 wordsearchOverlayTitle: '🔤 Kelime Arama',
-                wordsearchOverlayDesc: 'Gizli kelimeleri tıklayıp sürükleyerek bulun!',
+                wordsearchOverlayDesc: 'Gizli kelimeleri bulun! Harf ızgarasında gizli kelimeleri seçmek için tıklayın ve sürükleyin!',
                 
                 puzzleTitle: '🧩 Kaydırma Bulmacası',
-                puzzleDesc: 'Sayıları sıraya dizin!',
+                puzzleDesc: 'Sayı bulmaca oyunu! Karoları 1\'den 8\'e kadar sayısal sırayla düzenleyin.',
                 puzzleOverlayTitle: '🧩 Kaydırma Bulmacası',
-                puzzleOverlayDesc: 'Boş alanın yanındaki karolara tıklayarak kaydırın ve 1-8 sayılarını sıralayın!',
+                puzzleOverlayDesc: 'Sayı bulmaca oyunu! Boş alanın yanındaki karolara tıklayarak kaydırın ve 1-8 sayılarını düzenleyin!',
                 
                 // Buttons
                 startGame: '🚀 Oyunu Başlat',
@@ -1289,34 +1264,34 @@
                 
                 // Game Titles & Descriptions
                 memoryTitle: '🧠 Gioco di Abbinamento Memoria',
-                memoryDesc: 'Trova tutte le coppie corrispondenti!',
+                memoryDesc: 'Trova tutte le coppie corrispondenti! Metti alla prova le tue abilità di memoria.',
                 memoryOverlayTitle: '🧠 Gioco di Abbinamento Memoria',
-                memoryOverlayDesc: 'Trova tutte le coppie corrispondenti di carte emoji!',
+                memoryOverlayDesc: 'Trova tutte le coppie corrispondenti di carte emoji! Clicca sulle carte per girarle e trovare gli abbinamenti.',
                 
                 tictactoeTitle: '⭕ Tris',
-                tictactoeDesc: 'Ottieni tre di fila per vincere!',
+                tictactoeDesc: 'Gioco di strategia classico! Ottieni tre X o O di fila per vincere.',
                 tictactoeOverlayTitle: '⭕ Tris',
-                tictactoeOverlayDesc: 'Ottieni tre X o O di fila per vincere!',
+                tictactoeOverlayDesc: 'Gioco di strategia classico! Ottieni tre X o O di fila, colonna o diagonale per vincere!',
                 
                 mathTitle: '🔢 Quiz di Matematica',
-                mathDesc: 'Risolvi i problemi di matematica!',
+                mathDesc: 'Metti alla prova le tue abilità matematiche! Risolvi problemi di addizione, sottrazione e moltiplicazione.',
                 mathOverlayTitle: '🔢 Quiz di Matematica',
-                mathOverlayDesc: 'Risolvi 10 problemi di matematica il più velocemente possibile!',
+                mathOverlayDesc: 'Metti alla prova le tue abilità matematiche! Risolvi 10 problemi di matematica il più velocemente possibile!',
                 
                 simonTitle: '🔴 Simon Dice',
-                simonDesc: 'Guarda la sequenza e ripetila!',
+                simonDesc: 'Gioco di modello di memoria! Guarda la sequenza e ripetila perfettamente.',
                 simonOverlayTitle: '🔴 Simon Dice',
-                simonOverlayDesc: 'Guarda il modello e ripetilo cliccando sui pulsanti colorati!',
+                simonOverlayDesc: 'Gioco di modello di memoria! Guarda il modello e ripetilo cliccando sui pulsanti colorati!',
                 
                 wordsearchTitle: '🔤 Ricerca Parole',
-                wordsearchDesc: 'Clicca e trascina per selezionare le parole!',
+                wordsearchDesc: 'Trova le parole nascoste! Clicca e trascina per selezionare le parole nella griglia.',
                 wordsearchOverlayTitle: '🔤 Ricerca Parole',
-                wordsearchOverlayDesc: 'Trova le parole nascoste cliccando e trascinando per selezionarle!',
+                wordsearchOverlayDesc: 'Trova le parole nascoste! Clicca e trascina per selezionare le parole nascoste nella griglia di lettere!',
                 
                 puzzleTitle: '🧩 Puzzle Scorrevole',
-                puzzleDesc: 'Disponi i numeri in ordine!',
+                puzzleDesc: 'Gioco di puzzle numerico! Disponi le tessere in ordine numerico da 1 a 8.',
                 puzzleOverlayTitle: '🧩 Puzzle Scorrevole',
-                puzzleOverlayDesc: 'Clicca sulle tessere accanto allo spazio vuoto per farle scorrere e disponi i numeri 1-8!',
+                puzzleOverlayDesc: 'Gioco di puzzle numerico! Clicca sulle tessere accanto allo spazio vuoto per farle scorrere e disponi i numeri 1-8!',
                 
                 // Buttons
                 startGame: '🚀 Inizia Gioco',
@@ -1380,34 +1355,34 @@
                 
                 // Game Titles & Descriptions
                 memoryTitle: '🧠 Jogo de Correspondência da Memória',
-                memoryDesc: 'Encontre todos os pares correspondentes!',
+                memoryDesc: 'Encontre todos os pares correspondentes! Teste suas habilidades de memória.',
                 memoryOverlayTitle: '🧠 Jogo de Correspondência da Memória',
-                memoryOverlayDesc: 'Encontre todos os pares correspondentes de cartas emoji!',
+                memoryOverlayDesc: 'Encontre todos os pares correspondentes de cartas emoji! Clique nas cartas para virá-las e encontrar correspondências.',
                 
                 tictactoeTitle: '⭕ Jogo da Velha',
-                tictactoeDesc: 'Consiga três em linha para ganhar!',
+                tictactoeDesc: 'Jogo de estratégia clássico! Consiga três X ou O em linha para ganhar.',
                 tictactoeOverlayTitle: '⭕ Jogo da Velha',
-                tictactoeOverlayDesc: 'Consiga três X ou O em linha para ganhar!',
+                tictactoeOverlayDesc: 'Jogo de estratégia clássico! Consiga três X ou O em linha, coluna ou diagonal para ganhar!',
                 
                 mathTitle: '🔢 Quiz de Matemática',
-                mathDesc: 'Resolva os problemas de matemática!',
+                mathDesc: 'Teste suas habilidades matemáticas! Resolva problemas de adição, subtração e multiplicação.',
                 mathOverlayTitle: '🔢 Quiz de Matemática',
-                mathOverlayDesc: 'Resolva 10 problemas de matemática o mais rápido possível!',
+                mathOverlayDesc: 'Teste suas habilidades matemáticas! Resolva 10 problemas de matemática o mais rápido possível!',
                 
                 simonTitle: '🔴 Simon Diz',
-                simonDesc: 'Observe a sequência e repita!',
+                simonDesc: 'Jogo de padrão de memória! Observe a sequência e repita perfeitamente.',
                 simonOverlayTitle: '🔴 Simon Diz',
-                simonOverlayDesc: 'Observe o padrão e repita clicando nos botões coloridos!',
+                simonOverlayDesc: 'Jogo de padrão de memória! Observe o padrão e repita clicando nos botões coloridos!',
                 
                 wordsearchTitle: '🔤 Caça-Palavras',
-                wordsearchDesc: 'Clique e arraste para selecionar palavras!',
+                wordsearchDesc: 'Encontre palavras ocultas! Clique e arraste para selecionar palavras na grade.',
                 wordsearchOverlayTitle: '🔤 Caça-Palavras',
-                wordsearchOverlayDesc: 'Encontre palavras ocultas clicando e arrastando para selecioná-las!',
+                wordsearchOverlayDesc: 'Encontre palavras ocultas! Clique e arraste para selecionar palavras ocultas na grade de letras!',
                 
                 puzzleTitle: '🧩 Quebra-Cabeça Deslizante',
-                puzzleDesc: 'Organize os números em ordem!',
+                puzzleDesc: 'Jogo de quebra-cabeça numérico! Organize as peças em ordem numérica de 1 a 8.',
                 puzzleOverlayTitle: '🧩 Quebra-Cabeça Deslizante',
-                puzzleOverlayDesc: 'Clique nas peças ao lado do espaço vazio para deslizá-las e organize os números 1-8!',
+                puzzleOverlayDesc: 'Jogo de quebra-cabeça numérico! Clique nas peças ao lado do espaço vazio para deslizá-las e organize os números 1-8!',
                 
                 // Buttons
                 startGame: '🚀 Iniciar Jogo',
@@ -1437,7 +1412,6 @@
                 wordSearchWords: ['GATO', 'CACHORRO', 'SOL', 'JOGO', 'LIVRO', 'ARVORE', 'PEIXE', 'PASSARO', 'ESTRELA', 'LUA', 'BOLO', 'BRINCAR', 'CORRER', 'NADAR', 'BOLA', 'MACA', 'URSO', 'FLOR', 'CASA', 'ESCOLA']
             }
         };
-
         // Language Management
         const languageFlags = {
             en: '🇺🇸',
@@ -1495,8 +1469,14 @@
             // Update all text
             updateAllText();
             
-            // Go directly to home tab
-            loadGame('welcome');
+            // Stay on current game instead of redirecting to home
+            if (currentGame && currentGame !== 'welcome') {
+                // Just update the current game's text without reloading
+                updateGameText();
+            } else {
+                // Only go to home if we're not in a game
+                loadGame('welcome');
+            }
         }
 
         function updateAllText() {
@@ -1522,6 +1502,35 @@
                 if (element) {
                     element.textContent = updateById[id];
                 }
+            });
+        }
+
+        function updateGameText() {
+            // Update game-specific text without reloading the game
+            const gameElements = {
+                'memoryTitle': document.querySelector('.memory-game h2'),
+                'memoryDesc': document.querySelector('.memory-game p'),
+                'tttTurn': document.getElementById('tttTurn'),
+                'mathProblem': document.getElementById('mathProblem'),
+                'simonLevel': document.getElementById('simonLevel'),
+                'wordsFound': document.getElementById('wordsFound'),
+                'puzzleMoves': document.getElementById('puzzleMoves')
+            };
+
+            // Update pause button text if it exists
+            const pauseBtn = document.getElementById('pauseBtn');
+            if (pauseBtn) {
+                pauseBtn.textContent = translate('pauseBtn');
+            }
+
+            // Update game stats labels
+            document.querySelectorAll('.stat-item').forEach(item => {
+                const text = item.textContent;
+                if (text.includes('Moves:') || text.includes('الحركات:') || text.includes('Mouvements:')) {
+                    const value = text.split(':')[1] || text.split('الحركات:')[1];
+                    item.innerHTML = translate('moves') + ':' + value;
+                }
+                // Add similar updates for other stat items as needed
             });
         }
 
@@ -1775,7 +1784,15 @@
             document.querySelectorAll('.game-item').forEach(item => {
                 item.classList.remove('active');
             });
-            event.target.closest('.game-item').classList.add('active');
+            
+            // Find and activate the correct game item
+            const gameItems = document.querySelectorAll('.game-item');
+            gameItems.forEach(item => {
+                const onclick = item.getAttribute('onclick');
+                if (onclick && onclick.includes(`'${gameType}'`)) {
+                    item.classList.add('active');
+                }
+            });
 
             switch(gameType) {
                 case 'welcome':
@@ -1815,6 +1832,7 @@
             `;
         }
 
+        // Game loading functions with complete translations
         function loadMemoryGame() {
             document.getElementById('gameContainer').innerHTML = `
                 <div class="memory-game">
@@ -1853,6 +1871,7 @@
                     <div class="game-stats">
                         <div class="stat-item">${translate('score')}: <span id="mathScore">0</span></div>
                         <div class="stat-item">${translate('question')}: <span id="mathQuestion">1</span>/10</div>
+                        <div class="stat-item">${translate('time')}: <span id="mathquizTime">0</span>s</div>
                     </div>
                     <div style="font-size: 2em; margin: 30px 0; color: #4ecdc4;" id="mathProblem">2 + 2 = ?</div>
                     <div id="mathOptions" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;"></div>
@@ -2001,7 +2020,7 @@
                     gameActive = false;
                     gameRunning = false;
                     showWinNotification(translate('playerWins', {player: currentPlayer}));
-                } else if (board.every(cell => cell !== '')) {
+                            } else if (board.every(cell => cell !== '')) {
                     gameActive = false;
                     gameRunning = false;
                     showWinNotification(translate('itsATie'));
@@ -2094,7 +2113,8 @@
                                     generateProblem();
                                 } else {
                                     gameActive = false;
-                                    showWinNotification(translate('quizCompleted') + ' ' + translate('score') + ': ' + score + '/10');
+                                    const time = stopTimer();
+                                    showWinNotification(translate('quizCompleted') + ' ' + translate('score') + ': ' + score + '/10 ' + translate('inSeconds', {time}));
                                 }
                             }, 1500);
                         } else {
@@ -2196,6 +2216,7 @@
             document.getElementById('wordsFound').textContent = '0';
             document.getElementById('totalWords').textContent = selectedWords.length;
             
+            // Place words in grid
             selectedWords.forEach(word => {
                 let placed = false;
                 let attempts = 0;
@@ -2234,6 +2255,7 @@
                 }
             });
             
+            // Fill empty cells with random letters
             const letters = currentLanguage === 'ar' ? 
                 'ابتثجحخدذرزسشصضطظعغفقكلمنهوي' : 
                 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -2246,6 +2268,7 @@
                 }
             }
             
+            // Create words list
             const wordsList = document.getElementById('wordsList');
             wordsList.innerHTML = '';
             selectedWords.forEach(word => {
@@ -2256,6 +2279,7 @@
                 wordsList.appendChild(wordItem);
             });
             
+            // Create grid
             const gridElement = document.getElementById('wordGrid');
             gridElement.innerHTML = '';
             
@@ -2354,10 +2378,18 @@
                         display: flex; align-items: center; justify-content: center;
                         font-size: 1.5em; font-weight: bold; cursor: pointer;
                         background: ${num === 0 ? '#f0f0f0' : '#fff'};
-                        border-radius: 10px;
+                        border-radius: 10px; transition: all 0.3s ease;
                     `;
                     tile.textContent = num === 0 ? '' : num;
                     tile.onclick = () => moveTile(index);
+                    if (num !== 0) {
+                        tile.addEventListener('mouseenter', () => {
+                            tile.style.background = '#e0e0e0';
+                        });
+                        tile.addEventListener('mouseleave', () => {
+                            tile.style.background = '#fff';
+                        });
+                    }
                     board.appendChild(tile);
                 });
             }
@@ -2388,6 +2420,8 @@
             }
             
             window.shufflePuzzle = function() {
+                if (!gameActive || gamePaused) return;
+                
                 for (let i = 0; i < 100; i++) {
                     const emptyIndex = puzzle.indexOf(0);
                     const validMoves = [];
@@ -2402,6 +2436,7 @@
                 }
                 moves = 0;
                 document.getElementById('puzzleMoves').textContent = moves;
+                resetTimer();
                 render();
             };
             
@@ -2412,13 +2447,19 @@
         function showFullscreen() {
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
             }
         }
 
         // Initialize the portal
         document.addEventListener('DOMContentLoaded', () => {
             updateAllText();
+            loadGame('welcome');
         });
     </script>
 </body>
 </html>
+
