@@ -1564,11 +1564,15 @@
             gamePaused = true;
             gameActive = false;
             
-            // Stop timer
-            if (currentTimerInterval) {
-                clearInterval(currentTimerInterval);
-                currentTimerInterval = null;
-            }
+               // Store current elapsed time before stopping timer
+    if (currentTimerInterval) {
+        const timeElement = document.getElementById(`${currentGame}Time`);
+        if (timeElement) {
+            pausedTime = parseInt(timeElement.textContent) || 0;
+        }
+        clearInterval(currentTimerInterval);
+        currentTimerInterval = null;
+    }
             
             // Show pause overlay
             let pauseOverlay = document.getElementById('pauseOverlay');
@@ -1604,7 +1608,9 @@
             }
             
             // Resume timer
-            startTimer();
+           if (!currentTimerInterval) {
+        startTimer();
+    }
         }
 
         function showNotification(message, type = 'success', duration = 3000) {
@@ -1683,21 +1689,26 @@
 
         // Timer management
         function startTimer() {
-            resetTimer();
-            
-            if (!currentGame) return;
-            
-            const startTime = Date.now() - (pausedTime * 1000);
-            currentTimerInterval = setInterval(() => {
-                if (gameActive && !gamePaused) {
-                    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-                    const timeElement = document.getElementById(`${currentGame}Time`);
-                    if (timeElement) {
-                        timeElement.textContent = elapsed;
-                    }
-                }
-            }, 1000);
+    if (!currentGame) return;
+    
+    // Don't reset timer when resuming
+    if (!gamePaused && pausedTime === 0) {
+        // Only reset if starting fresh
+        gameTimers[currentGame] = { startTime: Date.now() };
+    }
+    
+    const startTime = gameTimers[currentGame]?.startTime || Date.now();
+    currentTimerInterval = setInterval(() => {
+        if (gameActive && !gamePaused) {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000) - pausedTime;
+            const timeElement = document.getElementById(`${currentGame}Time`);
+            if (timeElement) {
+                timeElement.textContent = Math.max(0, elapsed);
+            }
         }
+    }, 1000);
+}
+
 
         function stopTimer() {
             if (currentTimerInterval) {
