@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kids Game Portal - لعبة البورتال للأطفال</title>
+    <title>Kids Game Portal - بوابة ألعاب الأطفال</title>
     <style>
         * {
             margin: 0;
@@ -19,99 +19,150 @@
             transition: all 0.3s ease;
         }
 
-        /* Language Selection Screen */
-        .language-selector {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            transition: all 0.5s ease;
+        /* Language Dropdown Styles */
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
         }
 
-        .language-selector.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.9);
-        }
-
-        .language-title {
-            color: white;
-            font-size: 3em;
-            margin-bottom: 50px;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .language-options {
-            display: flex;
-            gap: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .language-btn {
-            background: rgba(255,255,255,0.9);
-            border: none;
-            padding: 30px 60px;
-            border-radius: 20px;
-            font-size: 1.5em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            min-width: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .language-btn:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            background: white;
-        }
-
-        .language-flag {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .language-name {
-            font-size: 1.2em;
-            color: #333;
-        }
-
-        .language-switch {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+        .language-toggle {
             background: rgba(255,255,255,0.2);
             border: 2px solid rgba(255,255,255,0.3);
             color: white;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: inherit;
-            font-size: 1em;
-            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .language-switch:hover {
+        .language-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .language-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
+            transform: translateY(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        [dir="rtl"] .language-options {
+            right: auto;
+            left: 0;
+        }
+
+        .language-options.show {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .language-option {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .language-option:hover {
+            background: #f0f0f0;
+        }
+
+        .language-option.active {
+            background: #4ecdc4;
+            color: white;
+        }
+
+        /* Pause System Styles */
+        .pause-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            border-radius: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .pause-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .pause-title {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .resume-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .resume-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        .pause-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 50;
+        }
+
+        [dir="rtl"] .pause-btn {
+            left: auto;
+            right: 20px;
+        }
+
+        .pause-btn:hover {
             background: rgba(255,255,255,0.3);
             transform: translateY(-2px);
         }
@@ -147,11 +198,6 @@
 
         [dir="rtl"] .game-item.active {
             transform: translateX(-10px);
-        }
-
-        [dir="rtl"] .language-switch {
-            right: auto;
-            left: 20px;
         }
 
         /* Header Styles */
@@ -507,55 +553,6 @@
         .simon-blue { background: #1e90ff; }
         .simon-yellow { background: #ffa502; }
 
-        /* Whack-a-Mole Game Styles */
-        .mole-game-area {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            max-width: 400px;
-            margin: 20px auto;
-        }
-
-        .mole-hole {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #8B4513, #654321);
-            border-radius: 50%;
-            position: relative;
-            cursor: pointer;
-            border: 4px solid #4ecdc4;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .mole-hole:hover {
-            transform: scale(1.05);
-        }
-
-        .mole {
-            position: absolute;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 3em;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .mole.visible {
-            bottom: 10px;
-        }
-
-        .mole.hit {
-            animation: moleHit 0.3s ease;
-        }
-
-        @keyframes moleHit {
-            0% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.2); }
-            100% { transform: translateX(-50%) scale(0); }
-        }
-
         /* Game Stats */
         .game-stats {
             display: flex;
@@ -672,51 +669,67 @@
             }
 
             .language-options {
-                flex-direction: column;
-                gap: 20px;
+                position: fixed;
+                top: 70px;
+                right: 10px;
+                left: auto;
             }
 
-            .language-btn {
-                min-width: 250px;
+            [dir="rtl"] .language-options {
+                right: auto;
+                left: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Language Selection Screen -->
-    <div class="language-selector" id="languageSelector">
-        <div class="language-title">
-            🎮 Choose Your Language - اختر لغتك 🎮
-        </div>
-        <div class="language-options">
-            <button class="language-btn" onclick="setLanguage('en')">
-                <div class="language-flag">🇺🇸</div>
-                <div class="language-name">English</div>
-            </button>
-            <button class="language-btn" onclick="setLanguage('ar')">
-                <div class="language-flag">🇸🇦</div>
-                <div class="language-name">العربية</div>
-            </button>
-        </div>
-    </div>
-
-    <!-- Language Switch Button -->
-    <button class="language-switch" id="languageSwitch" onclick="showLanguageSelector()" style="display: none;">
-        🌐 <span id="switchText">العربية</span>
-    </button>
-
     <!-- Header -->
-    <header class="header" style="display: none;">
+    <header class="header">
         <h1 id="headerTitle">🎮 Kids Game Portal</h1>
         <div class="header-buttons">
             <button class="header-btn" onclick="showFullscreen()" id="fullscreenBtn">⛶ Fullscreen</button>
-            <button class="header-btn" onclick="showStats()" id="statsBtn">📊 Stats</button>
-            <button class="header-btn" onclick="showSettings()" id="settingsBtn">⚙️ Settings</button>
+            <div class="language-dropdown">
+                <button class="language-toggle" onclick="toggleLanguageDropdown()">
+                    <span id="currentLangFlag">🇺🇸</span>
+                    <span id="currentLangName">English</span>
+                    <span>▼</span>
+                </button>
+                <div class="language-options" id="languageOptions">
+                    <div class="language-option active" onclick="setLanguage('en')">
+                        <span>🇺🇸</span>
+                        <span>English</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('ar')">
+                        <span>🇸🇦</span>
+                        <span>العربية</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('fr')">
+                        <span>🇫🇷</span>
+                        <span>Français</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('es')">
+                        <span>🇪🇸</span>
+                        <span>Español</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('tr')">
+                        <span>🇹🇷</span>
+                        <span>Türkçe</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('it')">
+                        <span>🇮🇹</span>
+                        <span>Italiano</span>
+                    </div>
+                    <div class="language-option" onclick="setLanguage('pt')">
+                        <span>🇵🇹</span>
+                        <span>Português</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <div class="container" style="display: none;">
+    <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <h3 id="sidebarTitle">🎯 Choose a Game</h3>
@@ -734,11 +747,6 @@
             <div class="game-item" onclick="loadGame('tictactoe')">
                 <span class="game-icon">⭕</span>
                 <span class="game-name" data-translate="tictactoe">Tic Tac Toe</span>
-            </div>
-            
-            <div class="game-item" onclick="loadGame('whackmole')">
-                <span class="game-icon">🔨</span>
-                <span class="game-name" data-translate="whackmole">Whack-a-Mole</span>
             </div>
             
             <div class="game-item" onclick="loadGame('mathquiz')">
@@ -769,8 +777,8 @@
                 <div class="welcome-screen">
                     <h2 data-translate="welcomeTitle">Welcome to Kids Game Portal! 🎉</h2>
                     <p data-translate="welcomeText">Choose a game from the sidebar to start playing!</p>
-                    <p><span data-translate="gamesCount">🎮 <strong>8 Amazing Games</strong> waiting for you!</span></p>
-                    <div style="font-size: 4em; margin: 20px 0;">🎯🧠⭕🔨🔢🔴🔤🧩</div>
+                    <p><span data-translate="gamesCount">🎮 <strong>7 Amazing Games</strong> waiting for you!</span></p>
+                    <div style="font-size: 4em; margin: 20px 0;">🎯🧠⭕🔢🔴🔤🧩</div>
                     <p data-translate="startInstructions">Click on any game in the left sidebar to begin your adventure!</p>
                 </div>
             </div>
@@ -779,23 +787,20 @@
 
     <script>
         // Language System
-        let currentLanguage = 'en';
+        let currentLanguage = 'en'; // Default to English
         
         const translations = {
             en: {
                 // Header & Navigation
                 headerTitle: '🎮 Kids Game Portal',
                 fullscreenBtn: '⛶ Fullscreen',
-                statsBtn: '📊 Stats',
-                settingsBtn: '⚙️ Settings',
                 sidebarTitle: '🎯 Choose a Game',
-                switchText: 'العربية',
+                pauseBtn: '⏸️ Pause',
                 
                 // Games
                 home: 'Home',
                 memory: 'Memory Match',
                 tictactoe: 'Tic Tac Toe',
-                whackmole: 'Whack-a-Mole',
                 mathquiz: 'Math Quiz',
                 simon: 'Simon Says',
                 wordsearch: 'Word Search',
@@ -804,12 +809,10 @@
                 // Welcome Screen
                 welcomeTitle: 'Welcome to Kids Game Portal! 🎉',
                 welcomeText: 'Choose a game from the sidebar to start playing!',
-                gamesCount: '🎮 <strong>8 Amazing Games</strong> waiting for you!',
+                gamesCount: '🎮 <strong>7 Amazing Games</strong> waiting for you!',
                 startInstructions: 'Click on any game in the left sidebar to begin your adventure!',
                 
                 // Game Stats
-                gamesPlayed: 'Games Played',
-                totalWins: 'Total Wins',
                 moves: 'Moves',
                 time: 'Time',
                 score: 'Score',
@@ -818,8 +821,6 @@
                 found: 'Found',
                 question: 'Question',
                 currentTurn: 'Current Turn',
-                misses: 'Misses',
-                lives: 'Lives',
                 
                 // Game Titles & Descriptions
                 memoryTitle: '🧠 Memory Match Game',
@@ -831,11 +832,6 @@
                 tictactoeDesc: 'Get three in a row to win!',
                 tictactoeOverlayTitle: '⭕ Tic Tac Toe',
                 tictactoeOverlayDesc: 'Get three X\'s or O\'s in a row to win!',
-                
-                whackmoleTitle: '🔨 Whack-a-Mole',
-                whackmoleDesc: 'Click the moles when they pop up!',
-                whackmoleOverlayTitle: '🔨 Whack-a-Mole',
-                whackmoleOverlayDesc: 'Click the moles as fast as you can when they pop up!',
                 
                 mathTitle: '🔢 Math Quiz',
                 mathDesc: 'Solve the math problems!',
@@ -860,10 +856,9 @@
                 // Buttons
                 startGame: '🚀 Start Game',
                 playAgain: '🎉 Play Again',
-                newGame: '🔄 New Game',
                 shuffle: '🔀 Shuffle',
-                nextColor: '➡️ Next Color',
-                newPuzzle: '🔄 New Puzzle',
+                pauseGame: '⏸️ Pause Game',
+                resumeGame: '▶️ Resume Game',
                 
                 // Notifications
                 greatMatch: 'Great match! 🎉',
@@ -871,10 +866,7 @@
                 wrong: '❌ Wrong!',
                 gameOver: 'Game Over!',
                 youWon: '🎉 You won!',
-                timeUp: '⏰ Time\'s up!',
-                finalScore: 'Final Score',
                 congratulations: '🎉 Congratulations!',
-                tryAgain: 'Try again!',
                 foundWord: '🎉 Found',
                 allWordsFound: '🎉 All words found!',
                 puzzleSolved: '🎉 Puzzle solved!',
@@ -882,14 +874,8 @@
                 playerWins: 'Player {player} wins!',
                 inSeconds: 'in {time} seconds!',
                 inMoves: 'in {moves} moves',
-                pointsEarned: '+{points} points!',
                 quizCompleted: '🎉 Quiz completed!',
-                levelComplete: '🎉 Level completed!',
                 wrongSequence: '❌ Wrong sequence!',
-                
-                // Settings & Stats Messages
-                statsMessage: 'Games: {games} | Wins: {wins} | Rate: {rate}%',
-                settingsMessage: 'Click games in sidebar to switch • Use fullscreen for better experience',
                 
                 // Word Search Words
                 wordSearchWords: ['CAT', 'DOG', 'SUN', 'FUN', 'TOY', 'BOOK', 'TREE', 'FISH', 'BIRD', 'STAR', 'MOON', 'CAKE', 'GAME', 'PLAY', 'JUMP', 'RUN', 'SWIM', 'BALL', 'APPLE', 'BEAR']
@@ -899,16 +885,13 @@
                 // Header & Navigation
                 headerTitle: '🎮 بوابة ألعاب الأطفال',
                 fullscreenBtn: '⛶ ملء الشاشة',
-                statsBtn: '📊 الإحصائيات',
-                settingsBtn: '⚙️ الإعدادات',
                 sidebarTitle: '🎯 اختر لعبة',
-                switchText: 'English',
+                pauseBtn: '⏸️ إيقاف',
                 
                 // Games
                 home: 'الرئيسية',
                 memory: 'لعبة الذاكرة',
                 tictactoe: 'إكس أوه',
-                whackmole: 'اضرب الخلد',
                 mathquiz: 'اختبار الرياضيات',
                 simon: 'سايمون يقول',
                 wordsearch: 'البحث عن الكلمات',
@@ -917,12 +900,10 @@
                 // Welcome Screen
                 welcomeTitle: 'مرحباً ببوابة ألعاب الأطفال! 🎉',
                 welcomeText: 'اختر لعبة من الشريط الجانبي لتبدأ اللعب!',
-                gamesCount: '🎮 <strong>8 ألعاب رائعة</strong> في انتظارك!',
+                gamesCount: '🎮 <strong>7 ألعاب رائعة</strong> في انتظارك!',
                 startInstructions: 'انقر على أي لعبة في الشريط الجانبي الأيسر لبدء مغامرتك!',
                 
                 // Game Stats
-                gamesPlayed: 'الألعاب التي تم لعبها',
-                totalWins: 'إجمالي الانتصارات',
                 moves: 'الحركات',
                 time: 'الوقت',
                 score: 'النقاط',
@@ -931,8 +912,6 @@
                 found: 'تم العثور',
                 question: 'السؤال',
                 currentTurn: 'الدور الحالي',
-                misses: 'الأخطاء',
-                lives: 'الأرواح',
                 
                 // Game Titles & Descriptions
                 memoryTitle: '🧠 لعبة مطابقة الذاكرة',
@@ -944,11 +923,6 @@
                 tictactoeDesc: 'احصل على ثلاثة في صف للفوز!',
                 tictactoeOverlayTitle: '⭕ إكس أوه',
                 tictactoeOverlayDesc: 'احصل على ثلاثة X أو O في صف للفوز!',
-                
-                whackmoleTitle: '🔨 اضرب الخلد',
-                whackmoleDesc: 'انقر على الخلدان عندما يظهرون!',
-                whackmoleOverlayTitle: '🔨 اضرب الخلد',
-                whackmoleOverlayDesc: 'انقر على الخلدان بأسرع ما يمكن عندما يظهرون!',
                 
                 mathTitle: '🔢 اختبار الرياضيات',
                 mathDesc: 'حل مسائل الرياضيات!',
@@ -973,10 +947,9 @@
                 // Buttons
                 startGame: '🚀 ابدأ اللعبة',
                 playAgain: '🎉 العب مرة أخرى',
-                newGame: '🔄 لعبة جديدة',
                 shuffle: '🔀 خلط',
-                nextColor: '➡️ اللون التالي',
-                newPuzzle: '🔄 لغز جديد',
+                pauseGame: '⏸️ إيقاف اللعبة',
+                resumeGame: '▶️ استئناف اللعبة',
                 
                 // Notifications
                 greatMatch: 'مطابقة رائعة! 🎉',
@@ -984,10 +957,7 @@
                 wrong: '❌ خطأ!',
                 gameOver: 'انتهت اللعبة!',
                 youWon: '🎉 لقد فزت!',
-                timeUp: '⏰ انتهى الوقت!',
-                finalScore: 'النتيجة النهائية',
                 congratulations: '🎉 تهانينا!',
-                tryAgain: 'حاول مرة أخرى!',
                 foundWord: '🎉 تم العثور على',
                 allWordsFound: '🎉 تم العثور على جميع الكلمات!',
                 puzzleSolved: '🎉 تم حل اللغز!',
@@ -995,21 +965,338 @@
                 playerWins: 'اللاعب {player} يفوز!',
                 inSeconds: 'في {time} ثانية!',
                 inMoves: 'في {moves} حركة',
-                pointsEarned: '+{points} نقطة!',
                 quizCompleted: '🎉 تم إكمال الاختبار!',
-                levelComplete: '🎉 تم إكمال المستوى!',
                 wrongSequence: '❌ تسلسل خاطئ!',
-                
-                // Settings & Stats Messages
-                statsMessage: 'الألعاب: {games} | الانتصارات: {wins} | المعدل: {rate}%',
-                settingsMessage: 'انقر على الألعاب في الشريط الجانبي للتبديل • استخدم ملء الشاشة للحصول على تجربة أفضل',
                 
                 // Word Search Words (Arabic)
                 wordSearchWords: ['قطة', 'كلب', 'شمس', 'مرح', 'لعبة', 'كتاب', 'شجرة', 'سمك', 'طير', 'نجم', 'قمر', 'كعكة', 'لعب', 'قفز', 'جري', 'سبح', 'كرة', 'تفاح', 'دب']
+            },
+
+            fr: {
+                // Header & Navigation
+                headerTitle: '🎮 Portail de Jeux pour Enfants',
+                fullscreenBtn: '⛶ Plein Écran',
+                sidebarTitle: '🎯 Choisir un Jeu',
+                pauseBtn: '⏸️ Pause',
+                
+                // Games
+                home: 'Accueil',
+                memory: 'Jeu de Mémoire',
+                tictactoe: 'Morpion',
+                mathquiz: 'Quiz de Maths',
+                simon: 'Jacques a Dit',
+                wordsearch: 'Recherche de Mots',
+                puzzle: 'Puzzle Glissant',
+                
+                // Welcome Screen
+                welcomeTitle: 'Bienvenue au Portail de Jeux pour Enfants! 🎉',
+                welcomeText: 'Choisissez un jeu dans la barre latérale pour commencer à jouer!',
+                gamesCount: '🎮 <strong>7 Jeux Fantastiques</strong> vous attendent!',
+                startInstructions: 'Cliquez sur n\'importe quel jeu dans la barre latérale gauche pour commencer votre aventure!',
+                
+                // Game Stats
+                moves: 'Mouvements',
+                time: 'Temps',
+                score: 'Score',
+                level: 'Niveau',
+                matches: 'Correspondances',
+                found: 'Trouvé',
+                question: 'Question',
+                currentTurn: 'Tour Actuel',
+                
+                // Buttons
+                startGame: '🚀 Commencer le Jeu',
+                playAgain: '🎉 Rejouer',
+                shuffle: '🔀 Mélanger',
+                pauseGame: '⏸️ Mettre en Pause',
+                resumeGame: '▶️ Reprendre le Jeu',
+                
+                // Notifications
+                greatMatch: 'Excellente correspondance! 🎉',
+                correct: '🎉 Correct!',
+                wrong: '❌ Faux!',
+                youWon: '🎉 Vous avez gagné!',
+                foundWord: '🎉 Trouvé',
+                allWordsFound: '🎉 Tous les mots trouvés!',
+                puzzleSolved: '🎉 Puzzle résolu!',
+                itsATie: '🤝 Match nul!',
+                playerWins: 'Le joueur {player} gagne!',
+                inSeconds: 'en {time} secondes!',
+                inMoves: 'en {moves} mouvements',
+                quizCompleted: '🎉 Quiz terminé!',
+                wrongSequence: '❌ Mauvaise séquence!',
+                
+                // Word Search Words (French)
+                wordSearchWords: ['CHAT', 'CHIEN', 'SOLEIL', 'JEU', 'LIVRE', 'ARBRE', 'POISSON', 'OISEAU', 'ETOILE', 'LUNE', 'GATEAU', 'JOUER', 'COURIR', 'NAGER', 'BALLE', 'POMME', 'OURS', 'FLEUR', 'MAISON', 'ECOLE']
+            },
+
+            es: {
+                // Header & Navigation
+                headerTitle: '🎮 Portal de Juegos para Niños',
+                fullscreenBtn: '⛶ Pantalla Completa',
+                sidebarTitle: '🎯 Elegir un Juego',
+                pauseBtn: '⏸️ Pausa',
+                
+                // Games
+                home: 'Inicio',
+                memory: 'Juego de Memoria',
+                tictactoe: 'Tres en Raya',
+                mathquiz: 'Quiz de Matemáticas',
+                simon: 'Simón Dice',
+                wordsearch: 'Búsqueda de Palabras',
+                puzzle: 'Rompecabezas Deslizante',
+                
+                // Welcome Screen
+                welcomeTitle: '¡Bienvenido al Portal de Juegos para Niños! 🎉',
+                welcomeText: '¡Elige un juego de la barra lateral para empezar a jugar!',
+                gamesCount: '🎮 ¡<strong>7 Juegos Increíbles</strong> te esperan!',
+                startInstructions: '¡Haz clic en cualquier juego de la barra lateral izquierda para comenzar tu aventura!',
+                
+                // Game Stats
+                moves: 'Movimientos',
+                time: 'Tiempo',
+                score: 'Puntuación',
+                level: 'Nivel',
+                matches: 'Coincidencias',
+                found: 'Encontrado',
+                question: 'Pregunta',
+                currentTurn: 'Turno Actual',
+                
+                // Buttons
+                startGame: '🚀 Empezar Juego',
+                playAgain: '🎉 Jugar de Nuevo',
+                shuffle: '🔀 Mezclar',
+                pauseGame: '⏸️ Pausar Juego',
+                resumeGame: '▶️ Reanudar Juego',
+                
+                // Notifications
+                greatMatch: '¡Excelente coincidencia! 🎉',
+                correct: '¡🎉 Correcto!',
+                wrong: '❌ ¡Incorrecto!',
+                youWon: '¡🎉 Has ganado!',
+                foundWord: '🎉 Encontrada',
+                allWordsFound: '¡🎉 Todas las palabras encontradas!',
+                puzzleSolved: '¡🎉 Rompecabezas resuelto!',
+                itsATie: '🤝 ¡Empate!',
+                playerWins: '¡El jugador {player} gana!',
+                inSeconds: '¡en {time} segundos!',
+                inMoves: 'en {moves} movimientos',
+                quizCompleted: '¡🎉 Quiz completado!',
+                wrongSequence: '❌ ¡Secuencia incorrecta!',
+                
+                // Word Search Words (Spanish)
+                wordSearchWords: ['GATO', 'PERRO', 'SOL', 'JUEGO', 'LIBRO', 'ARBOL', 'PEZ', 'PAJARO', 'ESTRELLA', 'LUNA', 'PASTEL', 'JUGAR', 'CORRER', 'NADAR', 'PELOTA', 'MANZANA', 'OSO', 'FLOR', 'CASA', 'ESCUELA']
+            },
+
+            tr: {
+                // Header & Navigation
+                headerTitle: '🎮 Çocuk Oyun Portalı',
+                fullscreenBtn: '⛶ Tam Ekran',
+                sidebarTitle: '🎯 Oyun Seç',
+                pauseBtn: '⏸️ Duraklat',
+                
+                // Games
+                home: 'Ana Sayfa',
+                memory: 'Hafıza Oyunu',
+                tictactoe: 'Tic Tac Toe',
+                mathquiz: 'Matematik Yarışması',
+                simon: 'Simon Der',
+                wordsearch: 'Kelime Arama',
+                puzzle: 'Kaydırma Bulmacası',
+                
+                // Welcome Screen
+                welcomeTitle: 'Çocuk Oyun Portalına Hoş Geldiniz! 🎉',
+                welcomeText: 'Oynamaya başlamak için kenar çubuğundan bir oyun seçin!',
+                gamesCount: '🎮 <strong>7 Harika Oyun</strong> sizi bekliyor!',
+                startInstructions: 'Maceranıza başlamak için sol kenar çubuğundaki herhangi bir oyuna tıklayın!',
+                
+                // Game Stats
+                moves: 'Hamle',
+                time: 'Zaman',
+                score: 'Skor',
+                level: 'Seviye',
+                matches: 'Eşleşme',
+                found: 'Bulundu',
+                question: 'Soru',
+                currentTurn: 'Şimdiki Tur',
+                
+                // Buttons
+                startGame: '🚀 Oyunu Başlat',
+                playAgain: '🎉 Tekrar Oyna',
+                shuffle: '🔀 Karıştır',
+                pauseGame: '⏸️ Oyunu Duraklat',
+                resumeGame: '▶️ Oyunu Devam Ettir',
+                
+                // Notifications
+                greatMatch: 'Harika eşleşme! 🎉',
+                correct: '🎉 Doğru!',
+                wrong: '❌ Yanlış!',
+                youWon: '🎉 Kazandınız!',
+                foundWord: '🎉 Bulundu',
+                allWordsFound: '🎉 Tüm kelimeler bulundu!',
+                puzzleSolved: '🎉 Bulmaca çözüldü!',
+                itsATie: '🤝 Berabere!',
+                playerWins: 'Oyuncu {player} kazandı!',
+                inSeconds: '{time} saniyede!',
+                inMoves: '{moves} hamlede',
+                quizCompleted: '🎉 Yarışma tamamlandı!',
+                wrongSequence: '❌ Yanlış sıralama!',
+                
+                // Word Search Words (Turkish)
+                wordSearchWords: ['KEDI', 'KÖPEK', 'GÜNEŞ', 'OYUN', 'KİTAP', 'AĞAÇ', 'BALIK', 'KUŞ', 'YILDIZ', 'AY', 'PASTA', 'OYNA', 'KOŞ', 'YÜZ', 'TOP', 'ELMA', 'AYI', 'ÇİÇEK', 'EV', 'OKUL']
+            },
+
+            it: {
+                // Header & Navigation
+                headerTitle: '🎮 Portale Giochi per Bambini',
+                fullscreenBtn: '⛶ Schermo Intero',
+                sidebarTitle: '🎯 Scegli un Gioco',
+                pauseBtn: '⏸️ Pausa',
+                
+                // Games
+                home: 'Casa',
+                memory: 'Gioco di Memoria',
+                tictactoe: 'Tris',
+                mathquiz: 'Quiz di Matematica',
+                simon: 'Simon Dice',
+                wordsearch: 'Ricerca Parole',
+                puzzle: 'Puzzle Scorrevole',
+                
+                // Welcome Screen
+                welcomeTitle: 'Benvenuto al Portale Giochi per Bambini! 🎉',
+                welcomeText: 'Scegli un gioco dalla barra laterale per iniziare a giocare!',
+                gamesCount: '🎮 <strong>7 Giochi Fantastici</strong> ti aspettano!',
+                startInstructions: 'Clicca su qualsiasi gioco nella barra laterale sinistra per iniziare la tua avventura!',
+                
+                // Game Stats
+                moves: 'Mosse',
+                time: 'Tempo',
+                score: 'Punteggio',
+                level: 'Livello',
+                matches: 'Abbinamenti',
+                found: 'Trovato',
+                question: 'Domanda',
+                currentTurn: 'Turno Attuale',
+                
+                // Buttons
+                startGame: '🚀 Inizia Gioco',
+                playAgain: '🎉 Gioca Ancora',
+                shuffle: '🔀 Mescola',
+                pauseGame: '⏸️ Metti in Pausa',
+                resumeGame: '▶️ Riprendi Gioco',
+                
+                // Notifications
+                greatMatch: 'Ottimo abbinamento! 🎉',
+                correct: '🎉 Corretto!',
+                wrong: '❌ Sbagliato!',
+                youWon: '🎉 Hai vinto!',
+                foundWord: '🎉 Trovata',
+                allWordsFound: '🎉 Tutte le parole trovate!',
+                puzzleSolved: '🎉 Puzzle risolto!',
+                itsATie: '🤝 Pareggio!',
+                playerWins: 'Il giocatore {player} vince!',
+                inSeconds: 'in {time} secondi!',
+                inMoves: 'in {moves} mosse',
+                quizCompleted: '🎉 Quiz completato!',
+                wrongSequence: '❌ Sequenza sbagliata!',
+                
+                // Word Search Words (Italian)
+                wordSearchWords: ['GATTO', 'CANE', 'SOLE', 'GIOCO', 'LIBRO', 'ALBERO', 'PESCE', 'UCCELLO', 'STELLA', 'LUNA', 'TORTA', 'GIOCARE', 'CORRERE', 'NUOTARE', 'PALLA', 'MELA', 'ORSO', 'FIORE', 'CASA', 'SCUOLA']
+            },
+
+            pt: {
+                // Header & Navigation
+                headerTitle: '🎮 Portal de Jogos para Crianças',
+                fullscreenBtn: '⛶ Tela Cheia',
+                sidebarTitle: '🎯 Escolher um Jogo',
+                pauseBtn: '⏸️ Pausar',
+                
+                // Games
+                home: 'Início',
+                memory: 'Jogo da Memória',
+                tictactoe: 'Jogo da Velha',
+                mathquiz: 'Quiz de Matemática',
+                simon: 'Simon Diz',
+                wordsearch: 'Caça-Palavras',
+                puzzle: 'Quebra-Cabeça Deslizante',
+                
+                // Welcome Screen
+                welcomeTitle: 'Bem-vindo ao Portal de Jogos para Crianças! 🎉',
+                welcomeText: 'Escolha um jogo da barra lateral para começar a jogar!',
+                gamesCount: '🎮 <strong>7 Jogos Incríveis</strong> esperam por você!',
+                startInstructions: 'Clique em qualquer jogo na barra lateral esquerda para começar sua aventura!',
+                
+                // Game Stats
+                moves: 'Movimentos',
+                time: 'Tempo',
+                score: 'Pontuação',
+                level: 'Nível',
+                matches: 'Correspondências',
+                found: 'Encontrado',
+                question: 'Pergunta',
+                currentTurn: 'Vez Atual',
+                
+                // Buttons
+                startGame: '🚀 Iniciar Jogo',
+                playAgain: '🎉 Jogar Novamente',
+                shuffle: '🔀 Embaralhar',
+                pauseGame: '⏸️ Pausar Jogo',
+                resumeGame: '▶️ Retomar Jogo',
+                
+                // Notifications
+                greatMatch: 'Ótima correspondência! 🎉',
+                correct: '🎉 Correto!',
+                wrong: '❌ Errado!',
+                youWon: '🎉 Você ganhou!',
+                foundWord: '🎉 Encontrada',
+                allWordsFound: '🎉 Todas as palavras encontradas!',
+                puzzleSolved: '🎉 Quebra-cabeça resolvido!',
+                itsATie: '🤝 Empate!',
+                playerWins: 'Jogador {player} vence!',
+                inSeconds: 'em {time} segundos!',
+                inMoves: 'em {moves} movimentos',
+                quizCompleted: '🎉 Quiz completado!',
+                wrongSequence: '❌ Sequência errada!',
+                
+                // Word Search Words (Portuguese)
+                wordSearchWords: ['GATO', 'CACHORRO', 'SOL', 'JOGO', 'LIVRO', 'ARVORE', 'PEIXE', 'PASSARO', 'ESTRELA', 'LUA', 'BOLO', 'BRINCAR', 'CORRER', 'NADAR', 'BOLA', 'MACA', 'URSO', 'FLOR', 'CASA', 'ESCOLA']
             }
         };
 
         // Language Management
+        const languageFlags = {
+            en: '🇺🇸',
+            ar: '🇸🇦', 
+            fr: '🇫🇷',
+            es: '🇪🇸',
+            tr: '🇹🇷',
+            it: '🇮🇹',
+            pt: '🇵🇹'
+        };
+
+        const languageNames = {
+            en: 'English',
+            ar: 'العربية',
+            fr: 'Français', 
+            es: 'Español',
+            tr: 'Türkçe',
+            it: 'Italiano',
+            pt: 'Português'
+        };
+
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('languageOptions');
+            dropdown.classList.toggle('show');
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function closeDropdown(e) {
+                if (!e.target.closest('.language-dropdown')) {
+                    dropdown.classList.remove('show');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            });
+        }
+
         function setLanguage(lang) {
             currentLanguage = lang;
             
@@ -1017,23 +1304,32 @@
             document.documentElement.lang = lang;
             document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
             
-            // Hide language selector
-            document.getElementById('languageSelector').classList.add('hidden');
+            // Update current language display
+            document.getElementById('currentLangFlag').textContent = languageFlags[lang];
+            document.getElementById('currentLangName').textContent = languageNames[lang];
             
-            // Show main interface
-            setTimeout(() => {
-                document.querySelector('.header').style.display = 'flex';
-                document.querySelector('.container').style.display = 'flex';
-                document.getElementById('languageSwitch').style.display = 'block';
-                updateAllText();
-            }, 500);
-        }
-
-        function showLanguageSelector() {
-            document.getElementById('languageSelector').classList.remove('hidden');
-            document.querySelector('.header').style.display = 'none';
-            document.querySelector('.container').style.display = 'none';
-            document.getElementById('languageSwitch').style.display = 'none';
+            // Update active state in dropdown
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`[onclick="setLanguage('${lang}')"]`).classList.add('active');
+            
+            // Close dropdown
+            document.getElementById('languageOptions').classList.remove('show');
+            
+            // Update all text
+            updateAllText();
+            
+            // Update current game content if any
+            if (currentGame) {
+                const activeItem = document.querySelector('.game-item.active');
+                if (activeItem) {
+                    const gameType = activeItem.onclick.toString().match(/loadGame\('(\w+)'\)/)[1];
+                    if (gameType !== 'welcome') {
+                        loadGame(gameType);
+                    }
+                }
+            }
         }
 
         function updateAllText() {
@@ -1051,10 +1347,7 @@
             const updateById = {
                 'headerTitle': t.headerTitle,
                 'fullscreenBtn': t.fullscreenBtn,
-                'statsBtn': t.statsBtn,
-                'settingsBtn': t.settingsBtn,
-                'sidebarTitle': t.sidebarTitle,
-                'switchText': t.switchText
+                'sidebarTitle': t.sidebarTitle
             };
             
             Object.keys(updateById).forEach(id => {
@@ -1076,18 +1369,73 @@
             return text;
         }
 
-        // FIXED: Game state management with proper timer handling
+        // Game state management
         let currentGame = null;
         let gameTimers = {};
         let gameActive = false;
+        let gamePaused = false;
         let currentTimerInterval = null;
-        let gameStats = {
-            gamesPlayed: 0,
-            totalTime: 0,
-            wins: 0
-        };
+        let pausedTime = 0;
 
-        // FIXED: Notification system
+        // Pause System
+        function createPauseOverlay() {
+            return `
+                <div class="pause-overlay" id="pauseOverlay">
+                    <div class="pause-title">⏸️ ${translate('pauseGame')}</div>
+                    <button class="resume-btn" onclick="resumeGame()">${translate('resumeGame')}</button>
+                </div>
+            `;
+        }
+
+        function pauseGame() {
+            if (!gameActive || gamePaused) return;
+            
+            gamePaused = true;
+            gameActive = false;
+            
+            // Stop timer
+            if (currentTimerInterval) {
+                clearInterval(currentTimerInterval);
+                currentTimerInterval = null;
+            }
+            
+            // Show pause overlay
+            let pauseOverlay = document.getElementById('pauseOverlay');
+            if (!pauseOverlay) {
+                document.getElementById('gameContainer').insertAdjacentHTML('beforeend', createPauseOverlay());
+                pauseOverlay = document.getElementById('pauseOverlay');
+            }
+            pauseOverlay.classList.add('show');
+            
+            // Update pause button
+            const pauseBtn = document.getElementById('pauseBtn');
+            if (pauseBtn) {
+                pauseBtn.style.display = 'none';
+            }
+        }
+
+        function resumeGame() {
+            if (!gamePaused) return;
+            
+            gamePaused = false;
+            gameActive = true;
+            
+            // Hide pause overlay
+            const pauseOverlay = document.getElementById('pauseOverlay');
+            if (pauseOverlay) {
+                pauseOverlay.classList.remove('show');
+            }
+            
+            // Show pause button
+            const pauseBtn = document.getElementById('pauseBtn');
+            if (pauseBtn) {
+                pauseBtn.style.display = 'block';
+            }
+            
+            // Resume timer
+            startTimer();
+        }
+
         function showNotification(message, type = 'success', duration = 3000) {
             const notification = document.createElement('div');
             notification.className = `game-notification ${type}`;
@@ -1145,14 +1493,32 @@
             }
         }
 
+        function addPauseButton() {
+            // Remove existing pause button
+            const existingBtn = document.getElementById('pauseBtn');
+            if (existingBtn) {
+                existingBtn.remove();
+            }
+            
+            // Add pause button to game container
+            const pauseBtn = document.createElement('button');
+            pauseBtn.id = 'pauseBtn';
+            pauseBtn.className = 'pause-btn';
+            pauseBtn.textContent = translate('pauseBtn');
+            pauseBtn.onclick = pauseGame;
+            
+            document.getElementById('gameContainer').appendChild(pauseBtn);
+        }
+
+        // Timer management
         function startTimer() {
             resetTimer();
             
             if (!currentGame) return;
             
-            const startTime = Date.now();
+            const startTime = Date.now() - (pausedTime * 1000);
             currentTimerInterval = setInterval(() => {
-                if (gameActive) {
+                if (gameActive && !gamePaused) {
                     const elapsed = Math.floor((Date.now() - startTime) / 1000);
                     const timeElement = document.getElementById(`${currentGame}Time`);
                     if (timeElement) {
@@ -1167,6 +1533,7 @@
                 clearInterval(currentTimerInterval);
                 const elapsed = Math.floor((Date.now() - gameTimers[currentGame]?.startTime || Date.now()) / 1000);
                 currentTimerInterval = null;
+                pausedTime = 0;
                 return elapsed;
             }
             return 0;
@@ -1177,6 +1544,8 @@
                 clearInterval(currentTimerInterval);
                 currentTimerInterval = null;
             }
+            
+            pausedTime = 0;
             
             if (currentGame) {
                 const timeElement = document.getElementById(`${currentGame}Time`);
@@ -1190,6 +1559,10 @@
             hideGameOverlay();
             currentGame = gameType;
             gameTimers[gameType] = { startTime: Date.now() };
+            gamePaused = false;
+            
+            // Add pause button
+            addPauseButton();
             
             switch(gameType) {
                 case 'memory':
@@ -1197,9 +1570,6 @@
                     break;
                 case 'tictactoe':
                     initTicTacToe();
-                    break;
-                case 'whackmole':
-                    initWhackMole();
                     break;
                 case 'mathquiz':
                     initMathQuiz();
@@ -1218,7 +1588,20 @@
 
         function loadGame(gameType) {
             gameActive = false;
+            gamePaused = false;
             resetTimer();
+            
+            // Remove pause button
+            const pauseBtn = document.getElementById('pauseBtn');
+            if (pauseBtn) {
+                pauseBtn.remove();
+            }
+            
+            // Remove pause overlay
+            const pauseOverlay = document.getElementById('pauseOverlay');
+            if (pauseOverlay) {
+                pauseOverlay.remove();
+            }
             
             document.querySelectorAll('.game-item').forEach(item => {
                 item.classList.remove('active');
@@ -1235,9 +1618,6 @@
                     break;
                 case 'tictactoe':
                     loadTicTacToe();
-                    break;
-                case 'whackmole':
-                    loadWhackMole();
                     break;
                 case 'mathquiz':
                     loadMathQuiz();
@@ -1260,12 +1640,8 @@
                     <h2>${translate('welcomeTitle')}</h2>
                     <p>${translate('welcomeText')}</p>
                     <p>${translate('gamesCount')}</p>
-                    <div style="font-size: 4em; margin: 20px 0;">🎯🧠⭕🔨🔢🔴🔤🧩</div>
+                    <div style="font-size: 4em; margin: 20px 0;">🎯🧠⭕🔢🔴🔤🧩</div>
                     <p>${translate('startInstructions')}</p>
-                    <div class="game-stats">
-                        <div class="stat-item">${translate('gamesPlayed')}: ${gameStats.gamesPlayed}</div>
-                        <div class="stat-item">${translate('totalWins')}: ${gameStats.wins}</div>
-                    </div>
                 </div>
             `;
         }
@@ -1293,27 +1669,10 @@
                     <p>${translate('tictactoeDesc')}</p>
                     <div class="game-stats">
                         <div class="stat-item" id="tttTurn">${translate('currentTurn')}: X</div>
-                        <div class="stat-item">${translate('time')}: <span id="tictactoeTime">0</span>s</div>
                     </div>
                     <div class="ttt-board" id="tttBoard"></div>
                 </div>
                 ${createGameOverlay(translate('tictactoeOverlayTitle'), translate('tictactoeOverlayDesc'), 'tictactoe')}
-            `;
-        }
-
-        function loadWhackMole() {
-            document.getElementById('gameContainer').innerHTML = `
-                <div class="memory-game">
-                    <h2>${translate('whackmoleTitle')}</h2>
-                    <p>${translate('whackmoleDesc')}</p>
-                    <div class="game-stats">
-                        <div class="stat-item">${translate('score')}: <span id="moleScore">0</span></div>
-                        <div class="stat-item">${translate('misses')}: <span id="moleMisses">0</span>/5</div>
-                        <div class="stat-item">${translate('time')}: <span id="whackmoleTime">0</span>s</div>
-                    </div>
-                    <div class="mole-game-area" id="moleGameArea"></div>
-                </div>
-                ${createGameOverlay(translate('whackmoleOverlayTitle'), translate('whackmoleOverlayDesc'), 'whackmole')}
             `;
         }
 
@@ -1325,7 +1684,6 @@
                     <div class="game-stats">
                         <div class="stat-item">${translate('score')}: <span id="mathScore">0</span></div>
                         <div class="stat-item">${translate('question')}: <span id="mathQuestion">1</span>/10</div>
-                        <div class="stat-item">${translate('time')}: <span id="mathquizTime">0</span>s</div>
                     </div>
                     <div style="font-size: 2em; margin: 30px 0; color: #4ecdc4;" id="mathProblem">2 + 2 = ?</div>
                     <div id="mathOptions" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;"></div>
@@ -1342,7 +1700,6 @@
                     <div class="game-stats">
                         <div class="stat-item">${translate('level')}: <span id="simonLevel">1</span></div>
                         <div class="stat-item">${translate('score')}: <span id="simonScore">0</span></div>
-                        <div class="stat-item">${translate('time')}: <span id="simonTime">0</span>s</div>
                     </div>
                     <div class="simon-container" id="simonContainer">
                         <div class="simon-btn simon-red" data-color="0"></div>
@@ -1412,7 +1769,7 @@
             });
             
             function flipCard(element) {
-                if (!gameActive || flipped.length >= 2 || element.classList.contains('flipped')) return;
+                if (!gameActive || gamePaused || flipped.length >= 2 || element.classList.contains('flipped')) return;
                 
                 element.classList.add('flipped');
                 element.textContent = element.dataset.card;
@@ -1433,8 +1790,6 @@
                                 const time = stopTimer();
                                 gameActive = false;
                                 showWinNotification(translate('youWon') + ' ' + translate('inMoves', {moves}) + ' ' + translate('inSeconds', {time}));
-                                gameStats.wins++;
-                                gameStats.gamesPlayed++;
                             }
                         } else {
                             flipped.forEach(card => {
@@ -1468,24 +1823,19 @@
             }
             
             function makeMove(index) {
-                if (!gameActive || !gameRunning || board[index] !== '') return;
+                if (!gameActive || gamePaused || !gameRunning || board[index] !== '') return;
                 
                 board[index] = currentPlayer;
                 document.querySelector(`[data-index="${index}"]`).textContent = currentPlayer;
                 
                 if (checkWinner()) {
-                    const time = stopTimer();
                     gameActive = false;
                     gameRunning = false;
-                    showWinNotification(translate('playerWins', {player: currentPlayer}) + ' ' + translate('inSeconds', {time}));
-                    gameStats.wins++;
-                    gameStats.gamesPlayed++;
+                    showWinNotification(translate('playerWins', {player: currentPlayer}));
                 } else if (board.every(cell => cell !== '')) {
-                    const time = stopTimer();
                     gameActive = false;
                     gameRunning = false;
-                    showWinNotification(translate('itsATie') + ' ' + translate('inSeconds', {time}));
-                    gameStats.gamesPlayed++;
+                    showWinNotification(translate('itsATie'));
                 } else {
                     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                     document.getElementById('tttTurn').textContent = translate('currentTurn') + ': ' + currentPlayer;
@@ -1505,96 +1855,6 @@
             }
         }
 
-        // Whack-a-Mole Logic
-        function initWhackMole() {
-            const gameArea = document.getElementById('moleGameArea');
-            gameArea.innerHTML = '';
-            
-            let score = 0;
-            let misses = 0;
-            let moleInterval;
-            let activeMoles = [];
-            
-            document.getElementById('moleScore').textContent = '0';
-            document.getElementById('moleMisses').textContent = '0';
-            
-            for (let i = 0; i < 9; i++) {
-                const hole = document.createElement('div');
-                hole.className = 'mole-hole';
-                hole.dataset.index = i;
-                
-                const mole = document.createElement('div');
-                mole.className = 'mole';
-                mole.textContent = '🐹';
-                mole.onclick = () => hitMole(i);
-                
-                hole.appendChild(mole);
-                gameArea.appendChild(hole);
-            }
-            
-            function showMole() {
-                if (!gameActive) return;
-                
-                const availableHoles = Array.from({length: 9}, (_, i) => i)
-                    .filter(i => !activeMoles.includes(i));
-                
-                if (availableHoles.length === 0) return;
-                
-                const randomHole = availableHoles[Math.floor(Math.random() * availableHoles.length)];
-                const mole = gameArea.children[randomHole].querySelector('.mole');
-                
-                mole.classList.add('visible');
-                activeMoles.push(randomHole);
-                
-                setTimeout(() => {
-                    if (mole.classList.contains('visible')) {
-                        mole.classList.remove('visible');
-                        activeMoles = activeMoles.filter(m => m !== randomHole);
-                        misses++;
-                        document.getElementById('moleMisses').textContent = misses;
-                        
-                        if (misses >= 5) {
-                            clearInterval(moleInterval);
-                            const time = stopTimer();
-                            gameActive = false;
-                            showWinNotification(translate('gameOver') + ' ' + translate('finalScore') + ': ' + score + ' ' + translate('inSeconds', {time}));
-                            gameStats.gamesPlayed++;
-                        }
-                    }
-                }, 1500);
-            }
-            
-            function hitMole(holeIndex) {
-                if (!gameActive) return;
-                
-                const mole = gameArea.children[holeIndex].querySelector('.mole');
-                if (mole.classList.contains('visible')) {
-                    mole.classList.add('hit');
-                    mole.classList.remove('visible');
-                    activeMoles = activeMoles.filter(m => m !== holeIndex);
-                    
-                    score += 10;
-                    document.getElementById('moleScore').textContent = score;
-                    showNotification(translate('pointsEarned', {points: 10}), 'success', 800);
-                    
-                    setTimeout(() => mole.classList.remove('hit'), 300);
-                }
-            }
-            
-            moleInterval = setInterval(showMole, 800);
-            
-            setTimeout(() => {
-                if (gameActive) {
-                    clearInterval(moleInterval);
-                    const time = stopTimer();
-                    gameActive = false;
-                    showWinNotification(translate('timeUp') + ' ' + translate('finalScore') + ': ' + score + ' ' + translate('inSeconds', {time}));
-                    gameStats.wins++;
-                    gameStats.gamesPlayed++;
-                }
-            }, 30000);
-        }
-
         // Math Quiz Logic
         function initMathQuiz() {
             let score = 0;
@@ -1606,7 +1866,7 @@
             generateProblem();
             
             function generateProblem() {
-                if (!gameActive || currentQuestion > 10) return;
+                if (!gameActive || gamePaused || currentQuestion > 10) return;
                 
                 const num1 = Math.floor(Math.random() * 10) + 1;
                 const num2 = Math.floor(Math.random() * 10) + 1;
@@ -1651,7 +1911,7 @@
                     btn.className = 'game-btn';
                     btn.textContent = option;
                     btn.onclick = () => {
-                        if (!gameActive) return;
+                        if (!gameActive || gamePaused) return;
                         
                         if (option === answer) {
                             showNotification(translate('correct'), 'success');
@@ -1664,11 +1924,8 @@
                                     document.getElementById('mathQuestion').textContent = currentQuestion;
                                     generateProblem();
                                 } else {
-                                    const time = stopTimer();
                                     gameActive = false;
-                                    showWinNotification(translate('quizCompleted') + ' ' + translate('score') + ': ' + score + '/10 ' + translate('inSeconds', {time}));
-                                    gameStats.gamesPlayed++;
-                                    if (score >= 7) gameStats.wins++;
+                                    showWinNotification(translate('quizCompleted') + ' ' + translate('score') + ': ' + score + '/10');
                                 }
                             }, 1500);
                         } else {
@@ -1694,7 +1951,7 @@
             
             buttons.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    if (!gameActive || !isPlayerTurn) return;
+                    if (!gameActive || gamePaused || !isPlayerTurn) return;
                     
                     const color = parseInt(btn.dataset.color);
                     playerSequence.push(color);
@@ -1703,15 +1960,13 @@
                     setTimeout(() => btn.classList.remove('active'), 200);
                     
                     if (playerSequence[playerSequence.length - 1] !== sequence[playerSequence.length - 1]) {
-                        const time = stopTimer();
                         showNotification(translate('wrongSequence'), 'error');
                         gameActive = false;
                         setTimeout(() => {
-                            showWinNotification(translate('gameOver') + ' ' + translate('level') + ' ' + level + ' ' + translate('inSeconds', {time}));
-                            gameStats.gamesPlayed++;
+                            showWinNotification(translate('gameOver') + ' ' + translate('level') + ' ' + level);
                         }, 2000);
                     } else if (playerSequence.length === sequence.length) {
-                        showNotification(translate('correct') + ' ' + translate('levelComplete'), 'success');
+                        showNotification(translate('correct'), 'success');
                         level++;
                         updateSimonDisplay();
                         setTimeout(addToSequence, 1000);
@@ -1725,6 +1980,7 @@
             }
             
             function addToSequence() {
+                if (!gameActive || gamePaused) return;
                 sequence.push(Math.floor(Math.random() * 4));
                 playSequence();
             }
@@ -1735,6 +1991,7 @@
                 
                 sequence.forEach((color, index) => {
                     setTimeout(() => {
+                        if (!gameActive || gamePaused) return;
                         const btn = document.querySelector(`[data-color="${color}"]`);
                         btn.classList.add('active');
                         setTimeout(() => btn.classList.remove('active'), 400);
@@ -1842,7 +2099,7 @@
                     cell.dataset.col = colIndex;
                     
                     cell.addEventListener('mousedown', (e) => {
-                        if (!gameActive) return;
+                        if (!gameActive || gamePaused) return;
                         e.preventDefault();
                         isSelecting = true;
                         selectedCells = [cell];
@@ -1850,7 +2107,7 @@
                     });
                     
                     cell.addEventListener('mouseenter', () => {
-                        if (gameActive && isSelecting && !selectedCells.includes(cell)) {
+                        if (gameActive && !gamePaused && isSelecting && !selectedCells.includes(cell)) {
                             selectedCells.push(cell);
                             cell.classList.add('selecting');
                         }
@@ -1861,7 +2118,7 @@
             });
             
             document.addEventListener('mouseup', () => {
-                if (isSelecting && gameActive) {
+                if (isSelecting && gameActive && !gamePaused) {
                     checkSelectedWord();
                     isSelecting = false;
                 }
@@ -1901,8 +2158,6 @@
                         const time = stopTimer();
                         gameActive = false;
                         showWinNotification(translate('allWordsFound') + ' ' + translate('inSeconds', {time}));
-                        gameStats.wins++;
-                        gameStats.gamesPlayed++;
                     }
                 } else {
                     selectedCells.forEach(cell => cell.classList.remove('selecting'));
@@ -1939,7 +2194,7 @@
             }
             
             function moveTile(index) {
-                if (!gameActive) return;
+                if (!gameActive || gamePaused) return;
                 
                 const emptyIndex = puzzle.indexOf(0);
                 const validMoves = [];
@@ -1959,8 +2214,6 @@
                         const time = stopTimer();
                         gameActive = false;
                         showWinNotification(translate('puzzleSolved') + ' ' + translate('inMoves', {moves}) + ' ' + translate('inSeconds', {time}));
-                        gameStats.wins++;
-                        gameStats.gamesPlayed++;
                     }
                 }
             }
@@ -1993,22 +2246,9 @@
             }
         }
 
-        function showStats() {
-            const rate = gameStats.gamesPlayed > 0 ? Math.round((gameStats.wins/gameStats.gamesPlayed)*100) : 0;
-            showNotification(translate('statsMessage', {
-                games: gameStats.gamesPlayed,
-                wins: gameStats.wins,
-                rate: rate
-            }), 'success', 5000);
-        }
-
-        function showSettings() {
-            showNotification(translate('settingsMessage'), 'success', 4000);
-        }
-
         // Initialize the portal
         document.addEventListener('DOMContentLoaded', () => {
-            // Start with language selection
+            updateAllText();
         });
     </script>
 </body>
