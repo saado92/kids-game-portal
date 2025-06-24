@@ -259,7 +259,7 @@
     width: 250px;
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
-    padding: 15px;
+    padding: 12px;
     border-right: 2px solid rgba(255,255,255,0.2);
     position: fixed;
     left: 0;
@@ -268,24 +268,25 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
 }
 
 
 
       .sidebar h3 {
     color: white;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.1em;
     flex-shrink: 0;
 }
 
 
-        .game-item {
+       .game-item {
     background: rgba(255,255,255,0.9);
-    margin: 8px 0;
-    padding: 12px;
-    border-radius: 15px;
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
@@ -294,6 +295,7 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     flex-shrink: 0;
 }
+
 
 
         .game-item:hover {
@@ -309,13 +311,17 @@
         }
 
         .game-icon {
-            font-size: 1.5em;
-        }
+    font-size: 1.2em;
+    flex-shrink: 0;
+}
 
-        .game-name {
-            font-weight: bold;
-            font-size: 1em;
-        }
+
+      .game-name {
+    font-weight: bold;
+    font-size: 0.9em;
+    flex-shrink: 0;
+}
+
 
         /* Main Content Area */
 .main-content {
