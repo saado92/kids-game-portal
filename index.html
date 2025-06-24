@@ -857,6 +857,218 @@
     text-align: center;
 }
 
+        /* Auto-scaling game content */
+.memory-game, .simon-container, .ttt-game {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.memory-board {
+    width: min(400px, 80vw, 100%);
+    height: min(320px, 40vh, 100%);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: min(15px, 2vw);
+    margin: 10px auto;
+}
+
+.memory-card {
+    width: 100%;
+    height: 100%;
+    min-width: 40px;
+    min-height: 40px;
+    background: #ff6b6b;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1em, 3vw, 2em);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: transparent;
+}
+
+.ttt-board {
+    width: min(300px, 70vw, 100%);
+    height: min(300px, 35vh, 100%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: min(10px, 2vw);
+    margin: 10px auto;
+}
+
+.ttt-cell {
+    width: 100%;
+    height: 100%;
+    min-width: 50px;
+    min-height: 50px;
+    background: #f0f0f0;
+    border: 3px solid #4ecdc4;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.2em, 4vw, 2em);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.simon-container {
+    width: min(300px, 70vw, 100%);
+    height: min(300px, 35vh, 100%);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: min(20px, 3vw);
+    margin: 10px auto;
+}
+
+.simon-btn {
+    width: 100%;
+    height: 100%;
+    min-width: 60px;
+    min-height: 60px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 4px solid #333;
+    opacity: 0.7;
+}
+
+#wordGrid {
+    width: min(400px, 85vw, 100%);
+    height: min(350px, 40vh, 100%);
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 2px;
+    margin: 10px auto;
+}
+
+.word-cell {
+    width: 100%;
+    height: 100%;
+    min-width: 25px;
+    min-height: 25px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: clamp(0.7em, 2.5vw, 1em);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+#puzzleBoard {
+    width: min(300px, 70vw, 100%);
+    height: min(300px, 35vh, 100%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    margin: 10px auto;
+}
+
+#puzzleBoard > div {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    border: 2px solid #4ecdc4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1em, 3vw, 1.5em) !important;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.game-stats {
+    display: flex;
+    justify-content: center;
+    gap: min(20px, 3vw);
+    margin: 10px 0;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.stat-item {
+    background: #4ecdc4;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: clamp(0.9em, 2.5vw, 1em);
+}
+
+#mathOptions {
+    display: flex;
+    justify-content: center;
+    gap: min(15px, 2vw);
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.game-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: clamp(8px, 2vw, 12px) clamp(15px, 3vw, 25px);
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: clamp(0.9em, 2.5vw, 1.1em);
+    margin: 5px;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+#mathProblem {
+    font-size: clamp(1.2em, 4vw, 2em) !important;
+    margin: 15px 0 !important;
+    color: #4ecdc4;
+    text-align: center;
+}
+
+.words-list {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: min(10px, 2vw);
+    justify-content: center;
+    max-height: 15vh;
+    overflow-y: auto;
+}
+
+.word-item {
+    background: #f0f0f0;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: clamp(0.8em, 2vw, 1em);
+    transition: all 0.3s ease;
+}
+
+/* Welcome screen scaling */
+.welcome-screen h2 {
+    font-size: clamp(1.8em, 5vw, 2.5em);
+    margin-bottom: 15px;
+}
+
+.welcome-screen p {
+    font-size: clamp(1em, 3vw, 1.2em);
+    margin-bottom: 20px;
+}
+
+.welcome-screen div[style*="font-size: 4em"] {
+    font-size: clamp(2em, 8vw, 4em) !important;
+    margin: 15px 0 !important;
+}
+
+
     </style>
 </head>
 <body>
