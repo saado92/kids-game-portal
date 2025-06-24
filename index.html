@@ -11,12 +11,49 @@
             box-sizing: border-box;
         }
 
-        body {
+       body {
     font-family: 'Comic Sans MS', cursive;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     height: 100vh;
     overflow: hidden;
-    transition: all 0.3s ease;
+    margin: 0;
+    padding: 0;
+}
+
+        .auto-fit-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auto-fit-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.auto-fit-sidebar {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.auto-fit-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.auto-fit-game {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
 }
 
 
@@ -862,6 +899,7 @@
 </head>
 <body>
     <!-- Header -->
+    <div class="auto-fit-container">
     <header class="header">
         <h1 id="headerTitle">🎮 Kids Game Portal</h1>
         <div class="header-buttons">
@@ -907,9 +945,8 @@
     </header>
 
     <!-- Main Container -->
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
+ <div class="auto-fit-main">
+        <aside class="sidebar auto-fit-sidebar">
             <h3 id="sidebarTitle">🎯 Choose a Game</h3>
             
             <div class="game-item active" onclick="loadGame('welcome')">
@@ -949,8 +986,8 @@
         </aside>
 
         <!-- Main Content Area -->
-        <main class="main-content">
-            <div class="game-container" id="gameContainer">
+       <main class="main-content auto-fit-content">
+            <div class="game-container auto-fit-game" id="gameContainer">
                 <!-- Welcome Screen -->
                 <div class="welcome-screen">
                     <h2 data-translate="welcomeTitle">Welcome to Kids Game Portal! 🎉</h2>
@@ -1991,24 +2028,31 @@ function resumeGame() {
                 case 'welcome':
                     currentGame = null;
                     showWelcomeScreen();
+                    setTimeout(initDynamicSizing, 100); // Add this line
                     break;
                 case 'memory':
                     loadMemoryGame();
+                    setTimeout(initDynamicSizing, 100); // Add this line
                     break;
                 case 'tictactoe':
                     loadTicTacToe();
+                    setTimeout(initDynamicSizing, 100); // Add this line
                     break;
                 case 'mathquiz':
                     loadMathQuiz();
+                    setTimeout(initDynamicSizing, 100); // Add this line
                     break;
                 case 'simon':
                     loadSimonSays();
+                    setTimeout(initDynamicSizing, 100); // Add this line
                     break;
                 case 'wordsearch':
                     loadWordSearch();
+                    setTimeout(initDynamicSizing, 100); // Add this line
                     break;
                 case 'puzzle':
                     loadSlidingPuzzle();
+                    setTimeout(initDynamicSizing, 100); // Add this line
                     break;
             }
         }
@@ -2635,6 +2679,85 @@ function resumeGame() {
             
             render();
         }
+
+        function initDynamicSizing() {
+    // Calculate available dimensions
+    const headerHeight = 80;
+    const availableHeight = window.innerHeight - headerHeight;
+    const availableWidth = window.innerWidth - 250; // sidebar width
+    
+    // Apply dynamic sizing
+    document.documentElement.style.setProperty('--available-height', availableHeight + 'px');
+    document.documentElement.style.setProperty('--available-width', availableWidth + 'px');
+    document.documentElement.style.setProperty('--sidebar-height', availableHeight + 'px');
+    
+    // Resize game elements
+    resizeGameElements();
+    
+    // Resize sidebar items
+    resizeSidebarItems();
+}
+
+function resizeGameElements() {
+    const gameContainer = document.getElementById('gameContainer');
+    if (!gameContainer) return;
+    
+    const containerHeight = gameContainer.offsetHeight;
+    const containerWidth = gameContainer.offsetWidth;
+    
+    // Calculate scale factor
+    const baseHeight = 600; // Original design height
+    const baseWidth = 800;  // Original design width
+    
+    const scaleY = containerHeight / baseHeight;
+    const scaleX = containerWidth / baseWidth;
+    const scale = Math.min(scaleY, scaleX, 1); // Don't scale up, only down
+    
+    // Apply scaling to game content
+    const gameContent = gameContainer.querySelector('.memory-game, .welcome-screen');
+    if (gameContent) {
+        gameContent.style.transform = `scale(${scale})`;
+        gameContent.style.transformOrigin = 'center center';
+        gameContent.style.height = '100%';
+        gameContent.style.width = '100%';
+    }
+}
+
+function resizeSidebarItems() {
+    const sidebar = document.querySelector('.sidebar');
+    const gameItems = sidebar.querySelectorAll('.game-item');
+    const sidebarTitle = sidebar.querySelector('h3');
+    
+    const availableHeight = sidebar.offsetHeight;
+    const titleHeight = sidebarTitle ? sidebarTitle.offsetHeight : 40;
+    const itemCount = gameItems.length;
+    const totalMargin = itemCount * 10; // 5px margin top and bottom per item
+    
+    const availableForItems = availableHeight - titleHeight - totalMargin - 30; // 30px padding
+    const itemHeight = Math.floor(availableForItems / itemCount);
+    
+    // Apply calculated height to each item
+    gameItems.forEach(item => {
+        item.style.height = Math.max(itemHeight, 35) + 'px'; // Minimum 35px
+        item.style.padding = '8px 12px';
+        item.style.fontSize = itemHeight > 50 ? '1em' : '0.9em';
+        
+        const icon = item.querySelector('.game-icon');
+        const name = item.querySelector('.game-name');
+        
+        if (icon) icon.style.fontSize = itemHeight > 50 ? '1.2em' : '1em';
+        if (name) name.style.fontSize = itemHeight > 50 ? '0.95em' : '0.85em';
+    });
+}
+
+// Add window resize listener
+window.addEventListener('resize', initDynamicSizing);
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateAllText();
+    setTimeout(initDynamicSizing, 100); // Small delay to ensure elements are rendered
+});
 
         // Header button functions
         function showFullscreen() {
