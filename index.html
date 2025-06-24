@@ -2,8 +2,8 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kids Game Portal - بوابة ألعاب الأطفال</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=3.0">
+    <title>Kids Game Portal</title>
     <style>
         * {
             margin: 0;
@@ -251,18 +251,22 @@
         }
 
         /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-right: 2px solid rgba(255,255,255,0.2);
-            position: fixed;
-            left: 0;
-            top: 80px;
-            bottom: 0;
-            overflow-y: auto;
-        }
+       .sidebar {
+    width: 250px;
+    min-width: 200px;
+    max-width: 300px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    border-right: 2px solid rgba(255,255,255,0.2);
+    position: fixed;
+    left: 0;
+    top: 80px;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: 100;
+}
+
 
         .sidebar h3 {
             color: white;
@@ -306,21 +310,28 @@
         }
 
         /* Main Content Area */
-        .main-content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 30px;
-            min-height: calc(100vh - 80px);
-        }
+       .main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 1rem;
+    min-height: calc(100vh - 80px);
+    width: calc(100vw - 250px);
+    box-sizing: border-box;
+}
 
-        .game-container {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            min-height: 600px;
-            position: relative;
-        }
+
+       .game-container {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    min-height: 70vh;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
 
         /* Game Overlay System */
         .game-overlay {
@@ -639,57 +650,223 @@
             text-decoration: line-through;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-                height: auto;
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
+/* Tablet and smaller desktop screens */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+        min-width: 180px;
+    }
+    
+    .main-content {
+        margin-left: 200px;
+        width: calc(100vw - 200px);
+        padding: 1rem;
+    }
+    
+    [dir="rtl"] .main-content {
+        margin-right: 200px;
+        margin-left: 0;
+    }
+    
+    .header h1 {
+        font-size: 1.8em;
+    }
+}
 
-            [dir="rtl"] .main-content {
-                margin-right: 0;
-            }
-            
-            .container {
-                flex-direction: column;
-            }
-            
-            .header h1 {
-                font-size: 1.5em;
-            }
-            
-            .header-buttons {
-                gap: 10px;
-            }
+/* Tablet portrait and mobile landscape */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+        top: 0;
+        height: auto;
+        min-height: auto;
+        border-right: none;
+        border-bottom: 2px solid rgba(255,255,255,0.2);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
+    }
 
-            .language-options {
-                position: fixed;
-                top: 70px;
-                right: 10px;
-                left: auto;
-            }
+    [dir="rtl"] .main-content {
+        margin-right: 0;
+    }
+    
+    .container {
+        flex-direction: column;
+    }
+    
+    .header h1 {
+        font-size: 1.5em;
+    }
+    
+    .header-buttons {
+        gap: 10px;
+    }
 
-            [dir="rtl"] .language-options {
-                right: auto;
-                left: 10px;
-            }
+    .language-options {
+        position: fixed;
+        top: 70px;
+        right: 10px;
+        left: auto;
+        max-width: calc(100vw - 20px);
+    }
 
-            .pause-btn {
-                top: 90px;
-                left: 10px;
-            }
+    [dir="rtl"] .language-options {
+        right: auto;
+        left: 10px;
+    }
+    
+    .game-container {
+        min-height: 60vh;
+        padding: 1rem;
+    }
+}
 
-            [dir="rtl"] .pause-btn {
-                left: auto;
-                right: 10px;
-            }
-        }
+/* Mobile portrait */
+@media (max-width: 480px) {
+    .header {
+        padding: 10px 15px;
+        flex-wrap: wrap;
+    }
+    
+    .header h1 {
+        font-size: 1.2em;
+        flex: 1;
+        min-width: 200px;
+    }
+    
+    .header-buttons {
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+    
+    .header-btn, .language-toggle {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+    
+    .game-container {
+        border-radius: 15px;
+        padding: 0.8rem;
+        min-height: 50vh;
+    }
+    
+    .game-stats {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .stat-item {
+        min-width: 120px;
+        text-align: center;
+    }
+    
+    .welcome-screen h2 {
+        font-size: 2em;
+    }
+    
+    .welcome-screen p {
+        font-size: 1.1em;
+    }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+    .sidebar {
+        width: 280px;
+    }
+    
+    .main-content {
+        margin-left: 280px;
+        width: calc(100vw - 280px);
+        padding: 2rem;
+    }
+    
+    [dir="rtl"] .main-content {
+        margin-right: 280px;
+        margin-left: 0;
+    }
+    
+    .game-container {
+        padding: 2rem;
+        min-height: 75vh;
+    }
+}
+
+/* Very large screens */
+@media (min-width: 1600px) {
+    .container {
+        max-width: 1400px;
+        margin: 80px auto 0;
+        position: relative;
+    }
+    
+    .sidebar {
+        position: absolute;
+        width: 300px;
+    }
+    
+    .main-content {
+        margin-left: 320px;
+        width: calc(100% - 320px);
+    }
+    
+    [dir="rtl"] .main-content {
+        margin-right: 320px;
+        margin-left: 0;
+    }
+}
+/* Game element responsiveness */
+.memory-board, .ttt-board, .simon-container {
+    max-width: min(400px, 90vw);
+    width: 100%;
+}
+
+.memory-card, .ttt-cell {
+    min-width: 60px;
+    min-height: 60px;
+    font-size: clamp(1.2em, 3vw, 2em);
+}
+
+.simon-btn {
+    min-width: 80px;
+    min-height: 80px;
+    width: min(120px, 20vw);
+    height: min(120px, 20vw);
+}
+
+#wordGrid {
+    max-width: min(400px, 95vw);
+    grid-template-columns: repeat(10, 1fr);
+}
+
+.word-cell {
+    width: clamp(25px, 4vw, 35px);
+    height: clamp(25px, 4vw, 35px);
+    font-size: clamp(0.8em, 2vw, 1em);
+}
+
+#puzzleBoard {
+    max-width: min(300px, 90vw);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#mathOptions {
+    max-width: 100%;
+    justify-content: center;
+}
+
+.game-btn {
+    padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 25px);
+    font-size: clamp(0.9em, 2.5vw, 1.1em);
+    margin: 5px;
+}
+
     </style>
 </head>
 <body>
