@@ -2,8 +2,8 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kids Game Portal - بوابة ألعاب الأطفال</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=3.0">
+    <title>Kids Game Portal</title>
     <style>
         * {
             margin: 0;
@@ -12,12 +12,13 @@
         }
 
         body {
-            font-family: 'Comic Sans MS', cursive;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: all 0.3s ease;
-        }
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100vh;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
 
         /* Language Dropdown Styles */
         .language-dropdown {
@@ -244,25 +245,29 @@
         }
 
         /* Layout Container */
-        .container {
-            display: flex;
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
-        }
+       .container {
+    display: flex;
+    margin-top: 80px;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+
 
         /* Sidebar Styles */
-        .sidebar {
-            width: 250px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-right: 2px solid rgba(255,255,255,0.2);
-            position: fixed;
-            left: 0;
-            top: 80px;
-            bottom: 0;
-            overflow-y: auto;
-        }
+      .sidebar {
+    width: 250px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px;
+    border-right: 2px solid rgba(255,255,255,0.2);
+    position: fixed;
+    left: 0;
+    top: 80px;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
 
         .sidebar h3 {
             color: white;
@@ -306,21 +311,27 @@
         }
 
         /* Main Content Area */
-        .main-content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 30px;
-            min-height: calc(100vh - 80px);
-        }
+      .main-content {
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px;
+    height: 100%;
+    overflow: hidden;
+}
 
-        .game-container {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            min-height: 600px;
-            position: relative;
-        }
+
+
+     .game-container {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
 
         /* Game Overlay System */
         .game-overlay {
@@ -555,12 +566,13 @@
 
         /* Game Stats */
         .game-stats {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
 
         .stat-item {
             background: #4ecdc4;
@@ -639,57 +651,166 @@
             text-decoration: line-through;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-                height: auto;
-            }
-            
-            .main-content {
-                margin-left: 0;
-            }
+/* Tablet and smaller desktop screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+        top: 0;
+        height: 25vh;
+        overflow-y: auto;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        height: 75vh;
+    }
 
-            [dir="rtl"] .main-content {
-                margin-right: 0;
-            }
-            
-            .container {
-                flex-direction: column;
-            }
-            
-            .header h1 {
-                font-size: 1.5em;
-            }
-            
-            .header-buttons {
-                gap: 10px;
-            }
+    [dir="rtl"] .main-content {
+        margin-right: 0;
+    }
+    
+    .container {
+        flex-direction: column;
+        height: calc(100vh - 60px);
+    }
+    
+    .header {
+        padding: 10px 15px;
+    }
+    
+    .header h1 {
+        font-size: 1.2em;
+    }
+    
+    .header-buttons {
+        gap: 8px;
+    }
 
-            .language-options {
-                position: fixed;
-                top: 70px;
-                right: 10px;
-                left: auto;
-            }
+    .language-options {
+        position: fixed;
+        top: 60px;
+        right: 10px;
+        left: auto;
+    }
 
-            [dir="rtl"] .language-options {
-                right: auto;
-                left: 10px;
-            }
+    [dir="rtl"] .language-options {
+        right: auto;
+        left: 10px;
+    }
+    
+    .game-container {
+        padding: 15px;
+    }
+    
+    .container {
+        margin-top: 60px;
+    }
+}
 
-            .pause-btn {
-                top: 90px;
-                left: 10px;
-            }
+/* Game element responsiveness */
+.memory-board, .ttt-board, .simon-container {
+    max-width: min(400px, 90vw);
+    width: 100%;
+}
 
-            [dir="rtl"] .pause-btn {
-                left: auto;
-                right: 10px;
-            }
-        }
+.memory-card, .ttt-cell {
+    min-width: 60px;
+    min-height: 60px;
+    font-size: clamp(1.2em, 3vw, 2em);
+}
+
+.simon-btn {
+    min-width: 80px;
+    min-height: 80px;
+    width: min(120px, 20vw);
+    height: min(120px, 20vw);
+}
+
+#wordGrid {
+    max-width: min(400px, 95vw);
+    grid-template-columns: repeat(10, 1fr);
+}
+
+.word-cell {
+    width: clamp(25px, 4vw, 35px);
+    height: clamp(25px, 4vw, 35px);
+    font-size: clamp(0.8em, 2vw, 1em);
+}
+
+#puzzleBoard {
+    max-width: min(300px, 90vw);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#mathOptions {
+    max-width: 100%;
+    justify-content: center;
+}
+
+.game-btn {
+    padding: clamp(8px, 2vw, 12px) clamp(15px, 4vw, 25px);
+    font-size: clamp(0.9em, 2.5vw, 1.1em);
+    margin: 5px;
+}
+
+        /* Fit to screen without scroll */
+.memory-game, .simon-container, .ttt-board, .word-grid, .puzzle-board {
+    max-height: calc(100vh - 280px);
+    overflow: visible;
+}
+
+.welcome-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.welcome-screen h2 {
+    font-size: clamp(1.8em, 4vw, 2.5em);
+    margin-bottom: 15px;
+}
+
+.welcome-screen p {
+    font-size: clamp(1em, 2.5vw, 1.2em);
+    margin-bottom: 20px;
+}
+
+/* Scale game boards to fit */
+.memory-board {
+    max-width: min(400px, 80vw);
+    max-height: 50vh;
+}
+
+.ttt-board {
+    max-width: min(300px, 70vw);
+    max-height: 40vh;
+}
+
+.simon-container {
+    max-width: min(300px, 70vw);
+    max-height: 40vh;
+}
+
+#wordGrid {
+    max-width: min(400px, 85vw);
+    max-height: 45vh;
+}
+
+#puzzleBoard {
+    max-width: min(300px, 70vw);
+    max-height: 40vh;
+}
+
+/* Responsive text sizes */
+.memory-card, .ttt-cell {
+    font-size: clamp(1.2em, 3vw, 2em);
+}
+
     </style>
 </head>
 <body>
@@ -868,7 +989,19 @@
                 inMoves: 'in {moves} moves',
                 quizCompleted: '🎉 Quiz completed!',
                 wrongSequence: '❌ Wrong sequence!',
-                wordSearchWords: ['CAT', 'DOG', 'SUN', 'FUN', 'TOY', 'BOOK', 'TREE', 'FISH', 'BIRD', 'STAR', 'MOON', 'CAKE', 'GAME', 'PLAY', 'JUMP', 'RUN', 'SWIM', 'BALL', 'APPLE', 'BEAR']
+               wordSearchWords: [
+    'CAT', 'DOG', 'SUN', 'FUN', 'TOY', 'BOOK', 'TREE', 'FISH', 'BIRD', 'STAR', 'MOON', 'CAKE', 'GAME', 'PLAY', 'JUMP', 'RUN', 'SWIM', 'BALL', 'APPLE', 'BEAR',
+    'RED', 'BLUE', 'GREEN', 'YELLOW', 'PINK', 'PURPLE', 'ORANGE', 'BLACK', 'WHITE', 'BROWN', 'GRAY', 'GOLD', 'SILVER', 'VIOLET', 'CYAN', 'LIME', 'NAVY', 'CORAL', 'TEAL', 'MINT',
+    'HOME', 'DOOR', 'WINDOW', 'CHAIR', 'TABLE', 'BED', 'LAMP', 'PHONE', 'CLOCK', 'MIRROR', 'TOWEL', 'BRUSH', 'SOAP', 'WATER', 'MILK', 'BREAD', 'CHEESE', 'BUTTER', 'HONEY', 'SUGAR',
+    'MOM', 'DAD', 'BABY', 'CHILD', 'FAMILY', 'FRIEND', 'LOVE', 'HAPPY', 'SMILE', 'LAUGH', 'CRY', 'SLEEP', 'WAKE', 'EAT', 'DRINK', 'WALK', 'TALK', 'SING', 'DANCE', 'DRAW',
+    'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'ELEVEN', 'TWELVE', 'TWENTY', 'THIRTY', 'FIFTY', 'HUNDRED', 'FIRST', 'SECOND', 'THIRD', 'LAST',
+    'HEAD', 'HAIR', 'EYE', 'NOSE', 'MOUTH', 'TOOTH', 'EAR', 'NECK', 'ARM', 'HAND', 'FINGER', 'LEG', 'FOOT', 'TOE', 'HEART', 'BELLY', 'BACK', 'KNEE', 'ELBOW', 'THUMB',
+    'CAR', 'BUS', 'TRAIN', 'PLANE', 'BIKE', 'BOAT', 'TRUCK', 'TAXI', 'ROCKET', 'HORSE', 'COW', 'PIG', 'SHEEP', 'DUCK', 'CHICKEN', 'RABBIT', 'MOUSE', 'FROG', 'BEE', 'BUTTERFLY',
+    'FLOWER', 'GRASS', 'LEAF', 'BRANCH', 'ROOT', 'SEED', 'GARDEN', 'PARK', 'MOUNTAIN', 'RIVER', 'LAKE', 'OCEAN', 'BEACH', 'SAND', 'ROCK', 'STONE', 'WIND', 'RAIN', 'SNOW', 'CLOUD',
+    'SCHOOL', 'TEACHER', 'STUDENT', 'PENCIL', 'PEN', 'PAPER', 'CRAYON', 'PAINT', 'BRUSH', 'CANVAS', 'MUSIC', 'PIANO', 'GUITAR', 'DRUM', 'FLUTE', 'VIOLIN', 'SONG', 'NOTE', 'BEAT', 'RHYTHM',
+    'SHIRT', 'PANTS', 'DRESS', 'SHOE', 'SOCK', 'HAT', 'COAT', 'GLOVE', 'SCARF', 'BELT', 'POCKET', 'BUTTON', 'ZIPPER', 'LACE', 'FABRIC', 'COTTON', 'WOOL', 'SILK', 'LEATHER', 'DENIM'
+]
+
             },
             
             ar: {
@@ -954,7 +1087,19 @@
                 wrongSequence: '❌ تسلسل خاطئ!',
                 
                 // Word Search Words (Arabic)
-                wordSearchWords: ['قطة', 'كلب', 'شمس', 'مرح', 'لعبة', 'كتاب', 'شجرة', 'سمك', 'طير', 'نجم', 'قمر', 'كعكة', 'لعب', 'قفز', 'جري', 'سبح', 'كرة', 'تفاح', 'دب']
+               wordSearchWords: [
+    'قطة', 'كلب', 'شمس', 'مرح', 'لعبة', 'كتاب', 'شجرة', 'سمك', 'طير', 'نجم', 'قمر', 'كعكة', 'لعب', 'قفز', 'جري', 'سبح', 'كرة', 'تفاح', 'دب', 'فيل',
+    'احمر', 'ازرق', 'اخضر', 'اصفر', 'وردي', 'بنفسجي', 'برتقالي', 'اسود', 'ابيض', 'بني', 'رمادي', 'ذهبي', 'فضي', 'نيلي', 'زهري', 'عسلي', 'كحلي', 'فيروزي', 'زيتي', 'كريمي',
+    'بيت', 'باب', 'نافذة', 'كرسي', 'طاولة', 'سرير', 'مصباح', 'هاتف', 'ساعة', 'مرآة', 'منشفة', 'فرشاة', 'صابون', 'ماء', 'حليب', 'خبز', 'جبن', 'زبدة', 'عسل', 'سكر',
+    'ماما', 'بابا', 'طفل', 'عائلة', 'صديق', 'حب', 'سعيد', 'ابتسامة', 'ضحك', 'بكاء', 'نوم', 'استيقاظ', 'اكل', 'شرب', 'مشي', 'كلام', 'غناء', 'رقص', 'رسم', 'كتابة',
+    'واحد', 'اثنان', 'ثلاثة', 'اربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة', 'عشرة', 'احد عشر', 'اثنا عشر', 'عشرون', 'ثلاثون', 'خمسون', 'مائة', 'اول', 'ثاني', 'ثالث', 'اخير',
+    'راس', 'شعر', 'عين', 'انف', 'فم', 'سن', 'اذن', 'رقبة', 'ذراع', 'يد', 'اصبع', 'رجل', 'قدم', 'اصبع قدم', 'قلب', 'بطن', 'ظهر', 'ركبة', 'كوع', 'ابهام',
+    'سيارة', 'حافلة', 'قطار', 'طائرة', 'دراجة', 'قارب', 'شاحنة', 'تاكسي', 'صاروخ', 'حصان', 'بقرة', 'خنزير', 'خروف', 'بطة', 'دجاج', 'ارنب', 'فأر', 'ضفدع', 'نحلة', 'فراشة',
+    'زهرة', 'عشب', 'ورقة', 'غصن', 'جذر', 'بذرة', 'حديقة', 'متنزه', 'جبل', 'نهر', 'بحيرة', 'محيط', 'شاطئ', 'رمل', 'صخرة', 'حجر', 'ريح', 'مطر', 'ثلج', 'سحابة',
+    'مدرسة', 'معلم', 'طالب', 'قلم رصاص', 'قلم', 'ورق', 'قلم تلوين', 'طلاء', 'فرشاة', 'لوحة', 'موسيقى', 'بيانو', 'جيتار', 'طبل', 'ناي', 'كمان', 'اغنية', 'نوتة', 'نبضة', 'ايقاع',
+    'قميص', 'بنطلون', 'فستان', 'حذاء', 'جورب', 'قبعة', 'معطف', 'قفاز', 'وشاح', 'حزام', 'جيب', 'زر', 'سحاب', 'رباط', 'قماش', 'قطن', 'صوف', 'حرير', 'جلد', 'جينز'
+]
+
             },
 
             fr: {
@@ -1045,7 +1190,19 @@
                 wrongSequence: '❌ Mauvaise séquence!',
                 
                 // Word Search Words (French)
-                wordSearchWords: ['CHAT', 'CHIEN', 'SOLEIL', 'JEU', 'LIVRE', 'ARBRE', 'POISSON', 'OISEAU', 'ETOILE', 'LUNE', 'GATEAU', 'JOUER', 'COURIR', 'NAGER', 'BALLE', 'POMME', 'OURS', 'FLEUR', 'MAISON', 'ECOLE']
+               wordSearchWords: [
+    'CHAT', 'CHIEN', 'SOLEIL', 'JEU', 'LIVRE', 'ARBRE', 'POISSON', 'OISEAU', 'ETOILE', 'LUNE', 'GATEAU', 'JOUER', 'COURIR', 'NAGER', 'BALLE', 'POMME', 'OURS', 'FLEUR', 'MAISON', 'ECOLE',
+    'ROUGE', 'BLEU', 'VERT', 'JAUNE', 'ROSE', 'VIOLET', 'ORANGE', 'NOIR', 'BLANC', 'BRUN', 'GRIS', 'DORE', 'ARGENT', 'MARINE', 'CORAIL', 'SARCELLE', 'MENTHE', 'CITRON', 'PRUNE', 'BEIGE',
+    'PORTE', 'FENETRE', 'CHAISE', 'TABLE', 'LIT', 'LAMPE', 'TELEPHONE', 'HORLOGE', 'MIROIR', 'SERVIETTE', 'BROSSE', 'SAVON', 'EAU', 'LAIT', 'PAIN', 'FROMAGE', 'BEURRE', 'MIEL', 'SUCRE', 'SEL',
+    'MAMAN', 'PAPA', 'BEBE', 'ENFANT', 'FAMILLE', 'AMI', 'AMOUR', 'HEUREUX', 'SOURIRE', 'RIRE', 'PLEURER', 'DORMIR', 'REVEILLER', 'MANGER', 'BOIRE', 'MARCHER', 'PARLER', 'CHANTER', 'DANSER', 'DESSINER',
+    'UN', 'DEUX', 'TROIS', 'QUATRE', 'CINQ', 'SIX', 'SEPT', 'HUIT', 'NEUF', 'DIX', 'ONZE', 'DOUZE', 'VINGT', 'TRENTE', 'CINQUANTE', 'CENT', 'PREMIER', 'DEUXIEME', 'TROISIEME', 'DERNIER',
+    'TETE', 'CHEVEUX', 'OEIL', 'NEZ', 'BOUCHE', 'DENT', 'OREILLE', 'COU', 'BRAS', 'MAIN', 'DOIGT', 'JAMBE', 'PIED', 'ORTEIL', 'COEUR', 'VENTRE', 'DOS', 'GENOU', 'COUDE', 'POUCE',
+    'VOITURE', 'BUS', 'TRAIN', 'AVION', 'VELO', 'BATEAU', 'CAMION', 'TAXI', 'FUSEE', 'CHEVAL', 'VACHE', 'COCHON', 'MOUTON', 'CANARD', 'POULE', 'LAPIN', 'SOURIS', 'GRENOUILLE', 'ABEILLE', 'PAPILLON',
+    'HERBE', 'FEUILLE', 'BRANCHE', 'RACINE', 'GRAINE', 'JARDIN', 'PARC', 'MONTAGNE', 'RIVIERE', 'LAC', 'OCEAN', 'PLAGE', 'SABLE', 'ROCHER', 'PIERRE', 'VENT', 'PLUIE', 'NEIGE', 'NUAGE', 'CIEL',
+    'PROFESSEUR', 'ELEVE', 'CRAYON', 'STYLO', 'PAPIER', 'COULEUR', 'PEINTURE', 'PINCEAU', 'TOILE', 'MUSIQUE', 'PIANO', 'GUITARE', 'TAMBOUR', 'FLUTE', 'VIOLON', 'CHANSON', 'NOTE', 'RYTHME', 'MELODIE', 'ACCORD',
+    'CHEMISE', 'PANTALON', 'ROBE', 'CHAUSSURE', 'CHAUSSETTE', 'CHAPEAU', 'MANTEAU', 'GANT', 'ECHARPE', 'CEINTURE', 'POCHE', 'BOUTON', 'FERMETURE', 'LACET', 'TISSU', 'COTON', 'LAINE', 'SOIE', 'CUIR', 'JEAN'
+]
+
             },
 
             es: {
@@ -1136,7 +1293,19 @@
                 wrongSequence: '❌ ¡Secuencia incorrecta!',
                 
                 // Word Search Words (Spanish)
-                wordSearchWords: ['GATO', 'PERRO', 'SOL', 'JUEGO', 'LIBRO', 'ARBOL', 'PEZ', 'PAJARO', 'ESTRELLA', 'LUNA', 'PASTEL', 'JUGAR', 'CORRER', 'NADAR', 'PELOTA', 'MANZANA', 'OSO', 'FLOR', 'CASA', 'ESCUELA']
+               wordSearchWords: [
+    'GATO', 'PERRO', 'SOL', 'JUEGO', 'LIBRO', 'ARBOL', 'PEZ', 'PAJARO', 'ESTRELLA', 'LUNA', 'PASTEL', 'JUGAR', 'CORRER', 'NADAR', 'PELOTA', 'MANZANA', 'OSO', 'FLOR', 'CASA', 'ESCUELA',
+    'ROJO', 'AZUL', 'VERDE', 'AMARILLO', 'ROSA', 'MORADO', 'NARANJA', 'NEGRO', 'BLANCO', 'MARRON', 'GRIS', 'DORADO', 'PLATEADO', 'VIOLETA', 'CORAL', 'TURQUESA', 'MENTA', 'LIMON', 'CIRUELA', 'BEIGE',
+    'PUERTA', 'VENTANA', 'SILLA', 'MESA', 'CAMA', 'LAMPARA', 'TELEFONO', 'RELOJ', 'ESPEJO', 'TOALLA', 'CEPILLO', 'JABON', 'AGUA', 'LECHE', 'PAN', 'QUESO', 'MANTEQUILLA', 'MIEL', 'AZUCAR', 'SAL',
+    'MAMA', 'PAPA', 'BEBE', 'NINO', 'FAMILIA', 'AMIGO', 'AMOR', 'FELIZ', 'SONRISA', 'REIR', 'LLORAR', 'DORMIR', 'DESPERTAR', 'COMER', 'BEBER', 'CAMINAR', 'HABLAR', 'CANTAR', 'BAILAR', 'DIBUJAR',
+    'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE', 'DIEZ', 'ONCE', 'DOCE', 'VEINTE', 'TREINTA', 'CINCUENTA', 'CIEN', 'PRIMERO', 'SEGUNDO', 'TERCERO', 'ULTIMO',
+    'CABEZA', 'PELO', 'OJO', 'NARIZ', 'BOCA', 'DIENTE', 'OREJA', 'CUELLO', 'BRAZO', 'MANO', 'DEDO', 'PIERNA', 'PIE', 'DEDO PIE', 'CORAZON', 'BARRIGA', 'ESPALDA', 'RODILLA', 'CODO', 'PULGAR',
+    'COCHE', 'AUTOBUS', 'TREN', 'AVION', 'BICICLETA', 'BARCO', 'CAMION', 'TAXI', 'COHETE', 'CABALLO', 'VACA', 'CERDO', 'OVEJA', 'PATO', 'POLLO', 'CONEJO', 'RATON', 'RANA', 'ABEJA', 'MARIPOSA',
+    'HIERBA', 'HOJA', 'RAMA', 'RAIZ', 'SEMILLA', 'JARDIN', 'PARQUE', 'MONTANA', 'RIO', 'LAGO', 'OCEANO', 'PLAYA', 'ARENA', 'ROCA', 'PIEDRA', 'VIENTO', 'LLUVIA', 'NIEVE', 'NUBE', 'CIELO',
+    'PROFESOR', 'ESTUDIANTE', 'LAPIZ', 'BOLIGRAFO', 'PAPEL', 'COLOR', 'PINTURA', 'PINCEL', 'LIENZO', 'MUSICA', 'PIANO', 'GUITARRA', 'TAMBOR', 'FLAUTA', 'VIOLIN', 'CANCION', 'NOTA', 'RITMO', 'MELODIA', 'ACORDE',
+    'CAMISA', 'PANTALON', 'VESTIDO', 'ZAPATO', 'CALCETÍN', 'SOMBRERO', 'ABRIGO', 'GUANTE', 'BUFANDA', 'CINTURON', 'BOLSILLO', 'BOTON', 'CREMALLERA', 'CORDON', 'TELA', 'ALGODON', 'LANA', 'SEDA', 'CUERO', 'VAQUERO'
+]
+
             },
 
             tr: {
@@ -1227,7 +1396,19 @@
                 wrongSequence: '❌ Yanlış sıralama!',
                 
                 // Word Search Words (Turkish)
-                wordSearchWords: ['KEDI', 'KÖPEK', 'GÜNEŞ', 'OYUN', 'KİTAP', 'AĞAÇ', 'BALIK', 'KUŞ', 'YILDIZ', 'AY', 'PASTA', 'OYNA', 'KOŞ', 'YÜZ', 'TOP', 'ELMA', 'AYI', 'ÇİÇEK', 'EV', 'OKUL']
+               wordSearchWords: [
+    'KEDI', 'KÖPEK', 'GÜNEŞ', 'OYUN', 'KİTAP', 'AĞAÇ', 'BALIK', 'KUŞ', 'YILDIZ', 'AY', 'PASTA', 'OYNA', 'KOŞ', 'YÜZ', 'TOP', 'ELMA', 'AYI', 'ÇİÇEK', 'EV', 'OKUL',
+    'KIRMIZI', 'MAVİ', 'YEŞİL', 'SARI', 'PEMBE', 'MOR', 'TURUNCU', 'SİYAH', 'BEYAZ', 'KAHVERENGİ', 'GRİ', 'ALTIN', 'GÜMÜŞ', 'MENEKŞE', 'MERCAN', 'CAM GÖBEĞİ', 'NARÇİÇEĞİ', 'LİMON', 'ERIK', 'BEJ',
+    'KAPI', 'PENCERE', 'SANDALYE', 'MASA', 'YATAK', 'LAMBA', 'TELEFON', 'SAAT', 'AYNA', 'HAVLU', 'FIRÇA', 'SABUN', 'SU', 'SÜT', 'EKMEK', 'PEYNİR', 'TEREYAĞI', 'BAL', 'ŞEKER', 'TUZ',
+    'ANNE', 'BABA', 'BEBEK', 'ÇOCUK', 'AİLE', 'ARKADAŞ', 'SEVGI', 'MUTLU', 'GÜLÜMSEME', 'GÜLMEK', 'AĞLAMAK', 'UYUMAK', 'UYANMAK', 'YEMEK', 'İÇMEK', 'YÜRÜMEK', 'KONUŞMAK', 'ŞARKI', 'DANS', 'ÇİZMEK',
+    'BİR', 'İKİ', 'ÜÇ', 'DÖRT', 'BEŞ', 'ALTI', 'YEDİ', 'SEKİZ', 'DOKUZ', 'ON', 'ON BİR', 'ON İKİ', 'YİRMİ', 'OTUZ', 'ELLİ', 'YÜZ', 'BİRİNCİ', 'İKİNCİ', 'ÜÇÜNCÜ', 'SON',
+    'KAFA', 'SAÇ', 'GÖZ', 'BURUN', 'AĞIZ', 'DİŞ', 'KULAK', 'BOYUN', 'KOL', 'EL', 'PARMAK', 'BACAK', 'AYAK', 'AYAK PARMAĞI', 'KALP', 'KARIN', 'SIRT', 'DİZ', 'DİRSEK', 'BAŞPARMAK',
+    'ARABA', 'OTOBÜS', 'TREN', 'UÇAK', 'BİSİKLET', 'TEKNE', 'KAMYON', 'TAKSİ', 'ROKET', 'AT', 'İNEK', 'DOMUZ', 'KOYUN', 'ÖRDEK', 'TAVUK', 'TAVŞAN', 'FARE', 'KURBAĞA', 'ARI', 'KELEBEK',
+    'ÇİMEN', 'YAPRAK', 'DAL', 'KÖK', 'TOHUM', 'BAHÇE', 'PARK', 'DAĞ', 'NEHİR', 'GÖLET', 'OKYANUS', 'SAHIL', 'KUM', 'KAYA', 'TAŞ', 'RÜZGAR', 'YAĞMUR', 'KAR', 'BULUT', 'GÖK',
+    'ÖĞRETMEN', 'ÖĞRENCİ', 'KALEM', 'TÜKENMEZ', 'KAĞIT', 'RENK', 'BOYA', 'FIRÇA', 'TUVAL', 'MÜZİK', 'PİYANO', 'GİTAR', 'DAVUL', 'FLÜT', 'KEMANÇe', 'ŞARKI', 'NOTA', 'RİTİM', 'MELODİ', 'AKOR',
+    'GÖMLEK', 'PANTOLON', 'ELBİSE', 'AYAKKABI', 'ÇORAP', 'ŞAPKA', 'PALTO', 'ELDİVEN', 'ATKÌ', 'KEMER', 'CEP', 'DÜĞME', 'FERMUVARr', 'BAĞCIK', 'KUMAŞ', 'PAMUK', 'YÜN', 'İPEK', 'DERİ', 'KOT'
+]
+
             },
 
             it: {
@@ -1318,7 +1499,19 @@
                 wrongSequence: '❌ Sequenza sbagliata!',
                 
                 // Word Search Words (Italian)
-                wordSearchWords: ['GATTO', 'CANE', 'SOLE', 'GIOCO', 'LIBRO', 'ALBERO', 'PESCE', 'UCCELLO', 'STELLA', 'LUNA', 'TORTA', 'GIOCARE', 'CORRERE', 'NUOTARE', 'PALLA', 'MELA', 'ORSO', 'FIORE', 'CASA', 'SCUOLA']
+               wordSearchWords: [
+    'GATTO', 'CANE', 'SOLE', 'GIOCO', 'LIBRO', 'ALBERO', 'PESCE', 'UCCELLO', 'STELLA', 'LUNA', 'TORTA', 'GIOCARE', 'CORRERE', 'NUOTARE', 'PALLA', 'MELA', 'ORSO', 'FIORE', 'CASA', 'SCUOLA',
+    'ROSSO', 'BLU', 'VERDE', 'GIALLO', 'ROSA', 'VIOLA', 'ARANCIONE', 'NERO', 'BIANCO', 'MARRONE', 'GRIGIO', 'ORO', 'ARGENTO', 'VIOLETTO', 'CORALLO', 'TURCHESE', 'MENTA', 'LIMONE', 'PRUGNA', 'BEIGE',
+    'PORTA', 'FINESTRA', 'SEDIA', 'TAVOLO', 'LETTO', 'LAMPADA', 'TELEFONO', 'OROLOGIO', 'SPECCHIO', 'ASCIUGAMANO', 'SPAZZOLA', 'SAPONE', 'ACQUA', 'LATTE', 'PANE', 'FORMAGGIO', 'BURRO', 'MIELE', 'ZUCCHERO', 'SALE',
+    'MAMMA', 'PAPA', 'BAMBINO', 'FAMIGLIA', 'AMICO', 'AMORE', 'FELICE', 'SORRISO', 'RIDERE', 'PIANGERE', 'DORMIRE', 'SVEGLIARE', 'MANGIARE', 'BERE', 'CAMMINARE', 'PARLARE', 'CANTARE', 'BALLARE', 'DISEGNARE', 'SCRIVERE',
+    'UNO', 'DUE', 'TRE', 'QUATTRO', 'CINQUE', 'SEI', 'SETTE', 'OTTO', 'NOVE', 'DIECI', 'UNDICI', 'DODICI', 'VENTI', 'TRENTA', 'CINQUANTA', 'CENTO', 'PRIMO', 'SECONDO', 'TERZO', 'ULTIMO',
+    'TESTA', 'CAPELLI', 'OCCHIO', 'NASO', 'BOCCA', 'DENTE', 'ORECCHIO', 'COLLO', 'BRACCIO', 'MANO', 'DITO', 'GAMBA', 'PIEDE', 'DITO PIEDE', 'CUORE', 'PANCIA', 'SCHIENA', 'GINOCCHIO', 'GOMITO', 'POLLICE',
+    'MACCHINA', 'AUTOBUS', 'TRENO', 'AEREO', 'BICICLETTA', 'BARCA', 'CAMION', 'TAXI', 'RAZZO', 'CAVALLO', 'MUCCA', 'MAIALE', 'PECORA', 'ANATRA', 'POLLO', 'CONIGLIO', 'TOPO', 'RANA', 'APE', 'FARFALLA',
+    'ERBA', 'FOGLIA', 'RAMO', 'RADICE', 'SEME', 'GIARDINO', 'PARCO', 'MONTAGNA', 'FIUME', 'LAGO', 'OCEANO', 'SPIAGGIA', 'SABBIA', 'ROCCIA', 'PIETRA', 'VENTO', 'PIOGGIA', 'NEVE', 'NUVOLA', 'CIELO',
+    'INSEGNANTE', 'STUDENTE', 'MATITA', 'PENNA', 'CARTA', 'COLORE', 'PITTURA', 'PENNELLO', 'TELA', 'MUSICA', 'PIANOFORTE', 'CHITARRA', 'TAMBURO', 'FLAUTO', 'VIOLINO', 'CANZONE', 'NOTA', 'RITMO', 'MELODIA', 'ACCORDO',
+    'CAMICIA', 'PANTALONI', 'VESTITO', 'SCARPA', 'CALZINO', 'CAPPELLO', 'CAPPOTTO', 'GUANTO', 'SCIARPA', 'CINTURA', 'TASCA', 'BOTTONE', 'CERNIERA', 'LACCIO', 'TESSUTO', 'COTONE', 'LANA', 'SETA', 'PELLE', 'JEANS'
+]
+
             },
 
             pt: {
@@ -1409,7 +1602,19 @@
                 wrongSequence: '❌ Sequência errada!',
                 
                 // Word Search Words (Portuguese)
-                wordSearchWords: ['GATO', 'CACHORRO', 'SOL', 'JOGO', 'LIVRO', 'ARVORE', 'PEIXE', 'PASSARO', 'ESTRELA', 'LUA', 'BOLO', 'BRINCAR', 'CORRER', 'NADAR', 'BOLA', 'MACA', 'URSO', 'FLOR', 'CASA', 'ESCOLA']
+               wordSearchWords: [
+    'GATO', 'CACHORRO', 'SOL', 'JOGO', 'LIVRO', 'ARVORE', 'PEIXE', 'PASSARO', 'ESTRELA', 'LUA', 'BOLO', 'BRINCAR', 'CORRER', 'NADAR', 'BOLA', 'MACA', 'URSO', 'FLOR', 'CASA', 'ESCOLA',
+    'VERMELHO', 'AZUL', 'VERDE', 'AMARELO', 'ROSA', 'ROXO', 'LARANJA', 'PRETO', 'BRANCO', 'MARROM', 'CINZA', 'DOURADO', 'PRATEADO', 'VIOLETA', 'CORAL', 'TURQUESA', 'MENTA', 'LIMAO', 'AMEIXA', 'BEGE',
+    'PORTA', 'JANELA', 'CADEIRA', 'MESA', 'CAMA', 'LAMPADA', 'TELEFONE', 'RELOGIO', 'ESPELHO', 'TOALHA', 'ESCOVA', 'SABAO', 'AGUA', 'LEITE', 'PAO', 'QUEIJO', 'MANTEIGA', 'MEL', 'ACUCAR', 'SAL',
+    'MAMAE', 'PAPAI', 'BEBE', 'CRIANCA', 'FAMILIA', 'AMIGO', 'AMOR', 'FELIZ', 'SORRISO', 'RIR', 'CHORAR', 'DORMIR', 'ACORDAR', 'COMER', 'BEBER', 'ANDAR', 'FALAR', 'CANTAR', 'DANCAR', 'DESENHAR',
+    'UM', 'DOIS', 'TRES', 'QUATRO', 'CINCO', 'SEIS', 'SETE', 'OITO', 'NOVE', 'DEZ', 'ONZE', 'DOZE', 'VINTE', 'TRINTA', 'CINQUENTA', 'CEM', 'PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'ULTIMO',
+    'CABECA', 'CABELO', 'OLHO', 'NARIZ', 'BOCA', 'DENTE', 'ORELHA', 'PESCOCO', 'BRACO', 'MAO', 'DEDO', 'PERNA', 'PE', 'DEDO PE', 'CORACAO', 'BARRIGA', 'COSTAS', 'JOELHO', 'COTOVELO', 'POLEGAR',
+    'CARRO', 'ONIBUS', 'TREM', 'AVIAO', 'BICICLETA', 'BARCO', 'CAMINHAO', 'TAXI', 'FOGUETE', 'CAVALO', 'VACA', 'PORCO', 'OVELHA', 'PATO', 'GALINHA', 'COELHO', 'RATO', 'SAPO', 'ABELHA', 'BORBOLETA',
+    'GRAMA', 'FOLHA', 'GALHO', 'RAIZ', 'SEMENTE', 'JARDIM', 'PARQUE', 'MONTANHA', 'RIO', 'LAGO', 'OCEANO', 'PRAIA', 'AREIA', 'ROCHA', 'PEDRA', 'VENTO', 'CHUVA', 'NEVE', 'NUVEM', 'CEU',
+    'PROFESSOR', 'ALUNO', 'LAPIS', 'CANETA', 'PAPEL', 'COR', 'TINTA', 'PINCEL', 'TELA', 'MUSICA', 'PIANO', 'VIOLAO', 'TAMBOR', 'FLAUTA', 'VIOLINO', 'CANCAO', 'NOTA', 'RITMO', 'MELODIA', 'ACORDE',
+    'CAMISA', 'CALCA', 'VESTIDO', 'SAPATO', 'MEIA', 'CHAPEU', 'CASACO', 'LUVA', 'CACHECOL', 'CINTO', 'BOLSO', 'BOTAO', 'ZIPER', 'CARDACO', 'TECIDO', 'ALGODAO', 'LA', 'SEDA', 'COURO', 'JEANS'
+]
+
             }
         };
         // Language Management
@@ -2083,7 +2288,7 @@ function resumeGame() {
                 
                 const num1 = Math.floor(Math.random() * 10) + 1;
                 const num2 = Math.floor(Math.random() * 10) + 1;
-                const operations = ['+', '-', '×'];
+                const operations = ['+', '-'];
                 const operation = operations[Math.floor(Math.random() * operations.length)];
                 
                 let answer;
@@ -2097,10 +2302,6 @@ function resumeGame() {
                     case '-':
                         answer = Math.max(num1, num2) - Math.min(num1, num2);
                         problemText = `${Math.max(num1, num2)} - ${Math.min(num1, num2)} = ?`;
-                        break;
-                    case '×':
-                        answer = num1 * num2;
-                        problemText = `${num1} × ${num2} = ?`;
                         break;
                 }
                 
@@ -2127,24 +2328,26 @@ function resumeGame() {
                         if (!gameActive || gamePaused) return;
                         
                         if (option === answer) {
-                            showNotification(translate('correct'), 'success');
-                            score++;
-                            document.getElementById('mathScore').textContent = score;
-                            
-                            setTimeout(() => {
-                                currentQuestion++;
-                                if (currentQuestion <= 10) {
-                                    document.getElementById('mathQuestion').textContent = currentQuestion;
-                                    generateProblem();
-                                } else {
-                                    gameActive = false;
-                                    const time = stopTimer();
-                                    showWinNotification(translate('quizCompleted') + ' ' + translate('score') + ': ' + score + '/10 ' + translate('inSeconds', {time}));
-                                }
-                            }, 1500);
-                        } else {
-                            showNotification(translate('wrong') + ' ' + answer, 'error');
-                        }
+    showNotification(translate('correct'), 'success');
+    score++;
+    document.getElementById('mathScore').textContent = score;
+} else {
+    showNotification(translate('wrong') + ' ' + answer, 'error');
+}
+
+// Always go to next question regardless of correct/wrong answer
+setTimeout(() => {
+    currentQuestion++;
+    if (currentQuestion <= 10) {
+        document.getElementById('mathQuestion').textContent = currentQuestion;
+        generateProblem();
+    } else {
+        gameActive = false;
+        const time = stopTimer();
+        showWinNotification(translate('quizCompleted') + ' ' + translate('score') + ': ' + score + '/10 ' + translate('inSeconds', {time}));
+    }
+}, 1500);
+
                     };
                     optionsDiv.appendChild(btn);
                 });
