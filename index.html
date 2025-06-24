@@ -2164,62 +2164,84 @@ function resumeGame() {
 
         // Memory Game Logic
         function initMemoryGame() {
-            const cards = ['🐶', '🐱', '🐸', '🦋', '🌈', '⭐', '🍎', '🎈'];
-            const gameCards = [...cards, ...cards].sort(() => Math.random() - 0.5);
-            let flipped = [];
-            let matches = 0;
-            let moves = 0;
-            
-            const board = document.getElementById('memoryBoard');
-            board.innerHTML = '';
-            
-            document.getElementById('memoryMoves').textContent = '0';
-            document.getElementById('memoryMatches').textContent = '0';
-            
-            gameCards.forEach((card, index) => {
-                const cardElement = document.createElement('div');
-                cardElement.className = 'memory-card';
-                cardElement.dataset.card = card;
-                cardElement.dataset.index = index;
-                cardElement.textContent = '?';
-                cardElement.onclick = () => flipCard(cardElement);
-                board.appendChild(cardElement);
-            });
-            
-            function flipCard(element) {
-                if (!gameActive || gamePaused || flipped.length >= 2 || element.classList.contains('flipped')) return;
-                
-                element.classList.add('flipped');
-                element.textContent = element.dataset.card;
-                flipped.push(element);
-                
-                if (flipped.length === 2) {
-                    moves++;
-                    document.getElementById('memoryMoves').textContent = moves;
-                    
-                    setTimeout(() => {
-                        if (flipped[0].dataset.card === flipped[1].dataset.card) {
-                            flipped.forEach(card => card.classList.add('matched'));
-                            matches++;
-                            document.getElementById('memoryMatches').textContent = matches;
-                            showNotification(translate('greatMatch'), 'success', 1500);
-                            
-                            if (matches === 8) {
-                                const time = stopTimer();
-                                gameActive = false;
-                                showWinNotification(translate('youWon') + ' ' + translate('inMoves', {moves}) + ' ' + translate('inSeconds', {time}));
-                            }
-                        } else {
-                            flipped.forEach(card => {
-                                card.classList.remove('flipped');
-                                card.textContent = '?';
-                            });
-                        }
-                        flipped = [];
-                    }, 1000);
-                }
-            }
+    // Large pool of kid-friendly emoji icons  
+    const allMemoryIcons = [
+        '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🙈', '🐔', '🐧', '🐦', '🐤', '🦆', '🦉', '🐝', '🐛', '🦋', '🐞', '🐢', '🐠', '🐬', '🦄',
+        '🍎', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🍒', '🍑', '🥭', '🍍', '🥝', '🍅', '🥑', '🥕', '🌽', '🍞', '🧀', '🍕', '🍔', '🍟', '🍪', '🍰', '🍭', '🍯', '🥐', '🥨', '🧁', '🍫', '🍬',
+        '🌈', '⭐', '🌟', '💫', '✨', '☀️', '🌙', '🌍', '🌋', '🌳', '🌲', '🌴', '🌱', '🌿', '🍀', '🌺', '🌻', '🌹', '🌷', '🌸', '🌼', '☘️', '🍃', '🍂', '🍁', '🌾', '💐', '🏵️', '🌵', '🎍',
+        '🎈', '🎁', '🎀', '🎊', '🎉', '🎆', '🎇', '🎨', '🎮', '🎯', '🎲', '🧸', '🧩', '🎪', '🎢', '🎡', '🎠', '🎭', '🎵', '🎸', '🥁', '⚽', '🏀', '🎾', '🏈', '🎱', '🎳', '🎪', '🎨',
+        '🚗', '🚕', '🚌', '🚎', '🚓', '🚑', '🚒', '🏎️', '🚲', '🛴', '🚁', '✈️', '🚂', '🚄', '🛸', '🚜', '🏍️', '🛵', '🛺', '🚛', '🚚', '🚐', '🛻', '🚙', '🚝', '🚇', '🚈', '🚊', '🚉', '🚆'
+    ];
+
+    // Randomly select 8 unique icons
+    const cards = [];
+    const usedIcons = new Set();
+    
+    while (cards.length < 8) {
+        const randomIcon = allMemoryIcons[Math.floor(Math.random() * allMemoryIcons.length)];
+        if (!usedIcons.has(randomIcon)) {
+            cards.push(randomIcon);
+            usedIcons.add(randomIcon);
         }
+    }
+
+    // Create pairs and shuffle
+    const gameCards = [...cards, ...cards].sort(() => Math.random() - 0.5);
+    let flipped = [];
+    let matches = 0;
+    let moves = 0;
+    
+    const board = document.getElementById('memoryBoard');
+    board.innerHTML = '';
+    
+    document.getElementById('memoryMoves').textContent = '0';
+    document.getElementById('memoryMatches').textContent = '0';
+    
+    gameCards.forEach((card, index) => {
+        const cardElement = document.createElement('div');
+        cardElement.className = 'memory-card';
+        cardElement.dataset.card = card;
+        cardElement.dataset.index = index;
+        cardElement.textContent = '?';
+        cardElement.onclick = () => flipCard(cardElement);
+        board.appendChild(cardElement);
+    });
+    
+    function flipCard(element) {
+        if (!gameActive || gamePaused || flipped.length >= 2 || element.classList.contains('flipped')) return;
+        
+        element.classList.add('flipped');
+        element.textContent = element.dataset.card;
+        flipped.push(element);
+        
+        if (flipped.length === 2) {
+            moves++;
+            document.getElementById('memoryMoves').textContent = moves;
+            
+            setTimeout(() => {
+                if (flipped[0].dataset.card === flipped[1].dataset.card) {
+                    flipped.forEach(card => card.classList.add('matched'));
+                    matches++;
+                    document.getElementById('memoryMatches').textContent = matches;
+                    showNotification(translate('greatMatch'), 'success', 1500);
+                    
+                    if (matches === 8) {
+                        const time = stopTimer();
+                        gameActive = false;
+                        showWinNotification(translate('youWon') + ' ' + translate('inMoves', {moves}) + ' ' + translate('inSeconds', {time}));
+                    }
+                } else {
+                    flipped.forEach(card => {
+                        card.classList.remove('flipped');
+                        card.textContent = '?';
+                    });
+                }
+                flipped = [];
+            }, 1000);
+        }
+    }
+}
+
 
         // Tic Tac Toe Logic
         function initTicTacToe() {
